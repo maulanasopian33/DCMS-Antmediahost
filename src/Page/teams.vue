@@ -2,21 +2,19 @@
     <div>
         <baseLy>
             <main>
-                <modal name="addvisit">
-                    <h1>sdasdas</h1>
-                </modal>
                 <div class="pt-6 px-4">
                     <div class="w-full gap-4">
                         <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                             <div class="mb-4 flex items-center justify-between">
                                 <div>
-                                    <h3 class="text-xl font-bold text-gray-900 mb-2">History Visit DC</h3>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">List Teams</h3>
                                     <span class="text-base font-normal text-gray-500">This is a list of history visit
                                         dc</span>
                                 </div>
                                 <div class="flex-shrink-0">
-                                    <a @click="AddNew()"
-                                        class="text-sm font-medium text-white bg-orange-600 hover:bg-orange-300 rounded-lg py-2 px-4 cursor-pointer">Add New</a>
+                                    <a href="#"
+                                        class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2">View
+                                        all</a>
                                 </div>
                             </div>
                             <div class="flex flex-col mt-8">
@@ -233,19 +231,16 @@
     import baseLy from './baseLayout.vue'
     import JwPagination from 'jw-vue-pagination';
     export default {
-        name: "visitDC",
+        name: "Teams",
         components: {
             baseLy,
             JwPagination
         },
         data() {
             return {
-                slidebar: false,
             }
         },
         methods: {
-            AddNew(){
-            }
         },
     }
 </script>
