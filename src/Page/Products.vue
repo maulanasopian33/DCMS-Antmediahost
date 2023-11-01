@@ -92,7 +92,7 @@
             return {
                 url         : import.meta.env.VITE_APIBASE,
                 productData : '',
-                userId      : '1',
+                userId      : this.$storage.getStorageSync("user_id"),
             }
         },
         created() {

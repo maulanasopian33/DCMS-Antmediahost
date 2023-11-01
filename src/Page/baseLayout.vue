@@ -14,7 +14,7 @@
                </button>
                <a href="#" class="text-xl font-bold flex items-center lg:ml-2.5">
                <img src="../assets/favico.png" class="h-10 mr-2" alt="Windster Logo">
-               <span class="self-center whitespace-nowrap">DCVMS</span>
+               <span class="self-center whitespace-nowrap">DCMS</span>
                </a>
                <form action="#" method="GET" class="hidden lg:block lg:pl-32">
                   <label for="topbar-search" class="sr-only">Search</label>
@@ -45,7 +45,7 @@
                   <svg class="svg-inline--fa fa-gem -ml-1 mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="gem" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                      <path fill="currentColor" d="M378.7 32H133.3L256 182.7L378.7 32zM512 192l-107.4-141.3L289.6 192H512zM107.4 50.67L0 192h222.4L107.4 50.67zM244.3 474.9C247.3 478.2 251.6 480 256 480s8.653-1.828 11.67-5.062L510.6 224H1.365L244.3 474.9z"></path>
                   </svg>
-                  {{ mydata.name }}
+                  {{ mydata }}
                </a>
             </div>
          </div>
@@ -80,7 +80,7 @@
                         </router-link>
                      </li>
                      <li>
-                        <router-link to="/visitdc" :class="$route.path === '/visitdc'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg flex items-center p-2">
+                        <router-link to="/visitdc" :class="$route.path === '/visitdc' || $route.path === '/visitdc/add' ? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg flex items-center p-2">
                            <svg class="w-6 h-6 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                            </svg>
@@ -105,12 +105,12 @@
                         </router-link>
                      </li>
                      <li>
-                        <a href="#" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                           <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <router-link to="/profile" :class="$route.path === '/profile'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                           <svg class="w-6 h-6 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
                            </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Setting</span>
-                        </a>
+                           <span class="ml-3 flex-1 whitespace-nowrap">Profile</span>
+                        </router-link>
                      </li>
                   </ul>
                </div>
@@ -159,28 +159,19 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     name : 'baseLy',
     data() {
         return {
-            mydata      : '',
+            mydata      : this.$storage.getStorageSync("username"),
             slidebar    : false,
             url         : import.meta.env.VITE_APIBASE,
-            userId      : '1',
+            userId      : this.$storage.getStorageSync("user_id"),
         }
     },
     created() {
-        this.getuser();
     },
     methods: {
-        getuser() {
-            axios.get(this.url + 'getUser/' + this.userId).then(({
-                data
-            }) => {
-                this.mydata = data.data
-            })
-        },
         slidebarAction() {
             this.slidebar = !this.slidebar;
         }

@@ -251,7 +251,7 @@ export default {
       return {
          slidebar    : false,
          url         : import.meta.env.VITE_APIBASE,
-         userId      : '1',
+         userId      : this.$storage.getStorageSync("user_id"),
          mydata      : '',
          myproduct   : null,
          sumproduct  : 0,
@@ -270,16 +270,21 @@ export default {
       }
     },
     created() {
-      this.getuser();
+      // this.getuser();
       this.getproduct();
+      this.check_session();
     },
     methods: {
-      getuser(){
-         axios.get(this.url+'getUser/'+this.userId).then(({data})=>{
-            this.mydata = data.data
-            console.log(data.data.name);
-         })
+      check_session(){
+         if(this.$storage.isExpire("user_id")){
+            this.$router.push('/login')
+         }
       },
+      // getuser(){
+      //    axios.get(this.url+'getUser/'+this.userId).then(({data})=>{
+      //       this.mydata = data.data
+      //    })
+      // },
       getproduct(){
          axios.get(this.url+'product?limit=all&id='+this.userId).then(({data})=>{
             let datas = data.data;
