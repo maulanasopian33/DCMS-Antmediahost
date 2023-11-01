@@ -42,11 +42,12 @@
                   </div>
                </div>
                <a href="#" class="hidden sm:inline-flex ml-5 text-black font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-                  <svg class="svg-inline--fa fa-gem -ml-1 mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="gem" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                     <path fill="currentColor" d="M378.7 32H133.3L256 182.7L378.7 32zM512 192l-107.4-141.3L289.6 192H512zM107.4 50.67L0 192h222.4L107.4 50.67zM244.3 474.9C247.3 478.2 251.6 480 256 480s8.653-1.828 11.67-5.062L510.6 224H1.365L244.3 474.9z"></path>
-                  </svg>
+                  <i class="fa fa-user pr-3"></i>
                   {{ mydata }}
                </a>
+               <span @click="logout()" class="hidden cursor-pointer sm:inline-flex ml-5 text-black font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+                  Logout
+               </span>
             </div>
          </div>
       </div>
@@ -105,8 +106,8 @@
                         </router-link>
                      </li>
                      <li>
-                        <router-link to="/profile" :class="$route.path === '/profile'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                           <svg class="w-6 h-6 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <router-link to="/profile" :class="$route.path === '/profile'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base flex items-center p-2 group ">
+                           <svg class="w-6 h-6 flex-shrink-0 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
                            </svg>
                            <span class="ml-3 flex-1 whitespace-nowrap">Profile</span>
@@ -174,6 +175,12 @@ export default {
     methods: {
         slidebarAction() {
             this.slidebar = !this.slidebar;
+        },
+        logout(){
+         this.$storage.removeStorageSync("username")
+         this.$storage.removeStorageSync("user_id");
+         this.$storage.removeStorageSync("token");
+         this.$router.push('/')
         }
     },
 }

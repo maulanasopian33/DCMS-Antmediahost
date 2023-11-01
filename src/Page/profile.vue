@@ -23,7 +23,7 @@
                            <span class="text-base font-normal text-gray-500">This is a list of history visit dc</span>
                         </div>
                         <div class="flex-shrink-0">
-                           <a href="#" class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2">Update Data</a>
+                           <!-- <a href="#" class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2">Update Data</a> -->
                         </div>
                      </div>
                      <div >
