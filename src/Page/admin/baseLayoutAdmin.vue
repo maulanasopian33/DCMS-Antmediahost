@@ -13,7 +13,7 @@
                   </svg>
                </button>
                <a href="#" class="text-xl font-bold flex items-center lg:ml-2.5">
-               <img src="../assets/favico.png" class="h-10 mr-2" alt="Windster Logo">
+               <img src="../../assets/favico.png" class="h-10 mr-2" alt="Windster Logo">
                <span class="self-center whitespace-nowrap">DCMS</span>
                </a>
                <form action="#" method="GET" class="hidden lg:block lg:pl-32">
@@ -36,14 +36,11 @@
                   </svg>
                </button>
                <div class="hidden lg:flex items-center">
-                  <span class="text-base font-normal text-gray-500 mr-5">Open source ❤️</span>
-                  <div class="-mb-1">
-                     <a class="github-button" href="#" data-color-scheme="no-preference: dark; light: light; dark: light;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star themesberg/windster-tailwind-css-dashboard on GitHub">Star</a>
-                  </div>
+                  <span class="text-base font-normal text-gray-500 mr-5">Admin Panel</span>
                </div>
                <a href="#" class="hidden sm:inline-flex ml-5 text-black font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
                   <i class="fa fa-user pr-3"></i>
-                  {{ mydata }}
+                  {{ mydata.fullname }}
                </a>
                <span @click="logout()" class="hidden cursor-pointer sm:inline-flex ml-5 text-black font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
                   Logout
@@ -72,7 +69,7 @@
                         </form>
                      </li>
                      <li>
-                        <router-link :class="$route.path === '/'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" to="/" class="text-base  font-normal  rounded-lg flex items-center p-2 ">
+                        <router-link :class="$route.path === '/admin'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" to="/admin" class="text-base  font-normal  rounded-lg flex items-center p-2 ">
                            <svg class="w-6 h-6 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                               <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
@@ -81,35 +78,22 @@
                         </router-link>
                      </li>
                      <li>
-                        <router-link to="/visitdc" :class="$route.path === '/visitdc' || $route.path === '/visitdc/add' ? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg flex items-center p-2">
+                        <router-link to="/admin/visitdc" :class="$route.path === '/admin/visitdc' || $route.path === '/visitdc/add' ? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg flex items-center p-2">
                            <svg class="w-6 h-6 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                            </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Visit DC</span>
+                           <span class="ml-3 flex-1 whitespace-nowrap">Request Visit DC</span>
                         </router-link>
                      </li>
                      <li>
-                        <router-link to="/teams" :class="$route.path === '/teams'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg  flex items-center p-2 ">
-                           <svg class="w-6 h-6  flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path>
-                              <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path>
-                           </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Teams</span>
-                        </router-link>
-                     </li>
-                     <li>
-                        <router-link to="/products" :class="$route.path === '/products'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base  font-normal rounded-lg  flex items-center p-2">
-                           <svg class="w-6 h-6 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path>
-                           </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Products</span>
+                        <router-link to="/admin/usermanage" :class="$route.path === '/admin/usermanage'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg  flex items-center p-2 ">
+                           <i class="fa fa-users"></i>
+                           <span class="ml-3 flex-1 whitespace-nowrap">User Manage</span>
                         </router-link>
                      </li>
                      <li>
                         <router-link to="/profile" :class="$route.path === '/profile'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base flex items-center p-2 group ">
-                           <svg class="w-6 h-6 flex-shrink-0 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
-                           </svg>
+                           <i class="fa fa-user"></i>
                            <span class="ml-3 flex-1 whitespace-nowrap">Profile</span>
                         </router-link>
                      </li>
@@ -160,29 +144,79 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name : 'baseLy',
     data() {
         return {
-            mydata      : this.$storage.getStorageSync("username"),
+            token       : this.$storage.getStorageSync("token"),
+            id          : this.$storage.getStorageSync("userId"),
             slidebar    : false,
             url         : import.meta.env.VITE_APIBASE,
-            userId      : this.$storage.getStorageSync("user_id"),
+            mydata      : []
         }
     },
-    created() {
-    },
-    methods: {
-        slidebarAction() {
-            this.slidebar = !this.slidebar;
-        },
-        logout(){
-         console.log('sda')
-         this.$storage.removeStorageSync("username")
-         this.$storage.removeStorageSync("user_id");
+   created() {
+      this.ceklogin();
+      this.getdata();
+   },
+   methods: {
+      slidebarAction() {
+         this.slidebar = !this.slidebar;
+      },
+      logout(){
          this.$storage.removeStorageSync("token");
-         this.$router.push('/login')
-        }
+         this.$storage.removeStorageSync("userId");
+         this.$router.push('/admin/login')
+      },
+      ceklogin(){
+         if(!this.$storage.hasKey('token') && !this.$storage.isExpire('token')){
+            this.$router.push('/admin/login')
+         }
+      },
+      getdata(){
+         let header = {
+            headers: {
+               'Authorization': `Bearer ${this.token}` 
+            }
+         }
+         axios.get(this.url+'admin/getdata?id='+this.id,header).then(({data})=>{
+            this.mydata = data.data
+            this.notif(data, true)
+
+            if(!data.status){ this.logout()}
+
+
+         }).catch((error) =>{
+            this.$notify({
+               title: 'Error',
+               text: error.response.data.message,
+               type: 'error',
+               duration: 5000, // Durasi notifikasi dalam milidetik
+            });
+            this.logout()
+         })
+      },
+      notif(data, onlyerr){
+         if(data.status){
+            if(onlyerr){
+               this.$notify({
+                  title: 'Berhasil',
+                  text: data.message,
+                  type: 'success',
+                  duration: 5000, // Durasi notifikasi dalam milidetik
+               });
+               return true
+            }
+         }
+         this.$notify({
+            title: 'Error',
+            text: data.message,
+            type: 'error',
+            duration: 5000, // Durasi notifikasi dalam milidetik
+         });
+      }
     },
 }
 </script>

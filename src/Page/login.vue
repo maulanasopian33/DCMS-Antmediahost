@@ -12,7 +12,7 @@
                 class="z-10 flex h-screen w-full flex-col justify-center bg-white px-5 py-10 text-center shadow-2xl shadow-black md:w-1/3">
                 <h1 class="text-3xl font-medium">LOGIN PAGE</h1>
                 <p class="pb-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                <a href="http://localhost:8000/ssologin.php?option=oauthredirect&app_name=dcvms&login=true" class="rounded-md bg-orange-700 px-4 py-3 text-white"> Login Dengan My Ant</a>
+                <a href="http://localhost:8000/0auth" class="rounded-md bg-orange-700 px-4 py-3 text-white"> Login Dengan My Ant</a>
             </div>
         </div>
     </div>
@@ -39,7 +39,6 @@ export default {
     },
     methods: {
         getClientId(){
-            console.log(this.$route.params.code)
             if(this.$route.params.code != null){
                 let data = JSON.parse(atob(this.$route.params.code));
                 axios.get(this.url + 'getUser/' + data.userId).then(({data}) => {

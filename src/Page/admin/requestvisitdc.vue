@@ -11,10 +11,6 @@
                                     <span class="text-base font-normal text-gray-500">This is a list of Request visit
                                         dc</span>
                                 </div>
-                                <div class="flex-shrink-0">
-                                    <router-link to="/visitdc/add"
-                                        class="text-sm font-medium text-white bg-orange-600 hover:bg-orange-300 rounded-lg py-2 px-4 cursor-pointer">Add New</router-link>
-                                </div>
                             </div>
                             <div class="flex flex-col mt-8">
                                 <div class="overflow-x-auto rounded-lg">
@@ -34,6 +30,10 @@
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase">
                                                             Reason
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                                            Progress
                                                         </th>
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase">
@@ -65,6 +65,10 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                            <span :class="(item.success)? 'bg-green-500' :'bg-yellow-500'" class=' px-2 text-white rounded-full'>{{ (item.success)? "Selesai":"Request" }}</span>
+                                                        </td>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
                                                             {{ item.data_center }}
                                                         </td>
                                                         <td
@@ -73,7 +77,8 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span @click="viewdetail(item.UID)" class="bg-green-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-eye"></i></span>
+                                                            <span @click="setdone(item.UID)" class="bg-yellow-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-check"></i></span>
+                                                            <span @click="viewdetail(item.UID, item.id_user)" class="bg-green-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
                                                             <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
                                                         </td>
                                                     </tr>
@@ -94,7 +99,7 @@
 
 <script>
     import axios from 'axios';
-    import baseLy from './baseLayout.vue'
+    import baseLy from './baseLayoutAdmin.vue'
     import JwPagination from 'jw-vue-pagination';
     export default {
         name: "visitDC",
@@ -108,6 +113,7 @@
                 modalVisible : false,
                 url         : import.meta.env.VITE_APIBASE,
                 userId      : this.$storage.getStorageSync("user_id"),
+                token       : this.$storage.getStorageSync("token"),
                 visitdc     : '',
                 loader      : null,
             }
@@ -116,7 +122,8 @@
             this.getdata();
         },
         methods: {
-            viewdetail(datas){
+            viewdetail(datas, id_user){
+                this.$storage.setStorageSync("user_id",id_user,86400000);
                 this.$router.push('/visitdc/report/'+btoa(datas));
             },
             deletedata(id){
@@ -141,10 +148,80 @@
                     }
                 })
             },
-            getdata(){
-                axios.get(this.url + 'visitdc/'+this.userId).then(({data}) => {
-                    this.visitdc = data.datas
+            setdone(id){
+                
+                this.loader = this.$loading.show({container: null,canCancel: false,});
+                let header = {
+                    headers: {
+                    'Authorization': `Bearer ${this.token}` 
+                    }
+                }
+                axios.put(this.url + 'visitdc/update/',{
+                    uid : id,
+                    success : 1
+                },header).then(({data}) => {
+                    this.loader.hide();
+                    if(data.status){
+                        this.$notify({
+                            title: 'Berhasil',
+                            text: data.message,
+                            type: 'success',
+                            duration: 5000, // Durasi notifikasi dalam milidetik
+                        });
+                        this.getdata()
+                    }else{
+                        this.$notify({
+                            title: 'Gagal',
+                            text: data.message,
+                            type: 'error',
+                            duration: 5000, // Durasi notifikasi dalam milidetik
+                        });
+                    }
                 })
+            },
+             getdata(){
+                this.loader = this.$loading.show({container: null,canCancel: false,});
+                let header = {
+                    headers: {
+                    'Authorization': `Bearer ${this.token}` 
+                    }
+                }
+                 axios.get(this.url + 'visitdc/',header).then(({data}) => {
+                    this.loader.hide()
+                    let temp = data.data
+                    this.visitdc = this.filter(temp)
+                }).catch((error) =>{
+                    this.$notify({
+                        title: 'Error',
+                        text: error.response.data.message,
+                        type: 'error',
+                        duration: 5000, // Durasi notifikasi dalam milidetik
+                    });
+                    switch (error.response.status) {
+                        case 401:
+                            this.logout();
+                            console.clear()
+                            break;
+                    
+                        default:
+                            break;
+                    }
+
+                })
+            },
+            logout(){
+                this.$storage.removeStorageSync("token");
+                this.$storage.removeStorageSync("userId");
+                this.$router.push('/admin/login')
+            },
+            filter(temp){
+                let sample= [];
+                    for (const key in temp) {
+                        if (temp[key].success === 0) {
+                            sample.push(temp[key])
+                        }
+                    }
+                return sample;
             },
             teamsconvert(data){
                 let json = JSON.parse(data);

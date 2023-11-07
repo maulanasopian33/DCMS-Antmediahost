@@ -135,7 +135,7 @@ export default {
                 axios.get(this.url +'teams/getbyname/'+this.userId+'/'+encodeURI(this.data.teams)).then(({data}) => {
                     this.dataTeams = data.datas
                     this.attTeam.push({ktp :this.dataTeams[0].ktp , name :this.dataTeams[0].name})
-                    console.log(this.attTeam)
+                    // console.log(this.attTeam)
                     this.loader.hide()
                 })
             })

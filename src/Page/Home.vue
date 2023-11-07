@@ -5,22 +5,22 @@
             <div class="pt-6 px-4">
                <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
                   <div class="2xl:col-span-2">
-                     <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  md:h-3/4">
+                     <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  md:fit">
                      <div class="flex items-center justify-between mb-4">
                         <div class="flex-shrink-0">
-                           <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">{{ sumvisitdc }}</span>
+                           <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">{{ sumvisitdc }}x Visit DC</span>
                            <h3 class="text-base font-normal text-gray-500">Request Visit Data Center</h3>
                         </div>
                      </div>
                      <div id="main-chart">
-                        <apexchart ref="chart" :options="chartOptions" :series="chartSeries"></apexchart>
+                        <apexchart ref="chart" height="300" :options="chartOptions" :series="chartSeries"></apexchart>
                      </div>
                   </div>
                   <div class="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4">
                      <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                         <div class="flex items-center">
                            <div class="flex-shrink-0">
-                              <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">{{ sumvisitdc }}</span>
+                              <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">{{ sumvisitdc }}x</span>
                               <h3 class="text-base font-sm text-gray-500">Visit DC</h3>
                            </div>
                         </div>
@@ -180,22 +180,17 @@ export default {
          myproduct   : null,
          sumproduct  : 0,
          sumvisitdc  : 0,
-         visitdc     : '',
+         visitdc     : [],
          chartOptions: {
-        chart: {
-          type: "area",
-        },
-        xaxis: {
-          categories: [],
-        },
-      },
-      chartSeries: [
-        {
-          name: "Visit DC",
-          data: [],
-        },
-      ],
-         
+               chart: {
+                  type: "area",
+               },
+               xaxis: {
+                  categories: [],
+               },
+            },
+         chartSeries: [],
+
       }
     },
     mounted() {
@@ -209,6 +204,7 @@ export default {
     methods: {
       updateChart(data) {
          this.chartSeries = [{
+            name: "Visit DC",
             data : data
          }]
     },
@@ -222,7 +218,7 @@ export default {
          const countByMonth = {};
          // Iterasi melalui data
          data.forEach(item => {
-            const createdDate = new Date(item.created_at);
+            const createdDate = new Date(item.Date);
             const monthYearKey = `${createdDate.getMonth() + 1}-${createdDate.getFullYear()}`;
             if (!countByMonth[monthYearKey]) {
                countByMonth[monthYearKey] = 0;
@@ -240,7 +236,8 @@ export default {
          axios.get(this.url + 'visitdc/'+this.userId).then(({data}) => {
             this.visitdc = data.datas;
             this.sumvisitdc = data.datas.length;
-            this.updateChart(this.groupdata(this.visitdc))
+            this.updateChart(this.groupdata(data.datas))
+            this.visitdc.splice(5)
          })
          
       },

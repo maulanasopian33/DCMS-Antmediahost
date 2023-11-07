@@ -126,6 +126,7 @@
                                                             <option value="Visit">Visit</option>
                                                             <option value="Replacement">Replacement</option>
                                                             <option value="Installation">Installation</option>
+                                                            
                                                         </select>
                                                 </div>
                                                 <div>
@@ -334,7 +335,7 @@ export default {
     axios.get(this.url + 'getUser/' + this.userId).then(({data}) => {
         this.mydata = data.data
         this.file[0] = { data: this.mydata.ktp, name: this.mydata.name }
-        filektp =this.mydata.ktp
+        this.filektp =this.mydata.ktp
     })
   },
   unmounted() {
@@ -346,7 +347,6 @@ export default {
         this.txtsave = "Processing..";
         try {
             const response = await axios.post(this.url + 'visitdc', this.prepareData()).then(({data})=>{
-                console.log(data)
                 if (data.status) {
                     this.$notify({
                         title: 'Berhasil',
@@ -366,7 +366,6 @@ export default {
             });
             this.success();
         } catch (error) {
-            console.log(error);
         }
     },
     success(){
