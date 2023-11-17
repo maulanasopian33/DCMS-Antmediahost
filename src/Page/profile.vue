@@ -3,8 +3,8 @@
       <baseLy>
         <vue-final-modal v-model="modalKtp">
                 <div class="flex justify-center items-center h-screen">
-                    <div class="bg-white w-fit m-3 md:m-32 h-fit p-10 rounded-md shadow-md max-h-[90%] overflow-y-auto">
-                        <img :src="mydata.ktp" alt="">
+                    <div class="bg-white w-[50%] m-3 md:m-32 h-[70%] p-10 rounded-md shadow-md max-h-[90%] overflow-y-auto">
+                        <img :src="mydata.ktp" alt="" class="h-full ">
                         <div class="inline">
                             <button @click="modalKtp = false" class="bg-blue-600 text-white py-3 px-10 rounded-md ml-2">Close</button>
                         </div>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">KTP</div>
-                                <div class="px-4 py-2" @click="modalKtp = true">View KTP</div>
+                                <div class="px-4 py-2" @click="showingimg(mydata.ktp)">View KTP</div>
                             </div>
                             
                         </div>
@@ -109,7 +109,9 @@
                                             </td>
                                             <td
                                                 class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                X
+                                                <router-link to="/teams">
+                                                    <span class="bg-green-500 p-2 text-white rounded cursor-pointer"><i class="fa fa-pencil"></i></span>
+                                                </router-link>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -177,7 +179,9 @@
                                             </td>
                                             <td
                                                 class="p-4 whitespace-nowrap text-sm font-semibold text-gray-500">
-                                                {{ item.status }}
+                                                    <p :class="item.status === 'Active' ? 'bg-green-500':'bg-red-500'" class="text-white px-4 py-1 rounded-full w-fit">
+                                                        {{ item.status }}
+                                                    </p>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -190,6 +194,11 @@
                </div>
             </div>
          </main>
+         <vue-easy-lightbox
+                :visible="imgvisible"
+                :imgs="imgurl"
+                @hide="function(){imgvisible = false}">
+            </vue-easy-lightbox>
       </baseLy>
     </div>
 </template>
@@ -198,6 +207,7 @@
 import axios from 'axios'
 import baseLy from './baseLayout.vue'
 import { VueFinalModal } from 'vue-final-modal';
+import VueEasyLightbox from 'vue-easy-lightbox'
 export default {
     name : 'HomePage',
     components: {  baseLy,VueFinalModal },
@@ -208,7 +218,9 @@ export default {
          productData : '',
          userId      : this.$storage.getStorageSync("user_id"),
          teams       : '',
-         mydata      : ''
+         mydata      : '',
+         imgvisible  : false,
+         imgurl      : '',
       }
     },
     created() {
@@ -218,6 +230,10 @@ export default {
       this.getUserData();
     },
     methods: {
+        showingimg(data){
+            this.imgurl = data
+            this.imgvisible = true
+        },
       check_session(){
          if(this.$storage.isExpire("user_id")){
             this.$router.push('/login')

@@ -168,6 +168,7 @@
 import axios from 'axios'
 import VueApexCharts from "vue3-apexcharts";
 import baseLy from './baseLayout.vue'
+import {iserror} from '../errorhandler'
 export default {
     name : 'HomePage',
     components: {  baseLy, apexchart: VueApexCharts, },
@@ -233,12 +234,12 @@ export default {
          return datas;
       },
       getdata(){
-         axios.get(this.url + 'visitdc/'+this.userId).then(({data}) => {
+         axios.get(this.url+'visitdc/'+this.userId).then(({data}) => {
             this.visitdc = data.datas;
             this.sumvisitdc = data.datas.length;
             this.updateChart(this.groupdata(data.datas))
             this.visitdc.splice(5)
-         })
+         }).catch((err)=>iserror(err,this))
          
       },
       getproduct(){

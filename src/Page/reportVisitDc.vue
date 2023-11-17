@@ -2,7 +2,7 @@
     <div class="w-full h-full bg-gray-100  flex justify-center" >
         <div class="w-full min-h-screenn md:w-[210mm] md:h-[290mm] md:shadow-md bg-white p-10 md:p-[2cm]" >
             <div id="content">
-                <h1 class="text-center font-bold text-2xl mb-10">REPORT VISIT DC REQUEST</h1>
+                <h1 class="text-center font-bold text-2xl mb-10">REPORT REQUEST VISIT DC</h1>
                 <table class="text-sm md:text-base break-all">
                     <tbody>
                     <tr>
@@ -63,6 +63,31 @@
                     </tbody>
                     </table>
                 </div>
+                <div class="w-full mt-10 overflow-x-auto">
+                    <h3 class="">Data Server</h3>
+                    <table class="w-full border border-blue-800 rounded-md">
+                    <thead>
+                        <tr class="text-md font-semibold tracking-wide text-left text-white bg-blue-800 uppercase border-b border-gray-600">
+                        <td class="text-sm p-2 md:p-4">Merek</td>
+                        <td class="text-sm p-2 md:p-4">Category</td>
+                        <td class="text-sm p-2 md:p-4">SN</td>
+                        <td class="text-sm p-2 md:p-4">Size</td>
+                        <td class="text-sm p-2 md:p-4">PSU</td>
+                        <td class="text-sm p-2 md:p-4">Railkit</td>
+                        </tr>
+                    </thead>
+                    <tbody v-for="(item, index) in serverdetail" :key="index">
+                        <tr class=" font-semibold tracking-wide text-left text-gray-900 bg-blue-100 border-b border-blue-600">
+                        <td class="text-sm p-2 md:p-4">{{ item.merek }}</td>
+                        <td class="text-sm p-2 md:p-4">{{ item.jenis_server }}</td>
+                        <td class="text-sm p-2 md:p-4">{{ item.SN }}</td>
+                        <td class="text-sm p-2 md:p-4">{{ item.ukuran }}</td>
+                        <td class="text-sm p-2 md:p-4">{{ item.psu }}</td>
+                        <td class="text-sm p-2 md:p-4">{{ item.railkit ? "Tersedia" : "Tidak Tersedia" }}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
             </div>
             <div>
                 <h3 class="pt-10">Attachment</h3>
@@ -104,6 +129,7 @@ export default {
             imgurl      : '',
             attTeam     : [],
             loader      : null,
+            serverdetail: null,
         }
     },
     components : {VueEasyLightbox, QrcodeVue},
@@ -128,16 +154,29 @@ export default {
             },
          getdata(uid){
             axios.get(this.url + 'visitdc/report/'+uid).then(({data}) => {
-                console.log(data.datas)
                 this.data = data.datas[0]
                 this.attTeam.push({ktp :this.data.lead_ktp , name :this.data.lead_name})
                 // let dataTeams = JSON.parse(this.data.teams)
                 axios.get(this.url +'teams/getbyname/'+this.userId+'/'+encodeURI(this.data.teams)).then(({data}) => {
                     this.dataTeams = data.datas
-                    this.attTeam.push({ktp :this.dataTeams[0].ktp , name :this.dataTeams[0].name})
+                    if(this.dataTeams.length > 0){
+                        this.attTeam.push({ktp :this.dataTeams[0].ktp , name :this.dataTeams[0].name})
+                    }
                     // console.log(this.attTeam)
                     this.loader.hide()
                 })
+                switch (this.data.reason) {
+                    case "Maintenance":
+                        this.serverdetail = JSON.parse(this.data.server_maintenance)
+                        break;
+                    case "Installation":
+                        axios.get(this.url +'produk/detail/'+this.data.UID).then(({data}) => {
+                            this.serverdetail =data.data
+                        })
+                        break;
+            
+                }
+                
             })
         },
     },

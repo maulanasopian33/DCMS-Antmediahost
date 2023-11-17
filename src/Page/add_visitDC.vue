@@ -2,71 +2,137 @@
     <div>
         <baseLy>
             <main>
+                <vue-final-modal v-model="showModal" >
+                    <div class="flex justify-center items-center h-screen">
+                        <div class="bg-white w-fit md:w-[80%] m-5 md:m-32 h-fit p-10 rounded-md shadow-md max-h-[90%] overflow-y-auto">
+                            <h3 class="text-2xl mb-4">Add Teams</h3>
+                            <div class="mb-6">
+                                <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Search</label>
+                                <input @input="onfilter($event)" type="text" id="company"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                    placeholder="Team Name" required>
+                            </div>
+                            <table class="w-full divide-y divide-gray-200">
+                                <thead class="bg-orange-600">
+                                    <tr>
+                                        <th scope="col"
+                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                            Name
+                                        </th>
+                                        <th scope="col"
+                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                            NIK
+                                        </th>
+                                        <th scope="col"
+                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                            Email
+                                        </th>
+                                        <th scope="col"
+                                            class="p-4 text-left text-xs font-medium text-white uppercase">
 
-    <vue-final-modal v-model="showModal" >
-        <div class="flex justify-center items-center h-screen">
-            <div class="bg-white w-fit md:w-[80%] m-5 md:m-32 h-fit p-10 rounded-md shadow-md max-h-[90%] overflow-y-auto">
-                <h3 class="text-2xl mb-4">Add Teams</h3>
-                <div class="mb-6">
-                    <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Search</label>
-                    <input @input="onfilter($event)" type="text" id="company"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                        placeholder="Team Name" required>
-                </div>
-                <table class="w-full divide-y divide-gray-200">
-                    <thead class="bg-orange-600">
-                        <tr>
-                            <th scope="col"
-                                class="p-4 text-left text-xs font-medium text-white uppercase">
-                                Name
-                            </th>
-                            <th scope="col"
-                                class="p-4 text-left text-xs font-medium text-white uppercase">
-                                NIK
-                            </th>
-                            <th scope="col"
-                                class="p-4 text-left text-xs font-medium text-white uppercase">
-                                Email
-                            </th>
-                            <th scope="col"
-                                class="p-4 text-left text-xs font-medium text-white uppercase">
-
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white" v-for="(item, index) in filterTeams" :key="index">
-                        <tr>
-                            <td class="p-4 text-sm font-normal text-gray-900">
-                                {{ item.name }}
-                            </td>
-                            <td class="p-4 text-sm font-normal text-gray-500">
-                                {{ item.phone }}
-                            </td>
-                            <td class="p-4 text-sm font-semibold text-gray-900">
-                                {{ item.email }}
-                            </td>
-                            <td class="p-4 text-sm font-semibold">
-                                <span class="bg-orange-600 text-white p-2" @click="addtteams(item)">Add</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <span v-if="filterTeams.length <= 0" class="text-sm">Data tidak ditemukan, silahkan tambahkan di menu Teams atau klik di <router-link to="/teams">Sini</router-link></span>
-                </table>
-                <div class="mt-5">
-                  <button @click="showModal = false">Close</button>
-                </div>
-            </div>
-        </div>
-        
-    </vue-final-modal>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white" v-for="(item, index) in filterTeams" :key="index">
+                                    <tr>
+                                        <td class="p-4 text-sm font-normal text-gray-900">
+                                            {{ item.name }}
+                                        </td>
+                                        <td class="p-4 text-sm font-normal text-gray-500">
+                                            {{ item.phone }}
+                                        </td>
+                                        <td class="p-4 text-sm font-semibold text-gray-900">
+                                            {{ item.email }}
+                                        </td>
+                                        <td class="p-4 text-sm font-semibold">
+                                            <span class="bg-orange-600 text-white p-2" @click="addtteams(item)">Add</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <span v-if="filterTeams.length <= 0" class="text-sm">Data tidak ditemukan, silahkan tambahkan di menu Teams atau klik di <router-link to="/teams">Sini</router-link></span>
+                            </table>
+                            <div class="mt-5">
+                            <button @click="showModal = false">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </vue-final-modal>
+                <vue-final-modal v-model="reasonmodal" >
+                    <div class="flex justify-center items-center h-screen">
+                        <div class="bg-white w-[90%] md:w-[50%] m-5 md:m-32 h-fit p-10 rounded-md shadow-md max-h-[90%] overflow-y-auto">
+                            <h3 class="text-2xl mb-4">Add Server</h3>
+                            <div class="mb-2">
+                                <label for="merek" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Merek &
+                                    Type</label>
+                                <input type="text" v-model="tempdata.merek" id="merek"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                    placeholder="merek & type server" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="categoryServer"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Category Server</label>
+                                <select
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                    placeholder="Railkit" required @change="optionDataserver($event,'category')">
+                                    <option value="#" selected>Category Server</option>
+                                    <option value="Branded">Branded</option>
+                                    <option value="Rakitan">Rakitan</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label for="SN" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">SN (Serial
+                                    Number)</label>
+                                <input type="text" v-model="tempdata.sn" id="sn"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                    placeholder="SN (Serial Number)" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="ukuran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Size
+                                    Server</label>
+                                    <select
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                        placeholder="Size Server" required @change="optionDataserver($event,'ukuran')">
+                                        <option value="#" selected>Size Server</option>
+                                        <option value="1U">1U</option>
+                                        <option value="2U">2U</option>
+                                        <option value="4U">4U</option>
+                                        <option value="Slim Case">Slim Case</option>
+                                        <option value="Full Tower">Full Tower</option>
+                                    </select>
+                            </div>
+                            <div class="mb-2">
+                                <label for="psu" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">PSU</label>
+                                <input type="text" v-model="tempdata.psu" id="psu"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                    placeholder="Power Suplay" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="railkit"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Railkit</label>
+                                <select
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                    placeholder="Railkit" required @change="optionDataserver($event,'railkit')">
+                                    <option value="#" selected>Available Railkit</option>
+                                    <option value="Tersedia">Tersedia</option>
+                                    <option value="Tidak Tersedia">Tidak Tersedia</option>
+                                </select>
+                            </div>
+                            <div class="flex mt-5 gap-2">
+                            <button @click="addserver()" class="bg-orange-600 rounded-md text-white py-2 px-4">Save</button>
+                            <button @click="reasonmodal = false">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </vue-final-modal>
                 <div class="pt-6 px-4">
                     <div class="w-full gap-4">
                         <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                             <div class="mb-4 flex items-center justify-between">
                                 <div>
                                     <h3 class="text-xl font-bold text-gray-900 mb-2">Add Visit DC</h3>
-                                    <span class="text-base font-normal text-gray-500">This is a list of history visit
-                                        dc</span>
+                                    <span class="text-base font-normal text-gray-500">This is a list of history visit dc</span>
                                 </div>
                                 <div class="flex-shrink-0">
                                     <button class="hidden md:block bg-orange-600 p-2 text-white rounded-md shadow-md hover:bg-orange-400" ref="show" @click="pip">View Camera</button>
@@ -87,7 +153,7 @@
                                                     <label for="full_name"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full
                                                         Name</label>
-                                                    <input type="text" v-model="mydata.name"
+                                                    <input disabled type="text" v-model="mydata.name"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="Name" required>
                                                 </div>
@@ -121,11 +187,9 @@
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                             placeholder="Data center" required @change="optionData($event,'reason')">
                                                             <option value="#" selected>Reason</option>
-                                                            <option value="Maintenance">Maintenance</option>
-                                                            <option value="Troubleshoot">Troubleshoot</option>
-                                                            <option value="Visit">Visit</option>
-                                                            <option value="Replacement">Replacement</option>
                                                             <option value="Installation">Installation</option>
+                                                            <option value="Maintenance">Maintenance</option>
+                                                            <option value="Unloading">Unloading</option>
                                                             
                                                         </select>
                                                 </div>
@@ -265,25 +329,204 @@
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                      required>
                                             </div>
-                                            <div class="mb-6">
-                                                <label for="confirm_password"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">signature</label>
-                                                    <div class="shadow-md md:m-4 border-2 relative md:w-[500px] w-full h-[500px] p-3">
-                                                        <button @click="undo"
-                                                            class=" ml-auto focus:outline-none hover:bg-gray-300 p-3 rounded-md">
-                                                            <svg class="pointer-events-none fill-current w-4 h-4 ml-auto"
-                                                                xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24">
-                                                                <path class="pointer-events-none"
-                                                                    d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
-                                                            </svg>
-                                                        </button>
-                                                        <div class="absolute">
-                                                            <VueSignaturePad width="400px" height="400px" ref="signaturePad" />
+                                            <div class="flex flex-col-reverse  xl:gap-10 w-full">
+                                                <div class="mb-2">
+                                                    <label for="confirm_password"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">signature</label>
+                                                        <div class="shadow-md md:m-4 border-2 relative md:w-[400px] w-full h-[500px] p-3">
+                                                            <button @click="undo"
+                                                                class=" ml-auto focus:outline-none hover:bg-gray-300 p-3 rounded-md">
+                                                                <svg class="pointer-events-none fill-current w-4 h-4 ml-auto"
+                                                                    xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24">
+                                                                    <path class="pointer-events-none"
+                                                                        d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
+                                                                </svg>
+                                                            </button>
+                                                            <div class="absolute">
+                                                                <VueSignaturePad width="400px" height="400px" ref="signaturePad" />
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                <div class="mb-2 w-full">
+                                                    <div v-if="mydata['reason'] === 'Installation'">
+                                                        <div class="flex justify-between w-full">
+                                                            <label for="instalisasi"
+                                                            class="block text-md font-medium text-gray-900 dark:text-gray-300 mb-5">Installation Data</label>
+                                                            <button class="bg-orange-600 p-2 m-2 rounded-md text-sm text-white" @click="modalreason()">Add Server</button>
+                                                        </div>
+                                                        <table class=" w-full divide-y divide-gray-200 overflow-auto text-[10px] md:text-xs">
+                                                            <thead class="bg-orange-600">
+                                                                <tr>
+                                                                    <th scope="col"
+                                                                        class="p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                        Merek & type
+                                                                    </th>
+                                                                    <th scope="col"
+                                                                        class="p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                        Category
+                                                                    </th>
+                                                                    <th scope="col"
+                                                                        class="p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                        SN
+                                                                    </th>
+                                                                    <th scope="col"
+                                                                        class="p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                        Size
+                                                                    </th>
+                                                                    <th scope="col"
+                                                                        class="p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                        PSU
+                                                                    </th>
+                                                                    <th scope="col"
+                                                                        class="p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                        Railkit
+                                                                    </th>
+                                                                    <th scope="col"
+                                                                        class="p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="bg-white" v-for="(item, index) in serverdata" :key="index">
+                                                                <tr >
+                                                                    <td
+                                                                        class="p-4 whitespace-nowrap font-normal text-gray-900 break-all">
+                                                                        {{ item.merek }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="p-4 whitespace-nowrap font-normal text-gray-900 break-all">
+                                                                        {{ item.category }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="p-4 whitespace-nowrap font-semibold text-gray-900 break-all">
+                                                                        {{ item.sn }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="p-4 whitespace-nowrap font-semibold text-gray-900 break-all">
+                                                                        {{ item.ukuran }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="p-4 whitespace-nowrap font-semibold text-gray-900 break-all">
+                                                                        {{ item.psu }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900 break-all">
+                                                                        {{ item.railkit }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                        <button @click="serverdata.splice(index,1)"
+                                                                            class=" ml-auto focus:outline-none hover:bg-gray-300 p-3 rounded-md">
+                                                                            <svg class="pointer-events-none fill-current w-4 h-4 ml-auto"
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24">
+                                                                                <path class="pointer-events-none"
+                                                                                    d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
+                                                                            </svg>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div v-if="mydata['reason'] === 'Maintenance' || mydata['reason'] === 'Unloading'">
+                                                        <label for="instalisasi"
+                                                        class="block text-md font-medium text-gray-900 dark:text-gray-300 mb-5">{{ mydata['reason'] === 'Maintenance' ? "Maintenance Server" : "Unloading Server"}}</label>
+                                                        <div class="flex mb-2">
+                                                            <div>
+                                                                <select
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                                                    placeholder="Data center" required @change="optionData($event,'servermaintenance')" v-for="(item, index) in myproduct" :key="index">
+                                                                    <option value="#" selected>Choose Server</option>
+                                                                    <option :value="item.id+'/'+item.productName +' — '+ item.domain">{{ item.productName +" — "+ item.domain }}</option>
+                                                                </select>
+                                                            </div>
+                                                            <button class="bg-orange-600 md:p-2 m-1 md:m-2 rounded-md text-[10px] md:text-sm text-white" @click="addmaintenace()">Add Server</button>
+                                                        </div>
+                                                        <div class="overflow-x-auto rounded-lg">
+                                                            <div class="align-middle inline-block min-w-full">
+                                                                <div class="shadow overflow-hidden sm:rounded-lg">
+                                                                    <table class="min-w-full divide-y divide-gray-200 text-[10px] md:text-xs">
+                                                                        <thead class="bg-orange-600">
+                                                                            <tr>
+                                                                                <th scope="col-"
+                                                                                    class="p-2 md:p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                                    Server
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="p-2 md:p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                                    Merek & type
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="p-2 md:p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                                    Category
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="p-2 md:p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                                    SN
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="p-2 md:p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                                    Size
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="p-2 md:p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                                    PSU
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="p-2 md:p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody class="bg-white" v-for="(item, index) in maintenancedata" :key="index">
+                                                                            <tr >
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap font-normal text-gray-900 break-all">
+                                                                                    {{ item.domain }}
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap font-normal text-gray-900 break-all">
+                                                                                    {{ item.merek }}
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap font-normal text-gray-900 break-all">
+                                                                                    {{ item.jenis_server }}
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap font-semibold text-gray-900 break-all">
+                                                                                    {{ item.SN }}
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap font-semibold text-gray-900 break-all">
+                                                                                    {{ item.ukuran }}
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap font-semibold text-gray-900 break-all">
+                                                                                    {{ item.psu }}
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-xs font-semibold text-gray-900">
+                                                                                    <button @click="maintenancedata.splice(index,1)"
+                                                                                        class=" ml-auto focus:outline-none hover:bg-gray-300 p-3 rounded-md">
+                                                                                        <svg class="pointer-events-none fill-current w-4 h-4 ml-auto"
+                                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                                            width="24" height="24"
+                                                                                            viewBox="0 0 24 24">
+                                                                                            <path class="pointer-events-none"
+                                                                                                d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
+                                                                                        </svg>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                            </div></div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                
                                             </div>
-                                            
                                             <button @click="savedata()" :disabled="issave" :class="issave ? 'hover:cursor-not-allowed' : ''" type="submit"
                                                 class=" text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-3 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">
                                                 <div class="flex items-center justify-center">
@@ -313,20 +556,25 @@ export default {
     components: { baseLy ,VueFinalModal },
     data() {
     return {
-      showModal     : false,
-      videoElement  : null,
-      stream        : null,
-      upload        : null,
-      filektp       : '',
-      url           : import.meta.env.VITE_APIBASE,
-      userId        : this.$storage.getStorageSync("user_id"),
-      file          : [],
-      teams         : [],
-      filterTeams   : [],
-      selectedteams : [],
-      mydata        : {},
-      txtsave       : 'Save Data',
-      issave        : false,
+      showModal         : false,
+      reasonmodal       : false,
+      videoElement      : null,
+      stream            : null,
+      upload            : null,
+      filektp           : '',
+      url               : import.meta.env.VITE_APIBASE,
+      userId            : this.$storage.getStorageSync("user_id"),
+      file              : [],
+      teams             : [],
+      filterTeams       : [],
+      selectedteams     : [],
+      mydata            : {},
+      txtsave           : 'Save Data',
+      issave            : false,
+      myproduct         : [],
+      serverdata        : [],
+      tempdata          : {},
+      maintenancedata   : [],
     };
   },
   mounted() {
@@ -337,14 +585,45 @@ export default {
         this.file[0] = { data: this.mydata.ktp, name: this.mydata.name }
         this.filektp =this.mydata.ktp
     })
+    this.getproduct()
   },
   unmounted() {
     this.stream.getVideoTracks()[0].stop();
   },
   methods: {
+    addmaintenace(){
+        axios.get(this.url + 'produk/detail/produkid/'+this.mydata.servermaintenance.split('/')[0]).then(({data}) => {
+            let tempdata = data.data
+            if(tempdata.length > 0){
+                tempdata[0]['domain'] = this.mydata.servermaintenance.split('/')[1]
+                this.maintenancedata.push(tempdata[0])
+            }
+
+        })
+    },
+    modalreason(){
+        this.reasonmodal = true
+    },
+    getproduct(){
+         axios.get(this.url+'product?limit=all&id='+this.userId).then(({data})=>{
+            let datas = data.data;
+            this.myproduct = datas
+         })
+    },
     async savedata(){
         this.issave = true;
         this.txtsave = "Processing..";
+        switch (this.mydata.reason) {
+            case "Installation":
+                this.mydata.server_maintenance = "install"
+                break;
+            case "Maintenance":
+                this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
+                break;
+            case "Unloading":
+                this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
+                break;
+        }
         try {
             const response = await axios.post(this.url + 'visitdc', this.prepareData()).then(({data})=>{
                 if (data.status) {
@@ -366,6 +645,12 @@ export default {
             });
             this.success();
         } catch (error) {
+            this.$notify({
+                        title: 'Gagal',
+                        text: "Silahkan coba lagi",
+                        type: 'error',
+                        duration: 5000, // Durasi notifikasi dalam milidetik
+                    });
         }
     },
     success(){
@@ -397,11 +682,20 @@ export default {
             Date            : this.mydata.date,
             data_center     : this.mydata.data_center,
             reason          : this.mydata.reason,
+            dataserver      : this.serverdata,
+            server_maintenance : this.mydata.server_maintenance,
             teams           : JSON.stringify(teams),
             webcam          : this.$refs.canvas.toDataURL('image/png')
 
         }
         return datas;
+    },
+    addserver(){
+        this.serverdata.push(this.tempdata)
+        this.tempdata = {}
+    },
+    optionDataserver(event,key){
+        this.tempdata[key] = event.target.value;
     },
     optionData(event,key){
         this.mydata[key] = event.target.value;
@@ -452,6 +746,7 @@ export default {
               });
           }
     },
+    
     createCameraElement() {
         const constraints = (window.constraints = {
             audio: false,

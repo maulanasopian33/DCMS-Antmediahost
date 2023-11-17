@@ -72,8 +72,9 @@
                                                             {{ teamsconvert(item.teams) }}
                                                         </td>
                                                         <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span @click="viewdetail(item.UID)" class="bg-green-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-eye"></i></span>
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 text-end">
+                                                            <span v-show="item.reason === 'Installation'" class="bg-green-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-download"></i></span>
+                                                            <span @click="viewdetail(item.UID)" class="bg-yellow-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
                                                             <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
                                                         </td>
                                                     </tr>

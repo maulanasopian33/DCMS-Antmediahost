@@ -60,8 +60,10 @@
                                                             {{ item.regDate }}
                                                         </td>
                                                         <td
-                                                            class="p-4 whitespace-nowrap text-sm font-semibold text-gray-500">
-                                                            {{ item.status }}
+                                                             class="p-4 whitespace-nowrap text-sm font-semibold text-gray-500">
+                                                             <p :class="item.status === 'Active' ? 'bg-green-500':'bg-red-500'" class="text-white px-4 py-1 rounded-full w-fit">
+                                                                 {{ item.status }}
+                                                             </p>
                                                         </td>
                                                     </tr>
                                                 </tbody>
