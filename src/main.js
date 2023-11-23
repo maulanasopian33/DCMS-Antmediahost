@@ -11,6 +11,7 @@ import {LoadingPlugin} from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 import Notifications from '@kyvg/vue3-notification'
 import VueApexCharts from "vue3-apexcharts"
+import "vue-search-select/dist/VueSearchSelect.css"
 const app = createApp(App);
 const vfm = createVfm()
 

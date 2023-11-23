@@ -2,62 +2,6 @@
     <div>
         <baseLy>
             <main>
-                <vue-final-modal v-model="showModal" >
-                    <div class="flex justify-center items-center h-screen">
-                        <div class="bg-white w-fit md:w-[80%] m-5 md:m-32 h-fit p-10 rounded-md shadow-md max-h-[90%] overflow-y-auto">
-                            <h3 class="text-2xl mb-4">Add Teams</h3>
-                            <div class="mb-6">
-                                <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Search</label>
-                                <input @input="onfilter($event)" type="text" id="company"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                    placeholder="Team Name" required>
-                            </div>
-                            <table class="w-full divide-y divide-gray-200">
-                                <thead class="bg-orange-600">
-                                    <tr>
-                                        <th scope="col"
-                                            class="p-4 text-left text-xs font-medium text-white uppercase">
-                                            Name
-                                        </th>
-                                        <th scope="col"
-                                            class="p-4 text-left text-xs font-medium text-white uppercase">
-                                            NIK
-                                        </th>
-                                        <th scope="col"
-                                            class="p-4 text-left text-xs font-medium text-white uppercase">
-                                            Email
-                                        </th>
-                                        <th scope="col"
-                                            class="p-4 text-left text-xs font-medium text-white uppercase">
-
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white" v-for="(item, index) in filterTeams" :key="index">
-                                    <tr>
-                                        <td class="p-4 text-sm font-normal text-gray-900">
-                                            {{ item.name }}
-                                        </td>
-                                        <td class="p-4 text-sm font-normal text-gray-500">
-                                            {{ item.phone }}
-                                        </td>
-                                        <td class="p-4 text-sm font-semibold text-gray-900">
-                                            {{ item.email }}
-                                        </td>
-                                        <td class="p-4 text-sm font-semibold">
-                                            <span class="bg-orange-600 text-white p-2" @click="addtteams(item)">Add</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <span v-if="filterTeams.length <= 0" class="text-sm">Data tidak ditemukan, silahkan tambahkan di menu Teams atau klik di <router-link to="/teams">Sini</router-link></span>
-                            </table>
-                            <div class="mt-5">
-                            <button @click="showModal = false">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </vue-final-modal>
                 <vue-final-modal v-model="reasonmodal" >
                     <div class="flex justify-center items-center h-screen">
                         <div class="bg-white w-[90%] md:w-[50%] m-5 md:m-32 h-fit p-10 rounded-md shadow-md max-h-[90%] overflow-y-auto">
@@ -205,6 +149,21 @@
                                                             <option value="Gedung Cyber">Gedung Cyber</option>
                                                         </select>
                                                 </div>
+                                                <div>
+                                                    <label for="company"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Company
+                                                        Name</label>
+                                                    <input type="text" v-model="mydata.company"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                                        placeholder="Company Name" required>
+                                                </div>
+                                                <div>
+                                                    <label for="date"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date</label>
+                                                    <input type="date" v-model="mydata.date" id="date"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                                        required>
+                                                </div>
                                             </div>
                                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">File KTP</label>
                                             <div class="flex">
@@ -257,10 +216,20 @@
                                                     </article>
                                                 </div>
                                             </div>
-                                            <div class="flex content-center justify-between">
-                                                <label for="data center"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Teams</label>
-                                                <button @click="showmodalA()" class="bg-orange-600 text-sm text-white py-1 px-2 m-2 rounded-sm">Add</button>
+                                            <div>
+                                                <label for="data center" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Teams</label>
+                                                <div class="flex m-2">
+                                                    <div class="w-2/3 md:w-1/2">
+                                                        <model-select
+                                                            ref="select"                                                     
+                                                            :options="teams"
+                                                            style="width: 100%;"
+                                                            v-model="teamitem"
+                                                            placeholder="Choose Teams">
+                                                        </model-select>
+                                                    </div>
+                                                    <router-link to="/teams" class="bg-orange-600 rounded-md text-sm text-white p-2 mx-2">Add New Teams</router-link>
+                                                </div>
                                             </div>
                                             <div class="sm:overflow-y-auto max-w-full">
                                                 <table class="min-w-full divide-y divide-gray-200">
@@ -313,21 +282,6 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            </div>
-                                            <div class="mb-6">
-                                                <label for="company"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Company
-                                                    Name</label>
-                                                <input type="text" v-model="mydata.company"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                    placeholder="Company Name" required>
-                                            </div>
-                                            <div class="mb-6">
-                                                <label for="date"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date</label>
-                                                <input type="date" v-model="mydata.date" id="date"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                     required>
                                             </div>
                                             <div class="flex flex-col-reverse  xl:gap-10 w-full">
                                                 <div class="mb-2">
@@ -435,19 +389,21 @@
                                                         class="block text-md font-medium text-gray-900 dark:text-gray-300 mb-5">{{ mydata['reason'] === 'Maintenance' ? "Maintenance Server" : "Unloading Server"}}</label>
                                                         <div class="flex mb-2">
                                                             <div>
-                                                                <select
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                                    placeholder="Data center" required @change="optionData($event,'servermaintenance')" v-for="(item, index) in myproduct" :key="index">
-                                                                    <option value="#" selected>Choose Server</option>
-                                                                    <option :value="item.id+'/'+item.productName +' — '+ item.domain">{{ item.productName +" — "+ item.domain }}</option>
-                                                                </select>
+                                                                <div class="w-80 md:w-72">
+                                                                    <model-select
+                                                                        ref="select"                                                     
+                                                                        :options="server"
+                                                                        style="width: 100%;"
+                                                                        v-model="serveritem"
+                                                                        placeholder="Choose Server">
+                                                                    </model-select>
+                                                                </div>
                                                             </div>
-                                                            <button class="bg-orange-600 md:p-2 m-1 md:m-2 rounded-md text-[10px] md:text-sm text-white" @click="addmaintenace()">Add Server</button>
                                                         </div>
                                                         <div class="overflow-x-auto rounded-lg">
                                                             <div class="align-middle inline-block min-w-full">
                                                                 <div class="shadow overflow-hidden sm:rounded-lg">
-                                                                    <table class="min-w-full divide-y divide-gray-200 text-[10px] md:text-xs">
+                                                                    <table class="min-w-full divide-y divide-gray-200 text-xs">
                                                                         <thead class="bg-orange-600">
                                                                             <tr>
                                                                                 <th scope="col-"
@@ -551,12 +507,12 @@
     import baseLy from './baseLayout.vue';
     import { v4 as uuidv4 } from 'uuid';
     import { VueFinalModal } from 'vue-final-modal';
+    import { ModelSelect } from "vue-search-select"
 export default {
     name : 'add_visitDc',
-    components: { baseLy ,VueFinalModal },
+    components: { baseLy ,VueFinalModal , ModelSelect},
     data() {
     return {
-      showModal         : false,
       reasonmodal       : false,
       videoElement      : null,
       stream            : null,
@@ -575,6 +531,9 @@ export default {
       serverdata        : [],
       tempdata          : {},
       maintenancedata   : [],
+      server            : [],
+      serveritem        : '',
+      teamitem          : []
     };
   },
   mounted() {
@@ -586,28 +545,42 @@ export default {
         this.filektp =this.mydata.ktp
     })
     this.getproduct()
+    this.getteams()
   },
   unmounted() {
     this.stream.getVideoTracks()[0].stop();
   },
+  watch : {
+    serveritem(newValue, oldValue){
+        this.addmaintenace(newValue)
+    },
+    teamitem(newValue, oldValue){
+       this.addtteams(newValue['value'])
+    }
+  },
   methods: {
-    addmaintenace(){
-        axios.get(this.url + 'produk/detail/produkid/'+this.mydata.servermaintenance.split('/')[0]).then(({data}) => {
+    modalreason(){
+        this.reasonmodal = true
+    },
+    addmaintenace(data){
+        let temp = data
+        axios.get(this.url + 'produk/detail/produkid/'+temp.split('/')[0]).then(({data}) => {
             let tempdata = data.data
             if(tempdata.length > 0){
-                tempdata[0]['domain'] = this.mydata.servermaintenance.split('/')[1]
+                tempdata[0]['domain'] = temp.split('/')[1]
                 this.maintenancedata.push(tempdata[0])
+                this.serveritem = ''
             }
 
         })
     },
-    modalreason(){
-        this.reasonmodal = true
-    },
     getproduct(){
          axios.get(this.url+'product?limit=all&id='+this.userId).then(({data})=>{
             let datas = data.data;
-            this.myproduct = datas
+            for (const key in datas) {
+                this.server.push({ value : datas[key]['id']+'/'+datas[key]['productName'] +' — '+ datas[key]['domain'], text : datas[key]['productName']})
+            }
+            // this.myproduct = datas
          })
     },
     async savedata(){
@@ -693,6 +666,7 @@ export default {
     addserver(){
         this.serverdata.push(this.tempdata)
         this.tempdata = {}
+        this.reasonmodal = false
     },
     optionDataserver(event,key){
         this.tempdata[key] = event.target.value;
@@ -702,22 +676,14 @@ export default {
     },
     addtteams(item){
         this.selectedteams.push(item)
-        this.showModal = false;
-    },
-    showmodalA(){
-        this.showModal = true;
-        this.getteams();
-    },
-    onfilter(event){
-        let data = this.teams.filter(function(val){
-            let result = val.name.toLowerCase();
-            return result.includes(event.target.value)
-        })
-        this.filterTeams = data
     },
     getteams(){
         axios.get(this.url + 'teams/'+this.userId).then(({data}) => {
-            this.teams = data.datas;
+            let temp = data.datas;
+            console.log(temp)
+            for (const key in temp) {
+                this.teams.push({ value : temp[key], text : temp[key]['name']})
+            }
         })
     },
     onFilePicked(){

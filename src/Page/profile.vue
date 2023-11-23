@@ -17,7 +17,7 @@
                <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
                   <div class="2xl:col-span-2">
                      <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  h-fit">
-                     <div class="flex items-center justify-between mb-4">
+                     <div class="flex items-center justify-between mb-4 cursor-default">
                         <div class="flex-shrink-0">
                             <h3 class="text-xl font-bold text-gray-900 mb-2">Detail Profile</h3>
                            <span class="text-base font-normal text-gray-500">This is a list of history visit dc</span>
@@ -29,31 +29,31 @@
                      <div >
                         <div class="grid text-sm">
                             <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold ">Full Name</div>
+                                <div class="px-4 py-2 font-semibold cursor-default">Full Name</div>
                                 <div class="px-4 py-2 break-words">{{ mydata.name }}</div>
                             </div>
                             <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold ">Email</div>
+                                <div class="px-4 py-2 font-semibold cursor-default">Email</div>
                                 <div class="px-4 py-2 break-words">{{ mydata.email }}</div>
                             </div>
                             <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold ">Phone</div>
+                                <div class="px-4 py-2 font-semibold cursor-default">Phone</div>
                                 <div class="px-4 py-2 break-words">{{ mydata.phone }}</div>
                             </div>
                             <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold ">NIK</div>
+                                <div class="px-4 py-2 font-semibold cursor-default">NIK</div>
                                 <div class="px-4 py-2 break-words">{{ mydata.nik }}</div>
                             </div>
                             <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">KTP</div>
-                                <div class="px-4 py-2" @click="showingimg(mydata.ktp)">View KTP</div>
+                                <div class="px-4 py-2 font-semibold cursor-default">KTP</div>
+                                <div class="px-4 py-2 cursor-pointer" @click="showingimg(mydata.ktp)">View KTP</div>
                             </div>
                             
                         </div>
                      </div>
                   </div>
                   </div>
-                  <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 h-ful">
+                  <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 h-full cursor-default">
                      <div class="mb-4 flex items-center justify-between">
                         <div>
                            <h3 class="text-xl font-bold text-gray-900 mb-2">Your Teams</h3>
@@ -122,7 +122,7 @@
                      </div>
                   </div>
                </div>
-               <div class="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
+               <div class=" my-4 cursor-default">
                   <div class="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-80">
                      <div class="mb-4 flex items-center justify-between">
                         <div>
@@ -252,7 +252,6 @@ export default {
         getUserData(){
             axios.get(this.url + 'getUser/' + this.userId).then(({data}) => {
                 this.mydata = data.data
-                console.log(data.data)
             })
         }
     },

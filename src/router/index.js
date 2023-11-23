@@ -12,6 +12,8 @@ import AdminLogin from '../Page/admin/login.vue'
 import dashboardpanel from '../Page/admin/dashboard.vue'
 import requestvisitdc from '../Page/admin/requestvisitdc.vue'
 import usermanage from '../Page/admin/usermanage.vue'
+import surat from '../Page/admin/surat.vue'
+
 import { createRouter, createWebHistory } from 'vue-router';
 const routes = [
   {
@@ -80,6 +82,11 @@ const routes = [
     path: '/admin/usermanage',
     name: 'User Manage Admin',
     component: usermanage,
+  },
+  {
+    path: '/admin/surat',
+    name: 'Manage Surat Admin',
+    component: surat,
   },
 ];
 

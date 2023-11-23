@@ -123,6 +123,7 @@
 import axios from 'axios'
 import baseLy from './baseLayoutAdmin.vue'
 import VueApexCharts from "vue3-apexcharts";
+import docxConverter from "docx-pdf"
 export default {
     name : 'dashboardAdmin',
     components : {baseLy, apexchart: VueApexCharts},
@@ -145,8 +146,17 @@ export default {
     mounted() {
         this.chartOptions.xaxis.categories = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         this.getdata()
+        this.test()
     },
     methods: {
+        test(){
+            docxConverter('./tes.docx','./output.pdf',function(err,result){
+            if(err){
+                console.log(err);
+            }
+            console.log('result'+result);
+            });
+        },
         viewdetail(datas, id_user){
             this.$storage.setStorageSync("user_id",id_user,86400000);
             this.$router.push('/visitdc/report/'+btoa(datas));

@@ -92,9 +92,9 @@
                         </router-link>
                      </li>
                      <li>
-                        <router-link to="/profile" :class="$route.path === '/profile'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base flex items-center p-2 group ">
-                           <i class="fa fa-user"></i>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Profile</span>
+                        <router-link to="/admin/surat" :class="$route.path === '/admin/surat'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg  flex items-center p-2 ">
+                           <i class="fa fa-envelope"></i>
+                           <span class="ml-3 flex-1 whitespace-nowrap">Manage Surat</span>
                         </router-link>
                      </li>
                   </ul>

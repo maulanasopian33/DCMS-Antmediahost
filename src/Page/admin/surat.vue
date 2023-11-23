@@ -7,13 +7,9 @@
                         <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                             <div class="mb-4 flex items-center justify-between">
                                 <div>
-                                    <h3 class="text-xl font-bold text-gray-900 mb-2">Request Visit DC</h3>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">Manage Surat</h3>
                                     <span class="text-base font-normal text-gray-500">This is a list of Request visit
                                         dc</span>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <router-link to="/visitdc/add"
-                                        class="text-sm font-medium text-white bg-orange-600 hover:bg-orange-300 rounded-lg py-2 px-4 cursor-pointer">Add New</router-link>
                                 </div>
                             </div>
                             <div class="flex flex-col mt-8">
@@ -37,11 +33,11 @@
                                                         </th>
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase">
-                                                            Data Center
+                                                            Progress
                                                         </th>
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase">
-                                                            Status
+                                                            Data Center
                                                         </th>
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase">
@@ -69,20 +65,20 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            {{ item.data_center }}
+                                                            <span :class="(item.success)? 'bg-green-500' :'bg-yellow-500'" class=' px-2 text-white rounded-full'>{{ (item.success)? "Selesai":"Request" }}</span>
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span :class="item.status ? 'bg-green-500' : 'bg-yellow-600'" class=" p-2 text-white rounded-md cursor-pointer">{{ item.status ? 'Done' : "Onprogress" }}</span>
+                                                            {{ item.data_center }}
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
                                                             {{ teamsconvert(item.teams) }}
                                                         </td>
                                                         <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 text-end">
-                                                            <span v-show="item.reason === 'Installation'" class="bg-green-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-download"></i></span>
-                                                            <span @click="viewdetail(item.UID)" class="bg-yellow-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                            <span @click="setdone(item.UID)" class="bg-yellow-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-envelope"></i></span>
+                                                            <span @click="viewdetail(item.UID, item.id_user)" class="bg-green-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
                                                             <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
                                                         </td>
                                                     </tr>
@@ -103,10 +99,10 @@
 
 <script>
     import axios from 'axios';
-    import baseLy from './baseLayout.vue'
+    import baseLy from './baseLayoutAdmin.vue'
     import JwPagination from 'jw-vue-pagination';
     export default {
-        name: "visitDC",
+        name: "surat",
         components: {
             baseLy,
             JwPagination,
@@ -117,6 +113,7 @@
                 modalVisible : false,
                 url         : import.meta.env.VITE_APIBASE,
                 userId      : this.$storage.getStorageSync("user_id"),
+                token       : this.$storage.getStorageSync("token"),
                 visitdc     : '',
                 loader      : null,
             }
@@ -125,7 +122,8 @@
             this.getdata();
         },
         methods: {
-            viewdetail(datas){
+            viewdetail(datas, id_user){
+                this.$storage.setStorageSync("user_id",id_user,86400000);
                 this.$router.push('/visitdc/report/'+btoa(datas));
             },
             deletedata(id){
@@ -150,10 +148,80 @@
                     }
                 })
             },
-            getdata(){
-                axios.get(this.url + 'visitdc/'+this.userId).then(({data}) => {
-                    this.visitdc = data.datas
+            setdone(id){
+                
+                this.loader = this.$loading.show({container: null,canCancel: false,});
+                let header = {
+                    headers: {
+                    'Authorization': `Bearer ${this.token}` 
+                    }
+                }
+                axios.put(this.url + 'visitdc/update/',{
+                    uid : id,
+                    success : 1
+                },header).then(({data}) => {
+                    this.loader.hide();
+                    if(data.status){
+                        this.$notify({
+                            title: 'Berhasil',
+                            text: data.message,
+                            type: 'success',
+                            duration: 5000, // Durasi notifikasi dalam milidetik
+                        });
+                        this.getdata()
+                    }else{
+                        this.$notify({
+                            title: 'Gagal',
+                            text: data.message,
+                            type: 'error',
+                            duration: 5000, // Durasi notifikasi dalam milidetik
+                        });
+                    }
                 })
+            },
+             getdata(){
+                this.loader = this.$loading.show({container: null,canCancel: false,});
+                let header = {
+                    headers: {
+                    'Authorization': `Bearer ${this.token}` 
+                    }
+                }
+                 axios.get(this.url + 'visitdc/',header).then(({data}) => {
+                    this.loader.hide()
+                    let temp = data.data
+                    this.visitdc = this.filter(temp)
+                }).catch((error) =>{
+                    this.$notify({
+                        title: 'Error',
+                        text: error.response.data.message,
+                        type: 'error',
+                        duration: 5000, // Durasi notifikasi dalam milidetik
+                    });
+                    switch (error.response.status) {
+                        case 401:
+                            this.logout();
+                            console.clear()
+                            break;
+                    
+                        default:
+                            break;
+                    }
+
+                })
+            },
+            logout(){
+                this.$storage.removeStorageSync("token");
+                this.$storage.removeStorageSync("userId");
+                this.$router.push('/admin/login')
+            },
+            filter(temp){
+                let sample= [];
+                    for (const key in temp) {
+                        if (temp[key].success === 1 && temp[key].reason === 'Installation' || temp[key].reason === 'Unloading' ) {
+                            sample.push(temp[key])
+                        }
+                    }
+                return sample;
             },
             teamsconvert(data){
                 let json = JSON.parse(data);

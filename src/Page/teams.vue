@@ -1,6 +1,6 @@
 <template>
     <div>
-        <baseLy>
+        <baseLy class="cursor-default">
             <vue-final-modal v-model="showModal">
                 <div class="flex justify-center items-center h-screen">
                     <div class="bg-white w-fit m-5 md:m-32 h-fit p-10 rounded-md shadow-md max-h-[90%] overflow-y-auto">
