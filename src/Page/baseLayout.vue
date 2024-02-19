@@ -75,11 +75,11 @@
                         </router-link>
                      </li>
                      <li>
-                        <router-link to="/visitdc" :class="$route.path === '/visitdc' || $route.path === '/visitdc/add' ? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg flex items-center p-2">
+                        <router-link to="/request" :class="$route.path === '/request' || $route.path === '/request/add' ? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg flex items-center p-2">
                            <svg class="w-6 h-6 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                            </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Visit DC</span>
+                           <span class="ml-3 flex-1 whitespace-nowrap">Request DC</span>
                         </router-link>
                      </li>
                      <li>
@@ -171,7 +171,6 @@ export default {
             this.slidebar = !this.slidebar;
         },
         logout(){
-         console.log('sda')
          this.$storage.removeStorageSync("username")
          this.$storage.removeStorageSync("user_id");
          this.$storage.removeStorageSync("token");

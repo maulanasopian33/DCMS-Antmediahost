@@ -36,14 +36,14 @@
                   </svg>
                </button>
                <div class="hidden lg:flex items-center">
-                  <span class="text-base font-normal text-gray-500 mr-5">Admin Panel</span>
+                  <span class="text-base font-normal text-gray-500 mr-5">{{ lang.dashboard_name }}</span>
                </div>
                <a href="#" class="hidden sm:inline-flex ml-5 text-black font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
                   <i class="fa fa-user pr-3"></i>
                   {{ mydata.fullname }}
                </a>
                <span @click="logout()" class="hidden cursor-pointer sm:inline-flex ml-5 text-black font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-                  Logout
+                  {{ lang.logout }}
                </span>
             </div>
          </div>
@@ -74,7 +74,7 @@
                               <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                               <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                            </svg>
-                           <span class="ml-3">Dashboard</span>
+                           <span class="ml-3">{{ lang.menu_dashboard }}</span>
                         </router-link>
                      </li>
                      <li>
@@ -82,19 +82,19 @@
                            <svg class="w-6 h-6 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                            </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Request Visit DC</span>
+                           <span class="ml-3 flex-1 whitespace-nowrap">{{ lang.menu_visitDC }}</span>
+                        </router-link>
+                     </li>
+                     <li>
+                        <router-link to="/admin/surat" :class="($route.path).includes('/admin/surat')? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg  flex items-center p-2 ">
+                           <i class="fa fa-envelope"></i>
+                           <span class="ml-3 flex-1 whitespace-nowrap">{{ lang.menu_surat }}</span>
                         </router-link>
                      </li>
                      <li>
                         <router-link to="/admin/usermanage" :class="$route.path === '/admin/usermanage'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg  flex items-center p-2 ">
                            <i class="fa fa-users"></i>
-                           <span class="ml-3 flex-1 whitespace-nowrap">User Manage</span>
-                        </router-link>
-                     </li>
-                     <li>
-                        <router-link to="/admin/surat" :class="$route.path === '/admin/surat'? 'bg-orange-600 text-white ' : 'text-gray-900 hover:text-gray-900 hover:bg-gray-100 group'" class="text-base font-normal rounded-lg  flex items-center p-2 ">
-                           <i class="fa fa-envelope"></i>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Manage Surat</span>
+                           <span class="ml-3 flex-1 whitespace-nowrap">{{ lang.menu_user }}</span>
                         </router-link>
                      </li>
                   </ul>
@@ -154,10 +154,12 @@ export default {
             id          : this.$storage.getStorageSync("userId"),
             slidebar    : false,
             url         : import.meta.env.VITE_APIBASE,
-            mydata      : []
+            mydata      : [],
+            lang        : {}
         }
     },
    created() {
+      this.fetchLanguageData()
       this.ceklogin();
       this.getdata();
    },

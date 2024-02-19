@@ -49,40 +49,45 @@
                                                         </th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="bg-white" v-for="(item, index) in visitdc" :key="index">
-                                                    <tr>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            {{ item.Date }}
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            {{ item.lead_name }}
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            {{ item.reason }}
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span :class="(item.success)? 'bg-green-500' :'bg-yellow-500'" class=' px-2 text-white rounded-full'>{{ (item.success)? "Selesai":"Request" }}</span>
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            {{ item.data_center }}
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            {{ teamsconvert(item.teams) }}
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span @click="setdone(item.UID)" class="bg-yellow-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-envelope"></i></span>
-                                                            <span @click="viewdetail(item.UID, item.id_user)" class="bg-green-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
-                                                            <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
-                                                        </td>
-                                                    </tr>
-
+                                                <tbody class="bg-white">
+                                                        <tr v-for="(item, index) in visitdc" :key="index" class="hover:bg-slate-100 cursor-pointer">
+                                                            <td
+                                                                class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900 hover:underline">
+                                                                <router-link :to="'/admin/surat/'+ encode(item.UID)">
+                                                                    {{ item.Date }}
+                                                                </router-link>
+                                                            </td>
+                                                            <td
+                                                                class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                <router-link :to="'/admin/surat/'+ encode(item.UID)">
+                                                                    {{ item.lead_name }}
+                                                                </router-link>
+                                                            </td>
+                                                            <td
+                                                                class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                <router-link :to="'/admin/surat/'+ encode(item.UID)">
+                                                                    {{ item.reason }}
+                                                                </router-link>
+                                                            </td>
+                                                            <td
+                                                                class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                <span :class="(item.success)? 'bg-green-500' :'bg-yellow-500'" class=' px-2 text-white rounded-full'>{{ (item.success)? "Selesai":"Request" }}</span>
+                                                            </td>
+                                                            <td
+                                                                class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                {{ item.data_center }}
+                                                            </td>
+                                                            <td
+                                                                class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                {{ teamsconvert(item.teams) }}
+                                                            </td>
+                                                            <td
+                                                                class="p-4 whitespace-nowrap text-end text-sm font-normal text-gray-900">
+                                                                <a v-show="item.file_surat" :href="item.file_surat" target="_blank" class="bg-yellow-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-file-pdf"></i></a>
+                                                                <span @click="viewdetail(item.UID, item.id_user)" class="bg-green-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
+                                                                <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
+                                                            </td>
+                                                        </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -126,6 +131,10 @@
                 this.$storage.setStorageSync("user_id",id_user,86400000);
                 this.$router.push('/visitdc/report/'+btoa(datas));
             },
+            encode(data){
+                let encode = btoa(data);
+                return encode;
+            },
             deletedata(id){
                 this.loader = this.$loading.show({container: null,canCancel: false,});
                 axios.post(this.url + 'visitdc/delete/'+id).then(({data}) => {
@@ -148,37 +157,7 @@
                     }
                 })
             },
-            setdone(id){
-                
-                this.loader = this.$loading.show({container: null,canCancel: false,});
-                let header = {
-                    headers: {
-                    'Authorization': `Bearer ${this.token}` 
-                    }
-                }
-                axios.put(this.url + 'visitdc/update/',{
-                    uid : id,
-                    success : 1
-                },header).then(({data}) => {
-                    this.loader.hide();
-                    if(data.status){
-                        this.$notify({
-                            title: 'Berhasil',
-                            text: data.message,
-                            type: 'success',
-                            duration: 5000, // Durasi notifikasi dalam milidetik
-                        });
-                        this.getdata()
-                    }else{
-                        this.$notify({
-                            title: 'Gagal',
-                            text: data.message,
-                            type: 'error',
-                            duration: 5000, // Durasi notifikasi dalam milidetik
-                        });
-                    }
-                })
-            },
+            
              getdata(){
                 this.loader = this.$loading.show({container: null,canCancel: false,});
                 let header = {

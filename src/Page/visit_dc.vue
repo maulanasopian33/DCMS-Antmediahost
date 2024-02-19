@@ -7,12 +7,12 @@
                         <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                             <div class="mb-4 flex items-center justify-between">
                                 <div>
-                                    <h3 class="text-xl font-bold text-gray-900 mb-2">Request Visit DC</h3>
-                                    <span class="text-base font-normal text-gray-500">This is a list of Request visit
-                                        dc</span>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">Request DC</h3>
+                                    <span class="text-base font-normal text-gray-500">This is a list of Request 
+                                        DC</span>
                                 </div>
                                 <div class="flex-shrink-0">
-                                    <router-link to="/visitdc/add"
+                                    <router-link to="/request/add"
                                         class="text-sm font-medium text-white bg-orange-600 hover:bg-orange-300 rounded-lg py-2 px-4 cursor-pointer">Add New</router-link>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span :class="item.status ? 'bg-green-500' : 'bg-yellow-600'" class=" p-2 text-white rounded-md cursor-pointer">{{ item.status ? 'Done' : "Onprogress" }}</span>
+                                                            <span :class="item.success ? 'bg-green-500' : 'bg-yellow-600'" class=" p-2 text-white rounded-md cursor-pointer">{{ item.success ? 'Done' : "Onprogress" }}</span>
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
@@ -81,9 +81,9 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 text-end">
-                                                            <span v-show="item.reason === 'Installation'" class="bg-green-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-download"></i></span>
+                                                            <a :href="item.file_surat" target="_blank" v-show="item.reason === 'Installation' && item.file_surat !== null" class="bg-green-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-download"></i></a>
                                                             <span @click="viewdetail(item.UID)" class="bg-yellow-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
-                                                            <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
+                                                            <span v-show="!item.success" @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
                                                         </td>
                                                     </tr>
 

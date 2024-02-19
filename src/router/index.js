@@ -13,6 +13,7 @@ import dashboardpanel from '../Page/admin/dashboard.vue'
 import requestvisitdc from '../Page/admin/requestvisitdc.vue'
 import usermanage from '../Page/admin/usermanage.vue'
 import surat from '../Page/admin/surat.vue'
+import confirm from '../Page/admin/confirmsurat.vue'
 
 import { createRouter, createWebHistory } from 'vue-router';
 const routes = [
@@ -32,7 +33,7 @@ const routes = [
     component: Login,
   },
   {
-    path: '/visitdc',
+    path: '/request',
     name: 'Visit DC',
     component: visitDC,
   },
@@ -42,7 +43,7 @@ const routes = [
     component: ReportVisit,
   },
   {
-    path: '/visitdc/add',
+    path: '/request/add',
     name: 'add Visit DC',
     component: AddVisitDc,
   },
@@ -87,6 +88,11 @@ const routes = [
     path: '/admin/surat',
     name: 'Manage Surat Admin',
     component: surat,
+  },
+  {
+    path: '/admin/surat/:id',
+    name: 'confirm Surat Admin',
+    component: confirm,
   },
 ];
 

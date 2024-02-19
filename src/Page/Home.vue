@@ -8,8 +8,8 @@
                      <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  md:fit">
                      <div class="flex items-center justify-between mb-4">
                         <div class="flex-shrink-0">
-                           <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">{{ sumvisitdc }}x Visit DC</span>
-                           <h3 class="text-base font-normal text-gray-500">Request Visit Data Center</h3>
+                           <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">{{ sumvisitdc }}x Request DC</span>
+                           <h3 class="text-base font-normal text-gray-500">Request Data Center</h3>
                         </div>
                      </div>
                      <div id="main-chart">
@@ -21,7 +21,7 @@
                         <div class="flex items-center">
                            <div class="flex-shrink-0">
                               <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">{{ sumvisitdc }}x</span>
-                              <h3 class="text-base font-sm text-gray-500">Visit DC</h3>
+                              <h3 class="text-base font-sm text-gray-500">Request DC</h3>
                            </div>
                         </div>
                      </div>
@@ -46,8 +46,8 @@
                   <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                      <div class="mb-4 flex items-center justify-between">
                         <div>
-                           <h3 class="text-xl font-bold text-gray-900 mb-2">History Visit DC</h3>
-                           <span class="text-base font-normal text-gray-500">This is a list of history visit dc</span>
+                           <h3 class="text-xl font-bold text-gray-900 mb-2">History Request DC</h3>
+                           <span class="text-base font-normal text-gray-500">This is a list of history request dc</span>
                         </div>
                         <div class="flex-shrink-0">
                            <a href="#" class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2">View all</a>

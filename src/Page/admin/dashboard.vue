@@ -9,8 +9,8 @@
                            <div class="flex items-center justify-between mb-4">
                                <div class="flex-shrink-0">
                                    <span
-                                       class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">Summary</span>
-                                   <h3 class="text-base font-normal text-gray-500">Request Visit Data Center</h3>
+                                       class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">{{ lang.visitdc_chartTitle }}</span>
+                                   <h3 class="text-base font-normal text-gray-500">{{ lang.visitdc_chartSubtitle }}</h3>
                                </div>
                            </div>
                            <div id="main-chart">
@@ -25,8 +25,8 @@
                   <div class="bg-white shadow rounded-lg mb-4 p-4 sm:p-6">
                      <div class="mb-4 flex items-center justify-between">
                         <div>
-                           <h3 class="text-xl font-bold text-gray-900 mb-2">Request Visit Dc Summary</h3>
-                           <span class="text-base font-normal text-gray-500">This is a list of Request Visit Dc</span>
+                           <h3 class="text-xl font-bold text-gray-900 mb-2">{{ lang.visitdc_summaryTitle }}</h3>
+                           <span class="text-base font-normal text-gray-500">{{ lang.visitdc_summarySubtitle }}</span>
                         </div>
                      </div>
                      <div class="flex flex-col mt-8">
@@ -123,7 +123,6 @@
 import axios from 'axios'
 import baseLy from './baseLayoutAdmin.vue'
 import VueApexCharts from "vue3-apexcharts";
-import docxConverter from "docx-pdf"
 export default {
     name : 'dashboardAdmin',
     components : {baseLy, apexchart: VueApexCharts},
@@ -132,6 +131,7 @@ export default {
             visitdc : [],
             url         : import.meta.env.VITE_APIBASE,
             token       : this.$storage.getStorageSync("token"),
+            lang        : {},
             chartOptions: {
                chart: {
                   type: "area",
@@ -144,19 +144,11 @@ export default {
         }
     },
     mounted() {
+        this.fetchLanguageData()
         this.chartOptions.xaxis.categories = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         this.getdata()
-        this.test()
     },
     methods: {
-        test(){
-            docxConverter('./tes.docx','./output.pdf',function(err,result){
-            if(err){
-                console.log(err);
-            }
-            console.log('result'+result);
-            });
-        },
         viewdetail(datas, id_user){
             this.$storage.setStorageSync("user_id",id_user,86400000);
             this.$router.push('/visitdc/report/'+btoa(datas));

@@ -1,0 +1,13 @@
+{
+    "dashboard_name": "Admin Panel",
+    "logout": "Logout",
+    "menu_dashboard": "Dashboard",
+    "menu_visitDC" : "Request DC",
+    "menu_user" : "Manage User",
+    "menu_surat" : "Manage Surat",
+    "visitdc_summaryTitle" : "Request Dc Summary",
+    "visitdc_summarySubtitle" : "This is a list of Request DC",
+    "visitdc_chartTitle" : "Summary",
+    "visitdc_chartSubtitle" : "Request Data Center"
+
+}

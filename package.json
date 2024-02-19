@@ -12,8 +12,6 @@
     "@kyvg/vue3-notification": "^3.0.2",
     "apexcharts": "^3.44.0",
     "axios": "^1.5.0",
-    "docx-pdf": "^0.0.1",
-    "html2pdf.js": "^0.10.1",
     "jw-vue-pagination": "^1.0.3",
     "qrcode.vue": "^3.4.1",
     "uuid": "^9.0.1",

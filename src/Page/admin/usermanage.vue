@@ -25,6 +25,14 @@
                             <span v-show="error.hasOwnProperty('fullname')" class="bg-red-400/30 text-[10px] w-full text-red-900 border-red-600 rounded-md px-2 py-1 border-l-2 mt-2">{{ error.fullname }}</span>
                         </div>
                         <div class="mb-3">
+                            <label for="email"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">email</label>
+                            <input type="text" id="email" v-model="users.email"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                placeholder="type Email" required>
+                            <span v-show="error.hasOwnProperty('email')" class="bg-red-400/30 text-[10px] w-full text-red-900 border-red-600 rounded-md px-2 py-1 border-l-2 mt-2">{{ error.email }}</span>
+                        </div>
+                        <div class="mb-3">
                             <label for="password"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">password</label>
                             <input type="password" id="password" v-model="users.password"
@@ -106,6 +114,10 @@
                                                         </th>
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase">
+                                                            email
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="p-4 text-left text-xs font-medium text-white uppercase">
                                                             Fullname
                                                         </th>
                                                         <th scope="col"
@@ -123,6 +135,10 @@
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
                                                             {{ item.username }}
+                                                        </td>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                            {{ item.email }}
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
@@ -178,6 +194,7 @@
                 let data = {
                     "fullname" : this.users.fullname,
                     "username" : this.users.username,
+                    "email"    : this.users.email,
                     "password" : this.users.password,
                 }
                 let header = {

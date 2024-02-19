@@ -295,7 +295,6 @@
             deletedata(id){
                 this.loader = this.$loading.show({container: null,canCancel: false,});
                 axios.post(this.url + 'teams/delete/'+id).then(({data}) => {
-                    console.log(data)
                     this.loader.hide();
                     if(data.status){
                         this.$notify({

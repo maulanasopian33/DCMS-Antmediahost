@@ -7,6 +7,18 @@
                         <div class="bg-white w-[90%] md:w-[50%] m-5 md:m-32 h-fit p-10 rounded-md shadow-md max-h-[90%] overflow-y-auto">
                             <h3 class="text-2xl mb-4">Add Server</h3>
                             <div class="mb-2">
+                                <label for="merek" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Choose Product</label>
+                                <div class="w-full">
+                                    <model-select
+                                        ref="select"                                                     
+                                        :options="server"
+                                        style="width: 100%;"
+                                        v-model="tempdata.productid"
+                                        placeholder="Choose Product">
+                                    </model-select>
+                                </div>
+                            </div>
+                            <div class="mb-2">
                                 <label for="merek" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Merek &
                                     Type</label>
                                 <input type="text" v-model="tempdata.merek" id="merek"
@@ -75,23 +87,14 @@
                         <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                             <div class="mb-4 flex items-center justify-between">
                                 <div>
-                                    <h3 class="text-xl font-bold text-gray-900 mb-2">Add Visit DC</h3>
-                                    <span class="text-base font-normal text-gray-500">This is a list of history visit dc</span>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button class="hidden md:block bg-orange-600 p-2 text-white rounded-md shadow-md hover:bg-orange-400" ref="show" @click="pip">View Camera</button>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">Add Request DC</h3>
+                                    <!-- <span class="text-base font-normal text-gray-500">This is a list of history Request dc</span> -->
                                 </div>
                             </div>
                             <div class="flex flex-col mt-8">
                                 <div class="overflow-x-auto rounded-lg">
                                     <div class="align-middle inline-block w-full">
                                         <div class="shadow overflow-hidden sm:rounded-lg">
-                                            <!-- webcam -->
-                                                <div class="mb-6">
-                                                    <video class="md:hidden rounded-md" ref="camera" :width="450" :height="337.5" autoplay poster="/placeholder.jpg"></video>
-                                                    <canvas class="hidden" id="photoTaken" ref="canvas" :width="450" :height="337.5"></canvas>
-                                                </div>
-                                            <!-- webcam end -->
                                             <div class="grid gap-6 mb-6 lg:grid-cols-2">
                                                 <div>
                                                     <label for="full_name"
@@ -153,7 +156,7 @@
                                                     <label for="company"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Company
                                                         Name</label>
-                                                    <input type="text" v-model="mydata.company"
+                                                    <input name="company" type="text" v-model="mydata.company"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="Company Name" required>
                                                 </div>
@@ -306,12 +309,16 @@
                                                     <div v-if="mydata['reason'] === 'Installation'">
                                                         <div class="flex justify-between w-full">
                                                             <label for="instalisasi"
-                                                            class="block text-md font-medium text-gray-900 dark:text-gray-300 mb-5">Installation Data</label>
+                                                                class="block text-md font-medium text-gray-900 dark:text-gray-300 my-5">Installation Data</label>
                                                             <button class="bg-orange-600 p-2 m-2 rounded-md text-sm text-white" @click="modalreason()">Add Server</button>
                                                         </div>
                                                         <table class=" w-full divide-y divide-gray-200 overflow-auto text-[10px] md:text-xs">
                                                             <thead class="bg-orange-600">
                                                                 <tr>
+                                                                    <th scope="col"
+                                                                        class="p-4 text-left font-medium text-white uppercase tracking-wider">
+                                                                        Server
+                                                                    </th>
                                                                     <th scope="col"
                                                                         class="p-4 text-left font-medium text-white uppercase tracking-wider">
                                                                         Merek & type
@@ -345,6 +352,10 @@
                                                                 <tr >
                                                                     <td
                                                                         class="p-4 whitespace-nowrap font-normal text-gray-900 break-all">
+                                                                        {{ item.productid.split('/')[1] }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="p-4 whitespace-nowrap font-normal text-gray-900 break-all">
                                                                         {{ item.merek }}
                                                                     </td>
                                                                     <td
@@ -369,7 +380,7 @@
                                                                     </td>
                                                                     <td
                                                                         class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                                                        <button @click="serverdata.splice(index,1)"
+                                                                        <button @click="deleteserver(index, 'install')"
                                                                             class=" ml-auto focus:outline-none hover:bg-gray-300 p-3 rounded-md">
                                                                             <svg class="pointer-events-none fill-current w-4 h-4 ml-auto"
                                                                                 xmlns="http://www.w3.org/2000/svg"
@@ -463,7 +474,7 @@
                                                                                 </td>
                                                                                 <td
                                                                                     class="p-4 whitespace-nowrap text-xs font-semibold text-gray-900">
-                                                                                    <button @click="maintenancedata.splice(index,1)"
+                                                                                    <button @click="deleteserver(index, 'maintenance')"
                                                                                         class=" ml-auto focus:outline-none hover:bg-gray-300 p-3 rounded-md">
                                                                                         <svg class="pointer-events-none fill-current w-4 h-4 ml-auto"
                                                                                             xmlns="http://www.w3.org/2000/svg"
@@ -514,7 +525,6 @@ export default {
     data() {
     return {
       reasonmodal       : false,
-      videoElement      : null,
       stream            : null,
       upload            : null,
       filektp           : '',
@@ -533,12 +543,11 @@ export default {
       maintenancedata   : [],
       server            : [],
       serveritem        : '',
-      teamitem          : []
+      serverId          : [],
+      teamitem          : [],
     };
   },
   mounted() {
-    this.videoElement = this.$refs.camera;
-    this.createCameraElement();
     axios.get(this.url + 'getUser/' + this.userId).then(({data}) => {
         this.mydata = data.data
         this.file[0] = { data: this.mydata.ktp, name: this.mydata.name }
@@ -547,15 +556,13 @@ export default {
     this.getproduct()
     this.getteams()
   },
-  unmounted() {
-    this.stream.getVideoTracks()[0].stop();
-  },
   watch : {
     serveritem(newValue, oldValue){
         this.addmaintenace(newValue)
     },
     teamitem(newValue, oldValue){
        this.addtteams(newValue['value'])
+    //    this.teamitem = []
     }
   },
   methods: {
@@ -569,6 +576,7 @@ export default {
             if(tempdata.length > 0){
                 tempdata[0]['domain'] = temp.split('/')[1]
                 this.maintenancedata.push(tempdata[0])
+                this.serverId.push(temp.split('/')[0])
                 this.serveritem = ''
             }
 
@@ -578,7 +586,7 @@ export default {
          axios.get(this.url+'product?limit=all&id='+this.userId).then(({data})=>{
             let datas = data.data;
             for (const key in datas) {
-                this.server.push({ value : datas[key]['id']+'/'+datas[key]['productName'] +' — '+ datas[key]['domain'], text : datas[key]['productName']})
+                this.server.push({ value : datas[key]['id']+'/'+datas[key]['productName'] +' — '+ datas[key]['domain'], text : datas[key]['productName'] + ' — '+ datas[key]['domain']})
             }
             // this.myproduct = datas
          })
@@ -606,7 +614,7 @@ export default {
                         type: 'success',
                         duration: 5000, // Durasi notifikasi dalam milidetik
                     });
-                    this.$router.push('/visitdc');
+                    this.$router.push('/request');
                 }else{
                     this.$notify({
                         title: 'Gagal',
@@ -638,9 +646,7 @@ export default {
         this.selectedteams.forEach(element => {
             teams.push(element.name)
         });
-        // get webcam image
-        const context = this.$refs.canvas.getContext('2d');
-        context.drawImage(this.$refs.camera, 0, 0, 450, 337.5);
+
 
         let datas = {
             UID             : uuidv4(),
@@ -656,17 +662,33 @@ export default {
             data_center     : this.mydata.data_center,
             reason          : this.mydata.reason,
             dataserver      : this.serverdata,
+            serverId        : this.serverId.toString(),
             server_maintenance : this.mydata.server_maintenance,
             teams           : JSON.stringify(teams),
-            webcam          : this.$refs.canvas.toDataURL('image/png')
+            file_surat      : ''
 
         }
         return datas;
     },
     addserver(){
         this.serverdata.push(this.tempdata)
+        this.serverId.push(this.tempdata['productid'].split('/')[0])
         this.tempdata = {}
         this.reasonmodal = false
+    },
+    deleteserver(pos, type){
+        switch (type) {
+            case "install":
+                this.serverdata.splice(pos,1)
+                break;
+            case "maintenance":
+                this.maintenancedata.splice(pos,1)
+                break;
+        
+            default:
+                break;
+        }
+        this.serverId.splice(pos,1)
     },
     optionDataserver(event,key){
         this.tempdata[key] = event.target.value;
@@ -680,7 +702,6 @@ export default {
     getteams(){
         axios.get(this.url + 'teams/'+this.userId).then(({data}) => {
             let temp = data.datas;
-            console.log(temp)
             for (const key in temp) {
                 this.teams.push({ value : temp[key], text : temp[key]['name']})
             }
@@ -698,37 +719,6 @@ export default {
     },
     undo() {
       this.$refs.signaturePad.undoSignature();
-    },
-    pip(){
-        if (document.pictureInPictureElement) {
-            document.exitPictureInPicture()
-              .catch(error => {
-                console.error('Failed to exit PiP mode:', error);
-              });
-          } else {
-            this.videoElement.requestPictureInPicture()
-              .catch(error => {
-                console.error('Failed to enter PiP mode:', error);
-              });
-          }
-    },
-    
-    createCameraElement() {
-        const constraints = (window.constraints = {
-            audio: false,
-            video: true
-        });
-
-
-        navigator.mediaDevices
-                .getUserMedia(constraints)
-                .then(stream => {
-                    this.stream = stream;
-                    this.$refs.camera.srcObject = stream;
-                })
-                .catch(error => {
-                    alert("May the browser didn't support or there is some errors.");
-                });
     },
     
   },

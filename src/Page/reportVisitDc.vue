@@ -1,8 +1,9 @@
 <template>
     <div class="w-full h-full bg-gray-100  flex justify-center" >
-        <div class="w-full min-h-screenn md:w-[210mm] md:h-[290mm] md:shadow-md bg-white p-10 md:p-[2cm]" >
+        <!-- <img src="../assets/bg.png" alt=""> -->
+        <div class="w-full min-h-screen md:w-[210mm] md:h-[290mm] md:shadow-md bg-[url('/bg.png')] bg-cover bg-white p-5 py-10 pb-14 md:px-[2cm]" >
             <div id="content">
-                <h1 class="text-center font-bold text-2xl mb-10">REPORT REQUEST VISIT DC</h1>
+                <h1 class="text-center font-bold text-2xl my-10">REPORT REQUEST DC</h1>
                 <table class="text-sm md:text-base break-all">
                     <tbody>
                     <tr>
@@ -116,7 +117,6 @@
 import axios from "axios";
 import VueEasyLightbox from 'vue-easy-lightbox'
 import QrcodeVue from 'qrcode.vue'
-import html2pdf from "html2pdf.js";
 export default {
     name : "reportVisitDc",
     data() {
@@ -129,7 +129,7 @@ export default {
             imgurl      : '',
             attTeam     : [],
             loader      : null,
-            serverdetail: null,
+            serverdetail: [],
         }
     },
     components : {VueEasyLightbox, QrcodeVue},
@@ -146,18 +146,11 @@ export default {
             this.imgurl = data
             this.imgvisible = true
         },
-        exportToPDF() {
-            html2pdf(document.getElementById("content"), {
-                        margin: 10,
-                        filename: "i-was-html.pdf",
-                    });
-            },
          getdata(uid){
             axios.get(this.url + 'visitdc/report/'+uid).then(({data}) => {
-                this.data = data.datas[0]
-                console.log(this.data)
+                this.data = data.data[0]
                 this.attTeam.push({ktp :this.data.lead_ktp , name :this.data.lead_name})
-                // let dataTeams = JSON.parse(this.data.teams)
+                let dataTeams = JSON.parse(this.data.teams)
                 axios.get(this.url +'teams/getbyname/'+this.data.id_user+'/'+encodeURI(this.data.teams)).then(({data}) => {
                     this.dataTeams = data.datas
                     if(this.dataTeams.length > 0){
@@ -176,11 +169,9 @@ export default {
                         this.serverdetail = JSON.parse(this.data.server_maintenance)
                         break;
                     case "Installation":
-                        axios.get(this.url +'produk/detail/'+this.data.UID).then(({data}) => {
-                            this.serverdetail =data.data
-                        }).catch((err)=>{
-                    console.log(err)
-                })
+                        for (const key in this.data.product[0].productdetail) {
+                            this.serverdetail.push(this.data.product[0].productdetail[key])
+                        }
                         break;
             
                 }

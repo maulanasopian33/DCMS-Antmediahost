@@ -83,12 +83,14 @@ export default {
             username : '',
             password : '',
             url      : import.meta.env.VITE_APIBASE,
-            error    : []
+            error    : [],
+            loader   : null 
         }
     },
     methods: {
         login(){
             try {
+                this.loader = this.$loading.show({container: null,canCancel: false});
                 axios.post(this.url+'admin/login',{
                     username    : this.username,
                     password    : this.password
@@ -101,6 +103,7 @@ export default {
                             type: 'success',
                             duration: 5000, // Durasi notifikasi dalam milidetik
                         });
+                        this.loader.hide()
                         this.$storage.setStorageSync("token",res.data.data.token,86400000);
                         this.$storage.setStorageSync("userId",res.data.data.userId,86400000);
                         this.$router.push('/admin')
