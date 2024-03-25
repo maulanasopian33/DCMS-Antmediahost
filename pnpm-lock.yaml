@@ -14,9 +14,6 @@ dependencies:
   axios:
     specifier: ^1.5.0
     version: 1.5.0
-  jw-vue-pagination:
-    specifier: ^1.0.3
-    version: 1.0.3
   qrcode.vue:
     specifier: ^3.4.1
     version: 3.4.1(vue@3.3.4)
@@ -908,16 +905,6 @@ packages:
     resolution: {integrity: sha512-5eEbBDQT/jF1xg6l36P+mWGGoH9Spuy0PCdSr2dtWRDGC6ph/w9ZCL4lmESW8f8F7MwT3XKescfP0wnZWAKL9w==}
     hasBin: true
     dev: true
-
-  /jw-paginate@1.0.4:
-    resolution: {integrity: sha512-W0bv782exgCoynUL/egbRpaYwf/r6T6e02H870H5u3hfSgEYrxgz5POwmFF5aApS6iPi6yhZ0VF8IbafNFsntA==}
-    dev: false
-
-  /jw-vue-pagination@1.0.3:
-    resolution: {integrity: sha512-85BV/5maL87mykKH8GBGRsi23p7yVsA4Y8dakCMQNbt/7wOJEqDtOySq5xm1xaudVO4UOp+0lbzUiTrHvXfr+A==}
-    dependencies:
-      jw-paginate: 1.0.4
-    dev: false
 
   /lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}

@@ -146,8 +146,7 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span @click="viewdetail(item.UID, item.id_user)" class="bg-green-500 p-2 text-white cursor-pointer"><i class="fa fa-pencil"></i></span>
-                                                            <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
+                                                            <span @click="deletedata(item.id)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
                                                         </td>
                                                     </tr>
 
@@ -270,7 +269,34 @@
                         });
                     }
                 })
-            }
+            },
+            deletedata(id){
+                this.loader = this.$loading.show({container: null,canCancel: false,});
+                let header = {
+                    headers: {
+                    'Authorization': `Bearer ${this.token}` 
+                    }
+                }
+                axios.post(this.url + 'admin/user/delete/'+id,[],header).then(({data}) => {
+                    this.loader.hide();
+                    if(data.status){
+                        this.$notify({
+                            title: 'Berhasil',
+                            text: data.message,
+                            type: 'success',
+                            duration: 5000, // Durasi notifikasi dalam milidetik
+                        });
+                        this.getdata()
+                    }else{
+                        this.$notify({
+                            title: 'Gagal',
+                            text: data.message,
+                            type: 'error',
+                            duration: 5000, // Durasi notifikasi dalam milidetik
+                        });
+                    }
+                })
+            },
         },
     }
 </script>

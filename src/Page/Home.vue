@@ -200,6 +200,7 @@ export default {
     created() {
       this.getproduct();
       this.getdata()
+      this.syncdata()
       this.check_session();
     },
     methods: {
@@ -239,6 +240,23 @@ export default {
             this.sumvisitdc = data.datas.length;
             this.updateChart(this.groupdata(data.datas))
             this.visitdc.splice(5)
+         }).catch((err)=>iserror(err,this))
+         
+      },
+      syncdata(){
+         this.$notify({
+                title: "Sync Data",
+                text: "Sedang melakukan sync Data",
+                type: 'warning',
+                duration: 5000, // Durasi notifikasi dalam milidetik
+         });
+         axios.get(this.url+'sync/'+this.userId).then(({data}) => {
+            this.$notify({
+                title: "Berhasil Sync Data",
+                text: " Berhasil melakukan sync Data",
+                type: 'success',
+                duration: 5000, // Durasi notifikasi dalam milidetik
+            });
          }).catch((err)=>iserror(err,this))
          
       },

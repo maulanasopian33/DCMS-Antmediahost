@@ -39,7 +39,7 @@
                   <i class="fa fa-user pr-3"></i>
                   {{ mydata }}
                </a>
-               <span @click="logout()" class="hidden cursor-pointer sm:inline-flex ml-5 text-black font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+               <span @click="logout()" class="cursor-pointer inline-flex ml-5 text-black font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
                   Logout
                </span>
             </div>
@@ -171,8 +171,10 @@ export default {
             this.slidebar = !this.slidebar;
         },
         logout(){
-         this.$storage.removeStorageSync("username")
+         this.$storage.removeStorageSync("token");
          this.$storage.removeStorageSync("user_id");
+         this.$storage.removeStorageSync("username")
+         this.$storage.removeStorageSync("userId");
          this.$storage.removeStorageSync("token");
          this.$router.push('/login')
         }

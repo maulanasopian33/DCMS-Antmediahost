@@ -9,35 +9,39 @@
                             <div>
                                 <label for="full_name"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full
-                                    Name</label>
+                                    Name <span class="text-xs text-red-500">*</span></label>
                                 <input v-model="fullname" type="text" id="full_name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                     placeholder="Name" required>
+                                <span id="error-full_name" class="text-xs text-red-600" hidden>error</span>
                             </div>
                             <div>
                                 <label for="email"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email <span class="text-xs text-red-500">*</span></label>
                                 <input v-model="email" type="email" id="email"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                     placeholder="Email" required>
+                                <span id="error-email" class="text-xs text-red-600" hidden>error</span>
                             </div>
                             <div>
                                 <label for="phone"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Phone
-                                    Number</label>
+                                    Number <span class="text-xs text-red-500">*</span></label>
                                 <input v-model="phone" type="tel" id="phone"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                     placeholder="(62) 123-456-789" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
+                                <span id="error-phone" class="text-xs text-red-600" hidden>error</span>
                             </div>
                             <div>
                                 <label for="nik"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">NIK</label>
-                                <input v-model="nik" type="text" id="nik"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">NIK <span class="text-xs text-red-500">*</span></label>
+                                <input v-model="nik" type="number" id="nik"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                     placeholder="NIK" required>
+                                    <span id="error-nik" class="text-xs text-red-600" hidden>error</span>
                             </div>
                         </div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">File KTP</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">File KTP <span class="text-xs text-red-500">*</span></label>
                         <div class="flex">
                             <div class=" bg-grey-lighter mb-5">
                                 <label
@@ -183,14 +187,12 @@
     import axios from 'axios';
     import { v4 as uuidv4 } from 'uuid';
     import baseLy from './baseLayout.vue';
-    // import JwPagination from 'jw-vue-pagination';
     import { notify } from "@kyvg/vue3-notification";
     import { VueFinalModal } from 'vue-final-modal';
     export default {
         name: "Teams",
         components: {
             baseLy,
-            // JwPagination,
             VueFinalModal
         },
         data() {
@@ -216,7 +218,10 @@
         },
         methods: {
             showaddmodal(){
+                this.initrequired()
                 this.showModal  = true;
+                this.addnew     = true;
+                this.titlemodal = "Add Teams"
                 this.uuidteams  = ''
                 this.fullname   = ''
                 this.nik        = ''
@@ -315,6 +320,9 @@
                 })
             },
             savedata() {
+                if(this.validate()){
+                    return true;
+                }
                 this.loader = this.$loading.show({container: null,canCancel: false,});
                 try {
                     axios.post(this.url + 'teams', {
@@ -349,6 +357,45 @@
                 } catch (error) {
                     console.log(error);
                 }
+            },
+            initrequired(){
+                let element = document.querySelectorAll('label')
+                console.log(element)
+            },
+            validate(){
+                let element = document.querySelectorAll('input')
+                let invalid = false;
+                element.forEach(element => {
+                    if(element.id === 'mobile-search' && element.id === ''){
+                        return true;
+                    }
+                    let error = document.getElementById('error-'+element.id)
+                    if(element.required){
+                        if((element.type).toLowerCase() === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(element.value)){
+                            error.hidden =false
+                            error.innerText = "input harus email"
+                            invalid = true
+                            return true;
+                        }
+                        if (element.value === '') {
+                            error.hidden =false
+                            error.innerText = "Tidak boleh kosong"
+                            invalid = true
+                            return true;
+                        }
+                        if((element.type).toLowerCase() === 'number' && isNaN(parseFloat(element.value))){
+                            error.hidden =false
+                            error.innerText = "input harus number"
+                            invalid = true
+                            return true;
+                        }
+                        if (error == null) {
+                            return true;
+                        }
+                        error.hidden =true
+                    }
+                });
+                return invalid;
             },
             getdata(){
                 axios.get(this.url + 'teams/'+this.userId).then(({data}) => {

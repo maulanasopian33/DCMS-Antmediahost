@@ -81,7 +81,7 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 text-end">
-                                                            <a :href="item.file_surat" target="_blank" v-show="item.reason === 'Installation' && item.file_surat !== null" class="bg-green-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-download"></i></a>
+                                                            <a :href="item.file_surat" target="_blank" v-show="item.reason === 'Installation' || item.reason === 'Unloading' && item.file_surat !== null" class="bg-green-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-download"></i></a>
                                                             <span @click="viewdetail(item.UID)" class="bg-yellow-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
                                                             <span v-show="!item.success" @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
                                                         </td>
@@ -104,12 +104,10 @@
 <script>
     import axios from 'axios';
     import baseLy from './baseLayout.vue'
-    import JwPagination from 'jw-vue-pagination';
     export default {
         name: "visitDC",
         components: {
             baseLy,
-            JwPagination,
         },
         data() {
             return {
@@ -126,7 +124,7 @@
         },
         methods: {
             viewdetail(datas){
-                this.$router.push('/visitdc/report/'+btoa(datas));
+                this.$router.push('/requestdc/report/'+btoa(datas));
             },
             deletedata(id){
                 this.loader = this.$loading.show({container: null,canCancel: false,});

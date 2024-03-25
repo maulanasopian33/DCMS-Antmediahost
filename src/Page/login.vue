@@ -1,21 +1,5 @@
 <template>
     <div>
-        <!-- <div class="flex">
-            <div
-                class="hidden h-screen w-0 flex-col justify-center bg-orange-600 p-40 text-right text-white md:flex md:w-2/3 md:p-10">
-                <h2 class="text-4xl">DATA CENTER</h2>
-                <h2 class="text-8xl font-extrabold">VISIT</h2>
-                <h2 class="text-5xl">MANAGEMENT</h2>
-                <h2 class="text-8xl font-medium">SYSTEM</h2>
-            </div>
-            <div
-                class="z-10 flex h-screen w-full flex-col justify-center bg-white px-5 py-10 text-center shadow-2xl shadow-black md:w-1/3">
-                <h1 class="text-3xl font-medium">LOGIN PAGE</h1>
-                <p class="pb-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                <a href="http://localhost:8000/0auth" class="rounded-md bg-orange-700 px-4 py-3 text-white"> Login Dengan My Ant</a>
-            </div>
-        </div> -->
-
         <div class="relative py-10 bg-gradient-to-br from-sky-50 to-gray-200 w-full h-screen">
             <div class="relative container m-auto px-6 text-gray-500 md:px-10 xl:px-40">
                 <div class="m-auto md:w-8/12 lg:w-6/12 xl:w-6/12">
@@ -38,7 +22,7 @@
                                             with my.antmedia.id</span>
                                     </div>
                                 </button>
-                                <button class="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 
+                                <button @click="guestlogin()" class="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 
  hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
                                     <div class="relative flex items-center space-x-4 justify-center">
 
@@ -86,7 +70,10 @@ export default {
     },
     methods: {
         login(){
-            window.location.assign('http://localhost:8000/0auth');
+            window.location.assign(import.meta.env.VITE_API+'0auth');
+        },
+        guestlogin(){
+            this.$router.push({name : "request Visit"})
         },
         getClientId(){
             if(this.$route.params.code != null){

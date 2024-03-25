@@ -7,7 +7,7 @@
                         <div class="bg-white w-[90%] md:w-[50%] m-5 md:m-32 h-fit p-10 rounded-md shadow-md max-h-[90%] overflow-y-auto">
                             <h3 class="text-2xl mb-4">Add Server</h3>
                             <div class="mb-2">
-                                <label for="merek" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Choose Product</label>
+                                <label for="merek"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" required>Choose Product <span class="text-xs text-red-500">*</span></label>
                                 <div class="w-full">
                                     <model-select
                                         ref="select"                                                     
@@ -20,14 +20,14 @@
                             </div>
                             <div class="mb-2">
                                 <label for="merek" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Merek &
-                                    Type</label>
+                                    Type <span class="text-xs text-red-500">*</span></label>
                                 <input type="text" v-model="tempdata.merek" id="merek"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                     placeholder="merek & type server" required>
                             </div>
                             <div class="mb-2">
                                 <label for="categoryServer"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Category Server</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Category Server <span class="text-xs text-red-500">*</span></label>
                                 <select
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                     placeholder="Railkit" required @change="optionDataserver($event,'category')">
@@ -38,14 +38,14 @@
                             </div>
                             <div class="mb-2">
                                 <label for="SN" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">SN (Serial
-                                    Number)</label>
+                                    Number) <span class="text-xs text-red-500">*</span></label>
                                 <input type="text" v-model="tempdata.sn" id="sn"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                     placeholder="SN (Serial Number)" required>
                             </div>
                             <div class="mb-2">
                                 <label for="ukuran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Size
-                                    Server</label>
+                                    Server <span class="text-xs text-red-500">*</span></label>
                                     <select
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                         placeholder="Size Server" required @change="optionDataserver($event,'ukuran')">
@@ -58,14 +58,14 @@
                                     </select>
                             </div>
                             <div class="mb-2">
-                                <label for="psu" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">PSU</label>
+                                <label for="psu" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">PSU <span class="text-xs text-red-500">*</span></label>
                                 <input type="text" v-model="tempdata.psu" id="psu"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                     placeholder="Power Suplay" required>
                             </div>
                             <div class="mb-2">
                                 <label for="railkit"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Railkit</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Railkit <span class="text-xs text-red-500">*</span></label>
                                 <select
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                     placeholder="Railkit" required @change="optionDataserver($event,'railkit')">
@@ -99,73 +99,81 @@
                                                 <div>
                                                     <label for="full_name"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full
-                                                        Name</label>
+                                                        Name <span class="text-xs text-red-500">*</span></label>
                                                     <input disabled type="text" v-model="mydata.name"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="Name" required>
+                                                        placeholder="Name" id="fullname" required>
+                                                        <span id="error-full_name" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="email"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email <span class="text-xs text-red-500">*</span></label>
                                                     <input type="email" v-model="mydata.email" id="email"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="Email" required>
+                                                    <span id="error-email" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="phone"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Phone
-                                                        Number</label>
+                                                        Number <span class="text-xs text-red-500">*</span></label>
                                                     <input type="tel" v-model="mydata.phone" id="phone"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="(62) 123-456-789"
                                                         pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
+                                                    <span id="error-phone" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="nik"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">NIK</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">NIK <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.nik" id="nik"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="NIK" required>
+                                                    <span id="error-nik" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
-                                                    <label for="data center"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Reason</label>
+                                                    <label for="reason"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Reason <span class="text-xs text-red-500">*</span></label>
                                                         <select 
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                            placeholder="Data center" required @change="optionData($event,'reason')">
+                                                            placeholder="Reason" id='reason' required @change="optionData($event,'reason')">
                                                             <option value="#" selected>Reason</option>
                                                             <option value="Installation">Installation</option>
                                                             <option value="Maintenance">Maintenance</option>
                                                             <option value="Unloading">Unloading</option>
                                                             
                                                         </select>
+                                                    <span id="error-reason" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
-                                                    <label for="data center"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Data Center</label>
+                                                    <label for="dc"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Data Center <span class="text-xs text-red-500">*</span></label>
                                                         <select
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                            placeholder="Data center" required @change="optionData($event,'data_center')">
+                                                            placeholder="Data center" id="dc" required @change="optionData($event,'data_center')">
                                                             <option value="#" selected>Data Center</option>
                                                             <option value="Area 31">Area 31</option>
                                                             <option value="Technovillage">Technovillage</option>
                                                             <option value="Gedung Cyber">Gedung Cyber</option>
                                                         </select>
+                                                        <span id="error-dc" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="company"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Company
-                                                        Name</label>
-                                                    <input name="company" type="text" v-model="mydata.company"
+                                                        Name <span class="text-xs text-red-500">*</span></label>
+                                                    <input name="company" id="company" type="text" v-model="mydata.company"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="Company Name" required>
+                                                    <span id="error-company" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="date"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date <span class="text-xs text-red-500">*</span></label>
                                                     <input type="date" v-model="mydata.date" id="date"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         required>
+                                                    <span id="error-date" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                             </div>
                                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">File KTP</label>
@@ -220,7 +228,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <label for="data center" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Teams</label>
+                                                <label for="data center" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Teams <span class="text-xs text-red-500">*</span></label>
                                                 <div class="flex m-2">
                                                     <div class="w-2/3 md:w-1/2">
                                                         <model-select
@@ -289,7 +297,7 @@
                                             <div class="flex flex-col-reverse  xl:gap-10 w-full">
                                                 <div class="mb-2">
                                                     <label for="confirm_password"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">signature</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">signature <span class="text-xs text-red-500">*</span></label>
                                                         <div class="shadow-md md:m-4 border-2 relative md:w-[400px] w-full h-[500px] p-3">
                                                             <button @click="undo"
                                                                 class=" ml-auto focus:outline-none hover:bg-gray-300 p-3 rounded-md">
@@ -309,7 +317,7 @@
                                                     <div v-if="mydata['reason'] === 'Installation'">
                                                         <div class="flex justify-between w-full">
                                                             <label for="instalisasi"
-                                                                class="block text-md font-medium text-gray-900 dark:text-gray-300 my-5">Installation Data</label>
+                                                                class="block text-md font-medium text-gray-900 dark:text-gray-300 my-5">Installation Data <span class="text-xs text-red-500">*</span></label>
                                                             <button class="bg-orange-600 p-2 m-2 rounded-md text-sm text-white" @click="modalreason()">Add Server</button>
                                                         </div>
                                                         <table class=" w-full divide-y divide-gray-200 overflow-auto text-[10px] md:text-xs">
@@ -592,47 +600,49 @@ export default {
          })
     },
     async savedata(){
-        this.issave = true;
-        this.txtsave = "Processing..";
-        switch (this.mydata.reason) {
-            case "Installation":
-                this.mydata.server_maintenance = "install"
-                break;
-            case "Maintenance":
-                this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
-                break;
-            case "Unloading":
-                this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
-                break;
-        }
-        try {
-            const response = await axios.post(this.url + 'visitdc', this.prepareData()).then(({data})=>{
-                if (data.status) {
-                    this.$notify({
-                        title: 'Berhasil',
-                        text: data.message,
-                        type: 'success',
-                        duration: 5000, // Durasi notifikasi dalam milidetik
-                    });
-                    this.$router.push('/request');
-                }else{
-                    this.$notify({
-                        title: 'Gagal',
-                        text: data.message,
-                        type: 'error',
-                        duration: 5000, // Durasi notifikasi dalam milidetik
-                    });
-                }
-            });
-            this.success();
-        } catch (error) {
-            this.$notify({
-                        title: 'Gagal',
-                        text: "Silahkan coba lagi",
-                        type: 'error',
-                        duration: 5000, // Durasi notifikasi dalam milidetik
-                    });
-        }
+        
+        console.log(this.validate())
+        // this.issave = true;
+        // this.txtsave = "Processing..";
+        // switch (this.mydata.reason) {
+        //     case "Installation":
+        //         this.mydata.server_maintenance = "install"
+        //         break;
+        //     case "Maintenance":
+        //         this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
+        //         break;
+        //     case "Unloading":
+        //         this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
+        //         break;
+        // }
+        // try {
+        //     const response = await axios.post(this.url + 'visitdc', this.prepareData()).then(({data})=>{
+        //         if (data.status) {
+        //             this.$notify({
+        //                 title: 'Berhasil',
+        //                 text: data.message,
+        //                 type: 'success',
+        //                 duration: 5000, // Durasi notifikasi dalam milidetik
+        //             });
+        //             this.$router.push('/request');
+        //         }else{
+        //             this.$notify({
+        //                 title: 'Gagal',
+        //                 text: data.message,
+        //                 type: 'error',
+        //                 duration: 5000, // Durasi notifikasi dalam milidetik
+        //             });
+        //         }
+        //     });
+        //     this.success();
+        // } catch (error) {
+        //     this.$notify({
+        //                 title: 'Gagal',
+        //                 text: "Silahkan coba lagi",
+        //                 type: 'error',
+        //                 duration: 5000, // Durasi notifikasi dalam milidetik
+        //             });
+        // }
     },
     success(){
         this.issave = false;
@@ -720,7 +730,48 @@ export default {
     undo() {
       this.$refs.signaturePad.undoSignature();
     },
-    
+    initrequired(){
+        let element = document.querySelectorAll('label')
+        console.log(element)
+    },
+    validate(){
+        let element = document.querySelectorAll('input, select')
+        let invalid = false;
+        console.log(element)
+        element.forEach(element => {
+            if(element.id === 'mobile-search' && (element.id === '' || element.id === null)){
+                return true;
+            }
+            if(element.required){
+                // console.log(element,element.required)
+                
+                let error = document.getElementById('error-'+element.id)
+                if((element.type).toLowerCase() === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(element.value)){
+                    error.hidden =false
+                    error.innerText = "input harus email"
+                    invalid = true
+                    return true;
+                }
+                if (element.value === '' || element.value === '#') {
+                    error.hidden =false
+                    error.innerText = "Tidak boleh kosong"
+                    invalid = true
+                    return true;
+                }
+                if((element.type).toLowerCase() === 'number' && isNaN(parseFloat(element.value))){
+                    error.hidden =false
+                    error.innerText = "input harus number"
+                    invalid = true
+                    return true;
+                }
+                if (error == null) {
+                    return true;
+                }
+                error.hidden =true
+            }
+        });
+        return invalid;
+    },
   },
 }
 </script>

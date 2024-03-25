@@ -9,7 +9,7 @@
                     <tr>
                         <td class="px-2">Lead Name </td>
                         <td class="px-2">:</td>
-                        <td class="px-2">{{ this.data.lead_name }}</td>
+                        <td class="px-2">{{ this.data.lead_name || this.data.lead_signature }}</td>
                     </tr>
                     <tr>
                         <td class="px-2">Email</td>
@@ -149,31 +149,39 @@ export default {
          getdata(uid){
             axios.get(this.url + 'visitdc/report/'+uid).then(({data}) => {
                 this.data = data.data[0]
-                this.attTeam.push({ktp :this.data.lead_ktp , name :this.data.lead_name})
-                let dataTeams = JSON.parse(this.data.teams)
-                axios.get(this.url +'teams/getbyname/'+this.data.id_user+'/'+encodeURI(this.data.teams)).then(({data}) => {
-                    this.dataTeams = data.datas
-                    if(this.dataTeams.length > 0){
-                        this.attTeam.push({ktp :this.dataTeams[0].ktp , name :this.dataTeams[0].name})
-                    }
-                    // console.log(this.attTeam)
+
+                if(this.data.reason === "visit DC"){
+                    this.dataTeams = JSON.parse(this.data.teams)
+                    let ktp = JSON.parse(this.data.lead_ktp)
+                    this.attTeam = ktp.map(element=>({ktp : element.data,name : element.name}));
                     this.loader.hide()
-                }).catch((err)=>{
-                    console.log(err)
-                })
-                switch (this.data.reason) {
-                    case "Maintenance":
-                        this.serverdetail = JSON.parse(this.data.server_maintenance)
-                        break;
-                    case "Unloading":
-                        this.serverdetail = JSON.parse(this.data.server_maintenance)
-                        break;
-                    case "Installation":
-                        for (const key in this.data.product[0].productdetail) {
-                            this.serverdetail.push(this.data.product[0].productdetail[key])
+                }else{
+                    this.attTeam.push({ktp :this.data.lead_ktp , name :this.data.lead_name})
+                    axios.get(this.url +'teams/getbyname/'+this.data.id_user+'/'+encodeURI(this.data.teams)).then(({data}) => {
+                        console.log(data.datas)
+                        this.dataTeams = data.datas
+                        if(this.dataTeams.length > 0){
+                            this.attTeam.push({ktp :this.dataTeams[0].ktp , name :this.dataTeams[0].name})
                         }
-                        break;
-            
+                        // console.log(this.attTeam)
+                        this.loader.hide()
+                    }).catch((err)=>{
+                        console.log(err)
+                    })
+                    switch (this.data.reason) {
+                        case "Maintenance":
+                            this.serverdetail = JSON.parse(this.data.server_maintenance)
+                            break;
+                        case "Unloading":
+                            this.serverdetail = JSON.parse(this.data.server_maintenance)
+                            break;
+                        case "Installation":
+                            for (const key in this.data.product[0].productdetail) {
+                                this.serverdetail.push(this.data.product[0].productdetail[key])
+                            }
+                            break;
+                
+                    }
                 }
                 
             })

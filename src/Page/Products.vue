@@ -83,12 +83,10 @@
 <script>
     import baseLy from './baseLayout.vue'
     import axios from 'axios'
-    import JwPagination from 'jw-vue-pagination';
     export default {
         name: "product",
         components: {
             baseLy,
-            JwPagination
         },
         data() {
             return {

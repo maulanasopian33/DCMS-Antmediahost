@@ -151,7 +151,7 @@ export default {
     methods: {
         viewdetail(datas, id_user){
             this.$storage.setStorageSync("user_id",id_user,86400000);
-            this.$router.push('/visitdc/report/'+btoa(datas));
+            this.$router.push('/requestdc/report/'+btoa(datas));
         },
         logout(){
             this.$storage.removeStorageSync("token");
@@ -164,17 +164,24 @@ export default {
                 'Authorization': `Bearer ${this.token}` 
                 }
             }
-            axios.get(this.url + 'visitdc/',header).then(({data}) => {
-                this.visitdc = this.filter(data.data);
-                // console.log(this.groupdata(data.data))
+            axios.get(this.url + 'visitdc',header).then(({data}) => {
+                let temp = data.data
+                let convert = temp.map((item) => {
+                    if (item.reason === "visit DC") {
+                        let team = JSON.parse(item.teams)
+                        let convertteam = team.map(item => item.name)
+                        item.teams = JSON.stringify(convertteam)
+                    }
+                    return item
+                })
+                this.visitdc = this.filter(convert);
 
                 // update chart
                 this.updateChart(this.groupdata(data.data,false,''),'All')
                 this.updateChart(this.groupdata(data.data,true,'Installation'),'Installation')
                 this.updateChart(this.groupdata(data.data,true,'Maintenance'),'Maintenance')
-                this.updateChart(this.groupdata(data.data,true,'Troubleshoot'),'Troubleshoot')
-                this.updateChart(this.groupdata(data.data,true,'Visit'),'Visit')
-                this.updateChart(this.groupdata(data.data,true,'Replacement'),'Replacement')
+                this.updateChart(this.groupdata(data.data,true,'visit DC'),'Visit DC')
+                this.updateChart(this.groupdata(data.data,true,'Unloading'),'Unloading')
                 // limit for summary visit dc request
                 this.visitdc.splice(5);
             }).catch((error) =>{

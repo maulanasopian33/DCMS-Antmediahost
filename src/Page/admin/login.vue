@@ -115,6 +115,7 @@ export default {
                         type: 'error',
                         duration: 5000, // Durasi notifikasi dalam milidetik
                     });
+                    this.loader.hide()
                 })
             } catch (error) {
                 

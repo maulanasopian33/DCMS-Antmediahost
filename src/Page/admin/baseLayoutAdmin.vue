@@ -29,12 +29,12 @@
                </form>
             </div>
             <div class="flex items-center">
-               <button id="toggleSidebarMobileSearch" type="button" class="lg:hidden text-gray-500 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-lg">
+               <!-- <button id="toggleSidebarMobileSearch" type="button" class="lg:hidden text-gray-500 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-lg">
                   <span class="sr-only">Search</span>
                   <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                      <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                   </svg>
-               </button>
+               </button> -->
                <div class="hidden lg:flex items-center">
                   <span class="text-base font-normal text-gray-500 mr-5">{{ lang.dashboard_name }}</span>
                </div>
@@ -42,7 +42,7 @@
                   <i class="fa fa-user pr-3"></i>
                   {{ mydata.fullname }}
                </a>
-               <span @click="logout()" class="hidden cursor-pointer sm:inline-flex ml-5 text-black font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+               <span @click="logout()" class="cursor-pointer inline-flex ml-5 text-black font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
                   {{ lang.logout }}
                </span>
             </div>
@@ -160,8 +160,7 @@ export default {
     },
    created() {
       this.fetchLanguageData()
-      this.ceklogin();
-      this.getdata();
+      // this.getdata();
    },
    methods: {
       slidebarAction() {
@@ -169,7 +168,9 @@ export default {
       },
       logout(){
          this.$storage.removeStorageSync("token");
+         this.$storage.removeStorageSync("user_id");
          this.$storage.removeStorageSync("userId");
+         this.$storage.removeStorageSync("username");
          this.$router.push('/admin/login')
       },
       ceklogin(){

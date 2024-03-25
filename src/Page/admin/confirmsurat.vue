@@ -453,7 +453,6 @@ export default {
   mounted() {
     this.fetchLanguageData()
     this.getdata();
-    this.getdatasurat();
 },
 methods: {
     async generatesurat(){
@@ -483,7 +482,8 @@ methods: {
     },
     async getdatasurat(){
         let data = await this.apiget('admin/surat/'+ this.uuid,this.token,this);
-        if(data.data.length > 0){
+        console.log(data.data.length)
+        if(data.data.length){
             this.update = true
             this.mydata['id'] = data.data[0].id
             this.mydata['position'] = data.data[0].position
@@ -502,7 +502,7 @@ methods: {
             this.mydata['client_signature'] = this.urlapi + 'storage/'+ data.data[0].client_signature
             this.timsignature = this.urlapi + 'storage/'+ data.data[0].support_signature
             this.clientsignature = this.urlapi + 'storage/'+ data.data[0].client_signature
-            
+            console.log('update',this.mydata)
             for (const key in this.mydata['dokumentasi']) {
                 this.file.push({ data: this.urlapi +"storage/"+ this.mydata['dokumentasi'][key], name: '' })
             }
@@ -582,6 +582,7 @@ methods: {
         }
         this.reason = tempdata[0]['reason'];
         this.mydata['ktp'] = [];
+        this.getdatasurat();
         this.ktpfetch(tempdata[0]['lead_ktp'])
         this.loader.hide()
     },

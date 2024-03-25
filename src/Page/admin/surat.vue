@@ -85,7 +85,7 @@
                                                                 class="p-4 whitespace-nowrap text-end text-sm font-normal text-gray-900">
                                                                 <a v-show="item.file_surat" :href="item.file_surat" target="_blank" class="bg-yellow-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-file-pdf"></i></a>
                                                                 <span @click="viewdetail(item.UID, item.id_user)" class="bg-green-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
-                                                                <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
+                                                                <!-- <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span> -->
                                                             </td>
                                                         </tr>
                                                 </tbody>
@@ -105,12 +105,10 @@
 <script>
     import axios from 'axios';
     import baseLy from './baseLayoutAdmin.vue'
-    import JwPagination from 'jw-vue-pagination';
     export default {
         name: "surat",
         components: {
             baseLy,
-            JwPagination,
         },
         data() {
             return {
@@ -129,7 +127,7 @@
         methods: {
             viewdetail(datas, id_user){
                 this.$storage.setStorageSync("user_id",id_user,86400000);
-                this.$router.push('/visitdc/report/'+btoa(datas));
+                this.$router.push('/requestdc/report/'+btoa(datas));
             },
             encode(data){
                 let encode = btoa(data);
@@ -165,7 +163,7 @@
                     'Authorization': `Bearer ${this.token}` 
                     }
                 }
-                 axios.get(this.url + 'visitdc/',header).then(({data}) => {
+                 axios.get(this.url + 'visitdc',header).then(({data}) => {
                     this.loader.hide()
                     let temp = data.data
                     this.visitdc = this.filter(temp)
