@@ -149,8 +149,7 @@ export default {
          getdata(uid){
             axios.get(this.url + 'visitdc/report/'+uid).then(({data}) => {
                 this.data = data.data[0]
-
-                if(this.data.reason === "visit DC"){
+                if(this.data.reason === "visit DC" && this.data.server_maintenance === "visit DC"){
                     this.dataTeams = JSON.parse(this.data.teams)
                     let ktp = JSON.parse(this.data.lead_ktp)
                     this.attTeam = ktp.map(element=>({ktp : element.data,name : element.name}));
@@ -158,10 +157,12 @@ export default {
                 }else{
                     this.attTeam.push({ktp :this.data.lead_ktp , name :this.data.lead_name})
                     axios.get(this.url +'teams/getbyname/'+this.data.id_user+'/'+encodeURI(this.data.teams)).then(({data}) => {
-                        console.log(data.datas)
                         this.dataTeams = data.datas
                         if(this.dataTeams.length > 0){
                             this.attTeam.push({ktp :this.dataTeams[0].ktp , name :this.dataTeams[0].name})
+                        }
+                        if(this.data.teams.includes(this.data.lead_name)){
+                            this.dataTeams.push(this.data.users)
                         }
                         // console.log(this.attTeam)
                         this.loader.hide()

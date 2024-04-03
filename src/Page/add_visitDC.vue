@@ -7,48 +7,54 @@
                         <div class="bg-white w-[90%] md:w-[50%] m-5 md:m-32 h-fit p-10 rounded-md shadow-md max-h-[90%] overflow-y-auto">
                             <h3 class="text-2xl mb-4">Add Server</h3>
                             <div class="mb-2">
-                                <label for="merek"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" required>Choose Product <span class="text-xs text-red-500">*</span></label>
+                                <label for="add-product"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" required>Choose Product <span class="text-xs text-red-500">*</span></label>
                                 <div class="w-full">
                                     <model-select
-                                        ref="select"                                                     
+                                        ref="select"
+                                        id="add-product"                                                     
                                         :options="server"
                                         style="width: 100%;"
                                         v-model="tempdata.productid"
+                                        required
                                         placeholder="Choose Product">
                                     </model-select>
                                 </div>
+                                <span id="error-add-product" class="text-xs text-red-600" hidden>error</span>
                             </div>
                             <div class="mb-2">
-                                <label for="merek" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Merek &
+                                <label for="add-merek" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Merek &
                                     Type <span class="text-xs text-red-500">*</span></label>
-                                <input type="text" v-model="tempdata.merek" id="merek"
+                                <input type="text" v-model="tempdata.merek" id="add-merek"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                     placeholder="merek & type server" required>
+                                <span id="error-add-merek" class="text-xs text-red-600" hidden>error</span>
                             </div>
                             <div class="mb-2">
-                                <label for="categoryServer"
+                                <label for="add-categoryServer"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Category Server <span class="text-xs text-red-500">*</span></label>
                                 <select
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                    placeholder="Railkit" required @change="optionDataserver($event,'category')">
+                                    placeholder="Railkit" id="add-categoryServer" required @change="optionDataserver($event,'category')">
                                     <option value="#" selected>Category Server</option>
                                     <option value="Branded">Branded</option>
                                     <option value="Rakitan">Rakitan</option>
                                 </select>
+                                <span id="error-add-categoryServer" class="text-xs text-red-600" hidden>error</span>
                             </div>
                             <div class="mb-2">
-                                <label for="SN" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">SN (Serial
+                                <label for="add-sn" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">SN (Serial
                                     Number) <span class="text-xs text-red-500">*</span></label>
-                                <input type="text" v-model="tempdata.sn" id="sn"
+                                <input type="text" v-model="tempdata.sn" id="add-sn"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                     placeholder="SN (Serial Number)" required>
+                                <span id="error-add-sn" class="text-xs text-red-600" hidden>error</span>
                             </div>
                             <div class="mb-2">
-                                <label for="ukuran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Size
+                                <label for="add-ukuran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Size
                                     Server <span class="text-xs text-red-500">*</span></label>
                                     <select
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                        placeholder="Size Server" required @change="optionDataserver($event,'ukuran')">
+                                        placeholder="Size Server" id="add-ukuran" required @change="optionDataserver($event,'ukuran')">
                                         <option value="#" selected>Size Server</option>
                                         <option value="1U">1U</option>
                                         <option value="2U">2U</option>
@@ -56,23 +62,26 @@
                                         <option value="Slim Case">Slim Case</option>
                                         <option value="Full Tower">Full Tower</option>
                                     </select>
+                                    <span id="error-add-ukuran" class="text-xs text-red-600" hidden>error</span>
                             </div>
                             <div class="mb-2">
-                                <label for="psu" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">PSU <span class="text-xs text-red-500">*</span></label>
-                                <input type="text" v-model="tempdata.psu" id="psu"
+                                <label for="add-psu" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">PSU <span class="text-xs text-red-500">*</span></label>
+                                <input type="text" v-model="tempdata.psu"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                    placeholder="Power Suplay" required>
+                                    placeholder="Power Suplay" id="add-psu" required>
+                                <span id="error-add-psu" class="text-xs text-red-600" hidden>error</span>
                             </div>
                             <div class="mb-2">
-                                <label for="railkit"
+                                <label for="add-railkit"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Railkit <span class="text-xs text-red-500">*</span></label>
                                 <select
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                    placeholder="Railkit" required @change="optionDataserver($event,'railkit')">
+                                    placeholder="Railkit" id="add-railkit" required @change="optionDataserver($event,'railkit')">
                                     <option value="#" selected>Available Railkit</option>
                                     <option value="Tersedia">Tersedia</option>
                                     <option value="Tidak Tersedia">Tidak Tersedia</option>
                                 </select>
+                                <span id="error-add-railkit" class="text-xs text-red-600" hidden>error</span>
                             </div>
                             <div class="flex mt-5 gap-2">
                             <button @click="addserver()" class="bg-orange-600 rounded-md text-white py-2 px-4">Save</button>
@@ -138,6 +147,7 @@
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                             placeholder="Reason" id='reason' required @change="optionData($event,'reason')">
                                                             <option value="#" selected>Reason</option>
+                                                            <option value="visit DC">Visit DC</option>
                                                             <option value="Installation">Installation</option>
                                                             <option value="Maintenance">Maintenance</option>
                                                             <option value="Unloading">Unloading</option>
@@ -239,7 +249,8 @@
                                                             placeholder="Choose Teams">
                                                         </model-select>
                                                     </div>
-                                                    <router-link to="/teams" class="bg-orange-600 rounded-md text-sm text-white p-2 mx-2">Add New Teams</router-link>
+                                                    <router-link to="/teams" class="bg-orange-600 rounded-md text-sm text-white p-2 mx-2">Add New Teams</router-link>  
+                                                    <button @click="includeme()" class="bg-orange-600 rounded-md text-sm text-white p-2 mx-2">Include Me</button>  
                                                 </div>
                                             </div>
                                             <div class="sm:overflow-y-auto max-w-full">
@@ -574,6 +585,9 @@ export default {
     }
   },
   methods: {
+    includeme(){
+        this.selectedteams.push(this.mydata)
+    },
     modalreason(){
         this.reasonmodal = true
     },
@@ -600,49 +614,59 @@ export default {
          })
     },
     async savedata(){
+        if(!this.validate('save')){
+            this.issave = true;
+            this.txtsave = "Processing..";
+            switch (this.mydata.reason) {
+                case "Installation":
+                    this.mydata.server_maintenance = "install"
+                    break;
+                case "visit DC":
+                    this.mydata.server_maintenance = "visit"
+                    break;
+                case "Maintenance":
+                    this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
+                    break;
+                case "Unloading":
+                    this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
+                    break;
+            }
+            try {
+                const response = await axios.post(this.url + 'visitdc', this.prepareData()).then(({data})=>{
+                    if (data.status) {
+                        this.$notify({
+                            title: 'Berhasil',
+                            text: data.message,
+                            type: 'success',
+                            duration: 5000, // Durasi notifikasi dalam milidetik
+                        });
+                        this.$router.push('/request');
+                    }else{
+                        this.$notify({
+                            title: 'Gagal',
+                            text: data.message,
+                            type: 'error',
+                            duration: 5000, // Durasi notifikasi dalam milidetik
+                        });
+                    }
+                });
+                this.success();
+            } catch (error) {
+                this.$notify({
+                            title: 'Gagal',
+                            text: "Silahkan coba lagi",
+                            type: 'error',
+                            duration: 5000, // Durasi notifikasi dalam milidetik
+                        });
+            }
+        }
+        this.$notify({
+            title: 'Periksa Inputan',
+            text: "silahkan periksa kembali inputan",
+            type: 'warning',
+            duration: 5000, // Durasi notifikasi dalam milidetik
+        });
         
-        console.log(this.validate())
-        // this.issave = true;
-        // this.txtsave = "Processing..";
-        // switch (this.mydata.reason) {
-        //     case "Installation":
-        //         this.mydata.server_maintenance = "install"
-        //         break;
-        //     case "Maintenance":
-        //         this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
-        //         break;
-        //     case "Unloading":
-        //         this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
-        //         break;
-        // }
-        // try {
-        //     const response = await axios.post(this.url + 'visitdc', this.prepareData()).then(({data})=>{
-        //         if (data.status) {
-        //             this.$notify({
-        //                 title: 'Berhasil',
-        //                 text: data.message,
-        //                 type: 'success',
-        //                 duration: 5000, // Durasi notifikasi dalam milidetik
-        //             });
-        //             this.$router.push('/request');
-        //         }else{
-        //             this.$notify({
-        //                 title: 'Gagal',
-        //                 text: data.message,
-        //                 type: 'error',
-        //                 duration: 5000, // Durasi notifikasi dalam milidetik
-        //             });
-        //         }
-        //     });
-        //     this.success();
-        // } catch (error) {
-        //     this.$notify({
-        //                 title: 'Gagal',
-        //                 text: "Silahkan coba lagi",
-        //                 type: 'error',
-        //                 duration: 5000, // Durasi notifikasi dalam milidetik
-        //             });
-        // }
     },
     success(){
         this.issave = false;
@@ -653,9 +677,9 @@ export default {
         const { isEmpty, data } = this.$refs.signaturePad.saveSignature();
         // convert teams selected to array
         let teams = [];
-        this.selectedteams.forEach(element => {
-            teams.push(element.name)
-        });
+            this.selectedteams.forEach(element => {
+                teams.push(element.name)
+            });
 
 
         let datas = {
@@ -681,10 +705,18 @@ export default {
         return datas;
     },
     addserver(){
-        this.serverdata.push(this.tempdata)
-        this.serverId.push(this.tempdata['productid'].split('/')[0])
-        this.tempdata = {}
-        this.reasonmodal = false
+        if(!this.validate('add-server')){
+            this.serverdata.push(this.tempdata)
+            this.serverId.push(this.tempdata['productid'].split('/')[0])
+            this.tempdata = {}
+            this.reasonmodal = false
+        }
+        this.$notify({
+            title: 'Periksa Inputan',
+            text: "silahkan periksa kembali inputan",
+            type: 'warning',
+            duration: 5000, // Durasi notifikasi dalam milidetik
+        });
     },
     deleteserver(pos, type){
         switch (type) {
@@ -734,16 +766,20 @@ export default {
         let element = document.querySelectorAll('label')
         console.log(element)
     },
-    validate(){
+    validate(id){
         let element = document.querySelectorAll('input, select')
         let invalid = false;
-        console.log(element)
         element.forEach(element => {
+            if(id === "add-server" && !element.id.includes('add-')){
+                return true;
+            }
+            if(id === "save" && element.id.includes('add-')){
+                return true;
+            }
             if(element.id === 'mobile-search' && (element.id === '' || element.id === null)){
                 return true;
             }
             if(element.required){
-                // console.log(element,element.required)
                 
                 let error = document.getElementById('error-'+element.id)
                 if((element.type).toLowerCase() === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(element.value)){

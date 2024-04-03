@@ -29,7 +29,7 @@
                                                         </th>
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                                            Domain
+                                                            Hostname
                                                         </th>
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase tracking-wider">
@@ -49,7 +49,7 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                                            {{ item.productName }}
+                                                            <span class="font-semibold">{{ convert(item.productName)[0] }}</span> <span class="text-xs bg-green-500 py-1 px-3 text-white rounded-full mt-2 ">{{ convert(item.productName)[1] }}</span>
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-semibold text-gray-500">
@@ -103,6 +103,10 @@
                 axios.get(this.url + 'product?limit=all&id=' + this.userId).then(({data}) => {
                     this.productData = data.data;
                 })
+            },
+            convert(val){
+                return val.split('/')
+                
             }
         },
     }

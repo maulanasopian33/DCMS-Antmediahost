@@ -304,7 +304,7 @@
                     this.loader.hide()
                     let temp = data.data
                     let convert = temp.map((item) => {
-                        if (item.reason === "visit DC") {
+                        if (item.reason === "visit DC" && item.server_maintenance === "visit DC") {
                             let team = JSON.parse(item.teams)
                             let convertteam = team.map(item => item.name)
                             item.teams = JSON.stringify(convertteam)

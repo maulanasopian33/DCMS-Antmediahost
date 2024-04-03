@@ -1,6 +1,6 @@
 // import Home from '../App.vue'; // Sesuaikan dengan struktur proyek Anda
 import Home from '../Page/Home.vue'
-import Login from '../Page/login.vue'
+import Login from '../Page/loginPage.vue'
 import visitDC from '../Page/visit_dc.vue'
 import Product from '../Page/Products.vue'
 import Teams from '../Page/teams.vue'
@@ -9,6 +9,8 @@ import Profile from '../Page/profile.vue'
 import ReportVisit from '../Page/reportVisitDc.vue'
 import RequestEmail from '../Page/requestemail.vue'
 import RequestGuest from '../Page/guestRequest.vue'
+import vpnClient from '../Page/vpnClient.vue'
+import CheckDocument from '../Page/checkDocument.vue'
 // admin import page
 import AdminLogin from '../Page/admin/login.vue'
 import dashboardpanel from '../Page/admin/dashboard.vue'
@@ -16,7 +18,7 @@ import requestvisitdc from '../Page/admin/requestvisitdc.vue'
 import usermanage from '../Page/admin/usermanage.vue'
 import surat from '../Page/admin/surat.vue'
 import confirm from '../Page/admin/confirmsurat.vue'
-
+import vpn from '../Page/admin/vpn.vue'
 // middleware
 
 import adminAuth from '../middleware/adminAuth'
@@ -34,8 +36,13 @@ const routes = [
   },
   {
     path: '/login/:code',
-    name: 'proses',
+    name: 'proses login',
     component: Login,
+  },
+  {
+    path: '/ceksurat/:id',
+    name: 'cek dokumen',
+    component: CheckDocument,
   },
   {
     path: '/visit/request',
@@ -56,6 +63,14 @@ const routes = [
     path: '/request',
     name: 'Visit DC',
     component: visitDC,
+    meta : {
+      middleware : [userAuth]
+    },
+  },
+  {
+    path: '/vpnClient',
+    name: 'Vpn Client',
+    component: vpnClient,
     meta : {
       middleware : [userAuth]
     },
@@ -140,6 +155,14 @@ const routes = [
     path: '/admin/surat/:id',
     name: 'confirm Surat Admin',
     component: confirm,
+    meta : {
+      middleware : [adminAuth]
+    },
+  },
+  {
+    path: '/admin/vpn',
+    name: 'VPN Admin',
+    component: vpn,
     meta : {
       middleware : [adminAuth]
     },

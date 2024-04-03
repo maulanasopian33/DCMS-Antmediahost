@@ -83,7 +83,7 @@
                                                             </td>
                                                             <td
                                                                 class="p-4 whitespace-nowrap text-end text-sm font-normal text-gray-900">
-                                                                <a v-show="item.file_surat" :href="item.file_surat" target="_blank" class="bg-yellow-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-file-pdf"></i></a>
+                                                                <a :href="item.file_surat" target="_blank" :class="(item.file_surat == null) ? 'bg-yellow-300 cursor-not-allowed text-white' : 'bg-yellow-500 cursor-pointer text-white'" class=" p-2 rounded-tl-md rounded-bl-md "><i class="fa fa-file-pdf"></i></a>
                                                                 <span @click="viewdetail(item.UID, item.id_user)" class="bg-green-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
                                                                 <!-- <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span> -->
                                                             </td>

@@ -14,6 +14,9 @@ dependencies:
   axios:
     specifier: ^1.5.0
     version: 1.5.0
+  crypto-js:
+    specifier: ^4.2.0
+    version: 4.2.0
   qrcode.vue:
     specifier: ^3.4.1
     version: 3.4.1(vue@3.3.4)
@@ -32,6 +35,9 @@ dependencies:
   vue-loading-overlay:
     specifier: ^6.0
     version: 6.0.3(vue@3.3.4)
+  vue-recaptcha-v3:
+    specifier: ^2.0.1
+    version: 2.0.1(vue@3.3.4)
   vue-router:
     specifier: '4'
     version: 4.2.4(vue@3.3.4)
@@ -686,6 +692,10 @@ packages:
       which: 2.0.2
     dev: false
 
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
+    dev: false
+
   /cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
@@ -1134,6 +1144,10 @@ packages:
       picomatch: 2.3.1
     dev: true
 
+  /recaptcha-v3@1.10.0:
+    resolution: {integrity: sha512-aGTxYSk3FFNKnXeKDbLpgRDRyIHRZNBF5HyaXXAN1Aj4TSyyZvmoAn9CylvpqLV3pYpIQavwc+2rzhNFn5SsLQ==}
+    dev: false
+
   /resolve@1.22.4:
     resolution: {integrity: sha512-PXNdCiPqDqeUou+w1C2eTQbNfxKSuMxqTCuvlmmMsk1NWHL5fRrhY6Pl0qEYYc6+QqGClco1Qj8XnjPego4wfg==}
     hasBin: true
@@ -1436,6 +1450,15 @@ packages:
     peerDependencies:
       vue: ^3.2.0
     dependencies:
+      vue: 3.3.4
+    dev: false
+
+  /vue-recaptcha-v3@2.0.1(vue@3.3.4):
+    resolution: {integrity: sha512-isEDtOfHU4wWRrZZuxciAELtQmPOeEEdicPNa0f1AOyLPy3sCcBEcpFt+FOcO3RQv5unJ3Yn5NlsWtXv9rXqjg==}
+    peerDependencies:
+      vue: ^3.0.11
+    dependencies:
+      recaptcha-v3: 1.10.0
       vue: 3.3.4
     dev: false
 

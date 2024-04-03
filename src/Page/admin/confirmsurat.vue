@@ -86,156 +86,172 @@
                                                 <div>
                                                     <label for="full_name"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full
-                                                        Name</label>
+                                                        Name <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.name"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="Name" required>
+                                                        placeholder="Name" id="full_name" required>
+                                                        <span id="error-full_name" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="email"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email <span class="text-xs text-red-500">*</span></label>
                                                     <input type="email" v-model="mydata.email" id="email"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="Email" required>
+                                                        <span id="error-email" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="phone"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Phone
-                                                        Number</label>
+                                                        Number <span class="text-xs text-red-500">*</span></label>
                                                     <input type="tel" v-model="mydata.phone" id="phone"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="(62) 123-456-789"
                                                         pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
+                                                        <span id="error-phone" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="nik"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">NIK</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">NIK <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.nik" id="nik"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="NIK" required>
+                                                        <span id="error-nik" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="address"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Address</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Address <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.address"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="Your Address" required>
+                                                        placeholder="Your Address" id="address" required>
+                                                        <span id="error-address" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="position"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Position</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Position <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.position"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="Position" required>
+                                                        placeholder="Position" id="position" required>
+                                                        <span id="error-position" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                             </div>
-                                            <label for="full_name"
+                                            <label
                                                     class="block mb-2 text-md font-medium text-gray-900 dark:text-gray-400">Company Detail</label>
                                             <div class="grid gap-4 mb-6 md:grid-cols-2">
                                                 <div>
                                                     <label for="company"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Company
-                                                        Name</label>
+                                                        Name <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.company"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="Company Name" required>
+                                                        placeholder="Company Name" id="company" required>
+                                                    <span id="error-company" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="npwp"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">NPWP</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">NPWP <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.npwp" id="npwp"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="NPWP" required>
+                                                        placeholder="NPWP">
                                                 </div>
                                                 <div>
                                                     <label for="companyphone"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                        Phone Number</label>
+                                                        Phone Number <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.companyphone"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="Company Phone Number" required>
+                                                        placeholder="Company Phone Number" id="companyphone" required>
+                                                        <span id="error-companyphone" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="addresscompany"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Address</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Address <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.address2" id="addresscompany"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="Company Address" required>
+                                                    <span id="error-addresscompany" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                             </div>
-                                            <label for="full_name"
+                                            <label
                                                     class="block mb-2 text-md font-medium text-gray-900 dark:text-gray-400">Installation Detail</label>
                                             <div class="grid gap-4 mb-6 md:grid-cols-2">
                                                 <div>
                                                     <label for="nosurat"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">No Surat</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">No Surat <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.nosurat"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="No Surat" required>
+                                                        placeholder="No Surat" id="nosurat" required>
+                                                        <span id="error-nosurat" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="datacenter"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Data Center</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Data Center <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.data_center" id="datacenter"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="Datacenter" required>
+                                                        <span id="error-datacenter" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="rack"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                        No Rack Server</label>
+                                                        No Rack Server <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.rack"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="No Rack Server" required>
+                                                        placeholder="No Rack Server" id="rack" required>
+                                                        <span id="error-rack" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="switch"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Switch</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Switch <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.switch" id="switch"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="Switch" required>
+                                                    <span id="error-switch" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="port"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">No Port</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">No Port <span class="text-xs text-red-500">*</span></label>
                                                     <input type="text" v-model="mydata.port" id="port"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="No Port" required>
+                                                    <span id="error-port" class="text-xs text-red-600" hidden>error</span>
                                                 </div>
                                                 <div>
                                                     <label for="Service"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Service</label>
                                                     <input type="text" v-model="mydata.productName" id="service"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="service" required>
+                                                        placeholder="service">
                                                 </div>
                                                 <div>
                                                     <label for="waktu_layanan"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Waktu Layanan</label>
                                                     <input type="text" v-model="mydata.waktulayanan" id="waktu_layanan"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="Waktu Layanan" required>
+                                                        placeholder="Waktu Layanan">
+                                                    
                                                 </div>
                                                 <div>
                                                     <label for="systemoperasi"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">System Operasi</label>
                                                     <input type="text" v-model="mydata.os" id="os"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="System Operasi" required>
+                                                        placeholder="System Operasi">
+                                                    
                                                 </div>
                                                 <div>
                                                     <label for="arsitektur"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Arsitektur</label>
                                                     <input type="text" v-model="mydata.arsitektur" id="arsitektur"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="Arsitektur" required>
+                                                        placeholder="Arsitektur">
                                                 </div>
                                                 <div>
                                                     <label for="controlpanel"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Control Panel</label>
                                                     <input type="text" v-model="mydata.controlPanel" id="controlpanel"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="Control Panel" required>
+                                                        placeholder="Control Panel">
                                                 </div>
                                             </div>
                                             <div class="flex flex-col mt-8">
@@ -315,7 +331,7 @@
                                                                 d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                                                         </svg>
                                                         <span class="mt-2 text-sm md:text-base leading-normal">Select a file</span>
-                                                        <input @change="onFilePicked()" ref="file" type='file' class="hidden" />
+                                                        <input @change="onFilePicked()" ref="file" type='file' class="hidden" id="file" />
                                                     </label>
                                                 </div>
                                                 <div class="flex flex-wrap gap-2 bg-grey-lighter mb-5 relative">
@@ -459,49 +475,55 @@ methods: {
         this.loader = this.$loading.show({container: null,canCancel: false,});
         let key = encodeURIComponent(btoa(this.mydata['nosurat']))
         let data = ""
-        switch (this.reason) {
-            case "Installation":
-                data = await this.apipost('admin/surat/i/'+ key,this.token,this);
-                
-                break;
-            case "Unloading":
-                data = await this.apipost('admin/surat/unloading/'+ key,this.token,this);
-                break;
-        
-            default:
-                break;
+        if(this.reason === "Installation"){
+            data = await this.apipost('admin/surat/i/'+ key,this.token,[],this);
+            if(data['status']){
+                this.$notify({
+                    title: 'Berhasil',
+                    text: data.message,
+                    type: 'success',
+                    duration: 5000, // Durasi notifikasi dalam milidetik
+                });
+            this.$router.push('/admin/surat')
+            this.loader.hide()
+            }
+            
+        }else{
+            data = await this.apipost('admin/surat/unloading/'+ key,this.token,[],this);
+            if(data['status']){
+                this.$notify({
+                    title: 'Berhasil',
+                    text: data.message,
+                    type: 'success',
+                    duration: 5000, // Durasi notifikasi dalam milidetik
+                });
+            this.$router.push('/admin/surat')
+            this.loader.hide()
+            }
         }
-        this.$notify({
-            title: 'Berhasil ',
-            text: data.message,
-            type: 'success',
-            duration: 5000, // Durasi notifikasi dalam milidetik
-        });
-        this.$router.push('/admin/surat')
-        this.loader.hide()
     },
     async getdatasurat(){
         let data = await this.apiget('admin/surat/'+ this.uuid,this.token,this);
         console.log(data.data.length)
         if(data.data.length){
-            this.update = true
-            this.mydata['id'] = data.data[0].id
-            this.mydata['position'] = data.data[0].position
-            this.mydata['companyphone'] = data.data[0].phone_number
-            this.mydata['nosurat'] = data.data[0].no_surat
-            this.mydata['os'] = data.data[0].os
-            this.mydata['rack'] = data.data[0].no_rack
-            this.mydata['productName'] = data.data[0].service
-            this.mydata['switch'] = data.data[0].switch
-            this.mydata['waktu_layanan'] = data.data[0].waktu_layanan
-            this.mydata['port'] = data.data[0].port
-            this.mydata['controlPanel'] = data.data[0].control_panel
-            this.mydata['arsitektur'] = data.data[0].arsitektur
-            this.mydata['dokumentasi'] = JSON.parse(data.data[0].dokumentasi)
-            this.mydata['tim_signature'] = this.urlapi + 'storage/'+ data.data[0].support_signature
+            this.update                     = true
+            this.mydata['id']               = data.data[0].id
+            this.mydata['position']         = data.data[0].position
+            this.mydata['companyphone']     = data.data[0].phone_number
+            this.mydata['nosurat']          = data.data[0].no_surat
+            this.mydata['os']               = data.data[0].os
+            this.mydata['rack']             = data.data[0].no_rack
+            this.mydata['productName']      = data.data[0].service
+            this.mydata['switch']           = data.data[0].switch
+            this.mydata['waktu_layanan']    = data.data[0].waktu_layanan
+            this.mydata['port']             = data.data[0].port
+            this.mydata['controlPanel']     = data.data[0].control_panel
+            this.mydata['arsitektur']       = data.data[0].arsitektur
+            this.mydata['dokumentasi']      = JSON.parse(data.data[0].dokumentasi)
+            this.mydata['tim_signature']    = this.urlapi + 'storage/'+ data.data[0].support_signature
             this.mydata['client_signature'] = this.urlapi + 'storage/'+ data.data[0].client_signature
-            this.timsignature = this.urlapi + 'storage/'+ data.data[0].support_signature
-            this.clientsignature = this.urlapi + 'storage/'+ data.data[0].client_signature
+            this.timsignature               = this.urlapi + 'storage/'+ data.data[0].support_signature
+            this.clientsignature            = this.urlapi + 'storage/'+ data.data[0].client_signature
             console.log('update',this.mydata)
             for (const key in this.mydata['dokumentasi']) {
                 this.file.push({ data: this.urlapi +"storage/"+ this.mydata['dokumentasi'][key], name: '' })
@@ -517,7 +539,7 @@ methods: {
         }
     },
     async updatedata(){
-        this.issave = true
+        this.loader = this.$loading.show({container: null,canCancel: false,});
         this.mydata['dokumentasi'] = this.file
         let data = await this.apiput('admin/surat/update',this.token,this.mydata,this);
         if(data['status']){
@@ -530,6 +552,7 @@ methods: {
             location.reload();
             this.issave = false;
         }
+        this.loader.hide()
     },
     editPrdk(i){
         this.editproduct = !this.editproduct;
@@ -590,17 +613,32 @@ methods: {
         return this.mydata['ktp'].push({"img" : data})
     },
     async savedata(){
-        this.mydata['dokumentasi'] = this.file
-        let data = await this.apipost('admin/surat',this.token,this.mydata,this);
-        if(data['status']){
-            this.$notify({
-                title: 'Berhasil',
-                text: data.message,
-                type: 'success',
-                duration: 5000, // Durasi notifikasi dalam milidetik
-            });
-            location.reload();
+        this.loader = this.$loading.show({container: null,canCancel: false,});
+        if(!this.validate()){
+            this.mydata['dokumentasi'] = this.file
+            this.mydata['service'] = this.mydata['service'] || 'Colocation'
+            this.mydata['waktu_layanan'] = this.mydata['waktu_layanan'] || '-'
+            this.mydata['arsitektur'] = this.mydata['arsitektur'] || '-'
+            this.mydata['controlPanel'] = this.mydata['controlPanel'] || '-'
+            this.mydata['os'] = this.mydata['os'] || '-'
+            let data = await this.apipost('admin/surat',this.token,this.mydata,this);
+            if(data['status']){
+                this.$notify({
+                    title: 'Berhasil',
+                    text: data.message,
+                    type: 'success',
+                    duration: 5000, // Durasi notifikasi dalam milidetik
+                });
+                location.reload();
+            }
+            this.loader.hide()
         }
+        this.$notify({
+            title: 'Periksa Inputan',
+            text: "silahkan periksa kembali inputan",
+            type: 'warning',
+            duration: 5000, // Durasi notifikasi dalam milidetik
+        });
     },
     modalttd(pos){
         this.ttdmodal = true
@@ -637,7 +675,41 @@ methods: {
     undo() {
       this.$refs.signaturePad.clearSignature();
     },
-    
+    validate(){
+        let element = document.querySelectorAll('input, select')
+        let invalid = false;
+        element.forEach(element => {
+            if(element.id === 'mobile-search' && (element.id === '' || element.id === null)){
+                return true;
+            }
+            if(element.required){
+                let error = document.getElementById('error-'+element.id)
+                if((element.type).toLowerCase() === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(element.value)){
+                    error.hidden =false
+                    error.innerText = "input harus email"
+                    invalid = true
+                    return true;
+                }
+                if (element.value === '' || element.value === '#') {
+                    error.hidden =false
+                    error.innerText = "Tidak boleh kosong"
+                    invalid = true
+                    return true;
+                }
+                if((element.type).toLowerCase() === 'number' && isNaN(parseFloat(element.value))){
+                    error.hidden =false
+                    error.innerText = "input harus number"
+                    invalid = true
+                    return true;
+                }
+                if (error == null) {
+                    return true;
+                }
+                error.hidden =true
+            }
+        });
+        return invalid;
+    },
   },
 }
 </script>

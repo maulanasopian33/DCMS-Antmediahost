@@ -40,42 +40,6 @@
                                 placeholder="type password" required>
                             <span v-show="error.hasOwnProperty('password')" class="bg-red-400/30 text-[10px] w-full text-red-900 border-red-600 rounded-md px-2 py-1 border-l-2 mt-2">{{ error.password }}</span>
                         </div>
-                        <!-- <table class="w-full divide-y divide-gray-200">
-                            <thead class="bg-orange-600">
-                                <tr>
-                                    <th scope="col" class="p-4 text-left text-xs font-medium text-white uppercase">
-                                        Name
-                                    </th>
-                                    <th scope="col" class="p-4 text-left text-xs font-medium text-white uppercase">
-                                        NIK
-                                    </th>
-                                    <th scope="col" class="p-4 text-left text-xs font-medium text-white uppercase">
-                                        Email
-                                    </th>
-                                    <th scope="col" class="p-4 text-left text-xs font-medium text-white uppercase">
-
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white" v-for="(item, index) in filterTeams" :key="index">
-                                <tr>
-                                    <td class="p-4 text-sm font-normal text-gray-900">
-                                        {{ item.name }}
-                                    </td>
-                                    <td class="p-4 text-sm font-normal text-gray-500">
-                                        {{ item.phone }}
-                                    </td>
-                                    <td class="p-4 text-sm font-semibold text-gray-900">
-                                        {{ item.email }}
-                                    </td>
-                                    <td class="p-4 text-sm font-semibold">
-                                        <span class="bg-orange-600 text-white p-2" @click="addtteams(item)">Add</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <span v-if="filterTeams.length <= 0" class="text-sm">Data tidak ditemukan, silahkan
-                                tambahkan di menu Teams atau klik di <router-link to="/teams">Sini</router-link></span>
-                        </table> -->
                         <div class="mt-5 gap-2">
                             <button @click="savedata" class="bg-orange-600 p-2  text-white rounded-md shadow-md hover:bg-orange-400 mr-3">Save Data</button>
                             <button @click="showModal = false">Close</button>

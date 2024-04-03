@@ -6,8 +6,7 @@
                     <div class="rounded-xl bg-white shadow-xl">
                         <div class="p-6 sm:p-16">
                             <div class="space-y-4 sm:text-center">
-                                <img src="../assets/logo.svg"
-                                    loading="lazy" class="w-1/2" alt="tailus logo">
+                                <img src="../assets/logo.svg" loading="lazy" class="w-1/2" alt="tailus logo">
                                 <h2 class="mb-8 text-3xl text-cyan-900 font-bold">Sign in to DCMS <br> <span
                                         class="text-[18px] font-light">Data Center Management System</span></h2>
                             </div>
@@ -51,42 +50,46 @@
 
 <script>
 import axios from 'axios'
+import { getKeyClient } from '../utils/RSAClass'
 export default {
-    name : 'loginPage',
+    name: 'loginPage',
     data() {
         return {
-            url         : import.meta.env.VITE_APIBASE,
+            url: import.meta.env.VITE_APIBASE,
         }
     },
     created() {
-        if(this.$storage.hasKey('user_id') && !this.$storage.isExpire('user_id')){
+        getKeyClient()
+    },
+    mounted() {
+        if (this.$storage.hasKey('user_id') && !this.$storage.isExpire('user_id')) {
             this.$router.push('/')
         }
-        else if(this.$storage.isExpire('user_id') || this.$route.params.code != null){
+        else if (this.$storage.isExpire('user_id') || this.$route.params.code != null) {
             this.getClientId();
-        }else{
-            return true;
+        } else {
+
         }
     },
     methods: {
-        login(){
-            window.location.assign(import.meta.env.VITE_API+'0auth');
+        login() {
+            window.location.assign(import.meta.env.VITE_API + '0auth');
         },
-        guestlogin(){
-            this.$router.push({name : "request Visit"})
+        guestlogin() {
+            this.$router.push({ name: "request Visit" })
         },
-        getClientId(){
-            if(this.$route.params.code != null){
+        getClientId() {
+            if (this.$route.params.code != null) {
                 let data = JSON.parse(atob(this.$route.params.code));
-                axios.get(this.url + 'getUser/' + data.userId).then(({data}) => {
+                axios.get(this.url + 'getUser/' + data.userId).then(({ data }) => {
                     let mydata = data.data
-                    this.$storage.setStorageSync("username",mydata.name,86400000);
+                    this.$storage.setStorageSync("username", mydata.name, 86400000);
                 })
-                this.$storage.setStorageSync("user_id",data.userId,86400000);
-                this.$storage.setStorageSync("token",data.token,86400000);
+                this.$storage.setStorageSync("user_id", data.userId, 86400000);
+                this.$storage.setStorageSync("token", data.token, 86400000);
                 // console.log(this.$storage.isExpire('user_id'))
                 this.$router.push('/')
-            }else{
+            } else {
 
             }
         }

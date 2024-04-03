@@ -321,6 +321,12 @@
             },
             savedata() {
                 if(this.validate()){
+                    this.$notify({
+            title: 'Periksa Inputan',
+            text: "silahkan periksa kembali inputan",
+            type: 'warning',
+            duration: 5000, // Durasi notifikasi dalam milidetik
+        });
                     return true;
                 }
                 this.loader = this.$loading.show({container: null,canCancel: false,});
