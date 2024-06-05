@@ -12,7 +12,7 @@
                                     <model-select
                                         ref="select"
                                         id="add-product"                                                     
-                                        :options="server"
+                                        :options="pendingServer"
                                         style="width: 100%;"
                                         v-model="tempdata.productid"
                                         required
@@ -91,6 +91,7 @@
                     </div>
                     
                 </vue-final-modal>
+                <AddTeams ref="addTeam" @update="getteams()"></AddTeams>
                 <div class="pt-6 px-4">
                     <div class="w-full gap-4">
                         <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
@@ -111,8 +112,8 @@
                                                         Name <span class="text-xs text-red-500">*</span></label>
                                                     <input disabled type="text" v-model="mydata.name"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="Name" id="fullname" required>
-                                                        <span id="error-full_name" class="text-xs text-red-600" hidden>error</span>
+                                                        placeholder="Name" id="fullname">
+                                                        <span v-if="errors.name" class="text-xs text-red-600">{{ errors.name[0] }}</span>
                                                 </div>
                                                 <div>
                                                     <label for="email"
@@ -120,7 +121,7 @@
                                                     <input type="email" v-model="mydata.email" id="email"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="Email" required>
-                                                    <span id="error-email" class="text-xs text-red-600" hidden>error</span>
+                                                    <span v-if="errors.email" class="text-xs text-red-600">{{ errors.email[0] }}</span>
                                                 </div>
                                                 <div>
                                                     <label for="phone"
@@ -130,7 +131,7 @@
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="(62) 123-456-789"
                                                         pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
-                                                    <span id="error-phone" class="text-xs text-red-600" hidden>error</span>
+                                                    <span v-if="errors.phone" class="text-xs text-red-600">{{ errors.phone[0] }}</span>
                                                 </div>
                                                 <div>
                                                     <label for="nik"
@@ -138,7 +139,7 @@
                                                     <input type="text" v-model="mydata.nik" id="nik"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                         placeholder="NIK" required>
-                                                    <span id="error-nik" class="text-xs text-red-600" hidden>error</span>
+                                                    <span v-if="errors.nik" class="text-xs text-red-600">{{ errors.nik[0] }}</span>
                                                 </div>
                                                 <div>
                                                     <label for="reason"
@@ -153,7 +154,7 @@
                                                             <option value="Unloading">Unloading</option>
                                                             
                                                         </select>
-                                                    <span id="error-reason" class="text-xs text-red-600" hidden>error</span>
+                                                        <span v-if="errors.reason" class="text-xs text-red-600">{{ errors.reason[0] }}</span>
                                                 </div>
                                                 <div>
                                                     <label for="dc"
@@ -166,7 +167,7 @@
                                                             <option value="Technovillage">Technovillage</option>
                                                             <option value="Gedung Cyber">Gedung Cyber</option>
                                                         </select>
-                                                        <span id="error-dc" class="text-xs text-red-600" hidden>error</span>
+                                                        <span v-if="errors.data_center" class="text-xs text-red-600">{{ errors.data_center[0] }}</span>
                                                 </div>
                                                 <div>
                                                     <label for="company"
@@ -174,16 +175,15 @@
                                                         Name <span class="text-xs text-red-500">*</span></label>
                                                     <input name="company" id="company" type="text" v-model="mydata.company"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        placeholder="Company Name" required>
-                                                    <span id="error-company" class="text-xs text-red-600" hidden>error</span>
+                                                        placeholder="Company Name">
+                                                    <span v-if="errors.company" class="text-xs text-red-600">{{ errors.company[0] }}</span>
                                                 </div>
                                                 <div>
                                                     <label for="date"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date <span class="text-xs text-red-500">*</span></label>
-                                                    <input type="date" v-model="mydata.date" id="date"
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                        required>
-                                                    <span id="error-date" class="text-xs text-red-600" hidden>error</span>
+                                                        <VueDatePicker name="date" id="date" v-model="mydata.date" model-type="iso"
+                                                        ></VueDatePicker>
+                                                    <span v-if="errors.date" class="text-xs text-red-600">{{ errors.date[0] }}</span>
                                                 </div>
                                             </div>
                                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">File KTP</label>
@@ -199,6 +199,7 @@
                                                         <span class="mt-2 text-sm md:text-base leading-normal">Select a file</span>
                                                         <input @change="onFilePicked()" ref="file" type='file' class="hidden" />
                                                     </label>
+                                                    <span v-if="errors.filektp" class="text-xs text-red-600">{{ errors.filektp[0] }}</span>
                                                 </div>
                                                 <div class=" bg-grey-lighter mb-5 ml-3 relative">
                                                     <article tabindex="0"
@@ -249,7 +250,7 @@
                                                             placeholder="Choose Teams">
                                                         </model-select>
                                                     </div>
-                                                    <router-link to="/teams" class="bg-orange-600 rounded-md text-sm text-white p-2 mx-2">Add New Teams</router-link>  
+                                                    <button @click="this.$refs.addTeam.showmodal()" class="bg-orange-600 rounded-md text-sm text-white p-2 mx-2">Add New Team</button>  
                                                     <button @click="includeme()" class="bg-orange-600 rounded-md text-sm text-white p-2 mx-2">Include Me</button>  
                                                 </div>
                                             </div>
@@ -414,7 +415,7 @@
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <div v-if="mydata['reason'] === 'Maintenance' || mydata['reason'] === 'Unloading'">
+                                                    <div class="mt-5" v-if="mydata['reason'] === 'Maintenance' || mydata['reason'] === 'Unloading'">
                                                         <label for="instalisasi"
                                                         class="block text-md font-medium text-gray-900 dark:text-gray-300 mb-5">{{ mydata['reason'] === 'Maintenance' ? "Maintenance Server" : "Unloading Server"}}</label>
                                                         <div class="flex mb-2">
@@ -510,6 +511,14 @@
                                                             </div></div>
                                                         </div>
                                                     </div>
+                                                    <div class="mt-5" v-if="mydata['reason'] === 'Maintenance'">
+                                                        <label for="keterangan"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Keterangan <span class="text-xs text-red-500">*</span></label>
+                                                        <input name="keterangan" id="keterangan" type="text"
+                                                            v-model="mydata.keterangan"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                                            placeholder="Keterangan Maintenace">
+                                                    </div>
                                                 </div>
                                                 
                                             </div>
@@ -538,276 +547,282 @@
     import { v4 as uuidv4 } from 'uuid';
     import { VueFinalModal } from 'vue-final-modal';
     import { ModelSelect } from "vue-search-select"
-export default {
-    name : 'add_visitDc',
-    components: { baseLy ,VueFinalModal , ModelSelect},
-    data() {
-    return {
-      reasonmodal       : false,
-      stream            : null,
-      upload            : null,
-      filektp           : '',
-      url               : import.meta.env.VITE_APIBASE,
-      userId            : this.$storage.getStorageSync("user_id"),
-      file              : [],
-      teams             : [],
-      filterTeams       : [],
-      selectedteams     : [],
-      mydata            : {},
-      txtsave           : 'Save Data',
-      issave            : false,
-      myproduct         : [],
-      serverdata        : [],
-      tempdata          : {},
-      maintenancedata   : [],
-      server            : [],
-      serveritem        : '',
-      serverId          : [],
-      teamitem          : [],
-    };
-  },
-  mounted() {
-    axios.get(this.url + 'getUser/' + this.userId).then(({data}) => {
-        this.mydata = data.data
-        this.file[0] = { data: this.mydata.ktp, name: this.mydata.name }
-        this.filektp =this.mydata.ktp
-    })
-    this.getproduct()
-    this.getteams()
-  },
-  watch : {
-    serveritem(newValue, oldValue){
-        this.addmaintenace(newValue)
-    },
-    teamitem(newValue, oldValue){
-       this.addtteams(newValue['value'])
-    //    this.teamitem = []
-    }
-  },
-  methods: {
-    includeme(){
-        this.selectedteams.push(this.mydata)
-    },
-    modalreason(){
-        this.reasonmodal = true
-    },
-    addmaintenace(data){
-        let temp = data
-        axios.get(this.url + 'produk/detail/produkid/'+temp.split('/')[0]).then(({data}) => {
-            let tempdata = data.data
-            if(tempdata.length > 0){
-                tempdata[0]['domain'] = temp.split('/')[1]
-                this.maintenancedata.push(tempdata[0])
-                this.serverId.push(temp.split('/')[0])
-                this.serveritem = ''
-            }
-
-        })
-    },
-    getproduct(){
-         axios.get(this.url+'product?limit=all&id='+this.userId).then(({data})=>{
-            let datas = data.data;
-            for (const key in datas) {
-                this.server.push({ value : datas[key]['id']+'/'+datas[key]['productName'] +' — '+ datas[key]['domain'], text : datas[key]['productName'] + ' — '+ datas[key]['domain']})
-            }
-            // this.myproduct = datas
-         })
-    },
-    async savedata(){
-        if(!this.validate('save')){
-            this.issave = true;
-            this.txtsave = "Processing..";
-            switch (this.mydata.reason) {
-                case "Installation":
-                    this.mydata.server_maintenance = "install"
-                    break;
-                case "visit DC":
-                    this.mydata.server_maintenance = "visit"
-                    break;
-                case "Maintenance":
-                    this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
-                    break;
-                case "Unloading":
-                    this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
-                    break;
-            }
-            try {
-                const response = await axios.post(this.url + 'visitdc', this.prepareData()).then(({data})=>{
-                    if (data.status) {
-                        this.$notify({
-                            title: 'Berhasil',
-                            text: data.message,
-                            type: 'success',
-                            duration: 5000, // Durasi notifikasi dalam milidetik
-                        });
-                        this.$router.push('/request');
-                    }else{
-                        this.$notify({
-                            title: 'Gagal',
-                            text: data.message,
-                            type: 'error',
-                            duration: 5000, // Durasi notifikasi dalam milidetik
-                        });
-                    }
-                });
-                this.success();
-            } catch (error) {
-                this.$notify({
-                            title: 'Gagal',
-                            text: "Silahkan coba lagi",
-                            type: 'error',
-                            duration: 5000, // Durasi notifikasi dalam milidetik
-                        });
-            }
-        }
-        this.$notify({
-            title: 'Periksa Inputan',
-            text: "silahkan periksa kembali inputan",
-            type: 'warning',
-            duration: 5000, // Durasi notifikasi dalam milidetik
-        });
-        
-    },
-    success(){
-        this.issave = false;
-        this.txtsave = "Success Save";
-    },
-    prepareData(){
-        // init signature result
-        const { isEmpty, data } = this.$refs.signaturePad.saveSignature();
-        // convert teams selected to array
-        let teams = [];
-            this.selectedteams.forEach(element => {
-                teams.push(element.name)
+    import VueDatePicker from '@vuepic/vue-datepicker';
+    import '@vuepic/vue-datepicker/dist/main.css'
+    import AddTeams from '../components/addTeams.vue';
+    import { z } from 'zod';
+    import moment from 'moment'
+    
+    export default {
+        name : 'add_visitDc',
+        components: { baseLy ,VueFinalModal , ModelSelect, VueDatePicker, AddTeams },
+        data() {
+            return {
+                reasonmodal: false,
+                stream: null,
+                upload: null,
+                url: import.meta.env.VITE_APIBASE,
+                userId: this.$storage.getStorageSync("user_id"),
+                file: [],
+                teams: [],
+                filterTeams: [],
+                selectedteams: [],
+                mydata: {},
+                txtsave: 'Save Data',
+                issave: false,
+                myproduct: [],
+                serverdata: [],
+                tempdata: {},
+                maintenancedata: [],
+                server: [],
+                serveritem: '',
+                serverId: [],
+                teamitem: [],
+                formSchema: null,
+                errors: {},
+                pendingServer : []
+            };
+        },
+        created() {
+            this.formSchema = z.object({
+                name: z.string().min(2, { message : "Fullname tidak boleh kosong dan minimal 2 karakter"}),
+                email: z.string().email({ message : "Email tidak valid"}),
+                phone: z.string().min(2, { message : "Phone tidak boleh kosong dan minimal 2 karakter"}),
+                nik: z.string().min(2, { message : "NIK tidak boleh kosong dan minimal 2 karakter"}),
+                company: z.string().min(2, { message : "Company tidak boleh kosong dan minimal 2 karakter"}),
+                date: z.string().min(2, { message : "Date tidak boleh kosong dan minimal 2 karakter"}),
+                data_center: z.string().min(2, { message : "Data Center tidak boleh kosong dan minimal 2 karakter"}),
+                reason: z.string().min(2, { message : "Reason tidak boleh kosong dan minimal 2 karakter"}),
+                filektp: z.string().min(2, { message : "KTP tidak boleh kosong"}),
             });
+        },
+        mounted() {
+            axios.get(this.url + 'getUser/' + this.userId).then(({data}) => {
+                this.mydata = data.data
+                this.file[0] = { data: this.mydata.ktp, name: this.mydata.name }
+                this.mydata.filektp =this.mydata.ktp
+            })
+            this.getproduct()
+            this.getteams()
+        },
+        watch : {
+            serveritem(newValue, oldValue){
+                console.log(newValue)
+                this.addmaintenace(newValue)
+            },
+            teamitem(newValue, oldValue){
+            this.addtteams(newValue['value'])
+            //    this.teamitem = []
+            }
+        },
+        methods: {
+            includeme(){
+                this.selectedteams.push(this.mydata)
+            },
+            modalreason(){
+                this.reasonmodal = true
+            },
+            addmaintenace(data){
+                let temp = data
+                axios.get(this.url + 'produk/detail/produkid/'+temp.split('/')[0]).then(({data}) => {
+                    let tempdata = data.data
+                    if(tempdata.length > 0){
+                        tempdata[0]['domain'] = temp.split('/')[1]
+                        this.maintenancedata.push(tempdata[0])
+                        this.serverId.push(temp.split('/')[0])
+                        this.serveritem = ''
+                    }
 
-
-        let datas = {
-            UID             : uuidv4(),
-            id_user         : this.userId,
-            lead_name       : this.mydata.name,
-            lead_email      : this.mydata.email,
-            lead_phone      : this.mydata.phone,
-            lead_nik        : this.mydata.nik,
-            lead_ktp        : this.filektp,
-            lead_signature  : data,
-            company_name    : this.mydata.company,
-            Date            : this.mydata.date,
-            data_center     : this.mydata.data_center,
-            reason          : this.mydata.reason,
-            dataserver      : this.serverdata,
-            serverId        : this.serverId.toString(),
-            server_maintenance : this.mydata.server_maintenance,
-            teams           : JSON.stringify(teams),
-            file_surat      : ''
-
-        }
-        return datas;
-    },
-    addserver(){
-        if(!this.validate('add-server')){
-            this.serverdata.push(this.tempdata)
-            this.serverId.push(this.tempdata['productid'].split('/')[0])
-            this.tempdata = {}
-            this.reasonmodal = false
-        }
-        this.$notify({
-            title: 'Periksa Inputan',
-            text: "silahkan periksa kembali inputan",
-            type: 'warning',
-            duration: 5000, // Durasi notifikasi dalam milidetik
-        });
-    },
-    deleteserver(pos, type){
-        switch (type) {
-            case "install":
-                this.serverdata.splice(pos,1)
-                break;
-            case "maintenance":
-                this.maintenancedata.splice(pos,1)
-                break;
-        
-            default:
-                break;
-        }
-        this.serverId.splice(pos,1)
-    },
-    optionDataserver(event,key){
-        this.tempdata[key] = event.target.value;
-    },
-    optionData(event,key){
-        this.mydata[key] = event.target.value;
-    },
-    addtteams(item){
-        this.selectedteams.push(item)
-    },
-    getteams(){
-        axios.get(this.url + 'teams/'+this.userId).then(({data}) => {
-            let temp = data.datas;
-            for (const key in temp) {
-                this.teams.push({ value : temp[key], text : temp[key]['name']})
-            }
-        })
-    },
-    onFilePicked(){
-        this.upload = this.$refs.file.files[0]
-        this.file = [];
-        const fileReader = new FileReader()
-        fileReader.addEventListener('load', () => {
-            this.filektp = fileReader.result;
-            this.file.push({ data: fileReader.result, name: this.upload.name })
-        })
-        fileReader.readAsDataURL(this.upload)
-    },
-    undo() {
-      this.$refs.signaturePad.undoSignature();
-    },
-    initrequired(){
-        let element = document.querySelectorAll('label')
-        console.log(element)
-    },
-    validate(id){
-        let element = document.querySelectorAll('input, select')
-        let invalid = false;
-        element.forEach(element => {
-            if(id === "add-server" && !element.id.includes('add-')){
-                return true;
-            }
-            if(id === "save" && element.id.includes('add-')){
-                return true;
-            }
-            if(element.id === 'mobile-search' && (element.id === '' || element.id === null)){
-                return true;
-            }
-            if(element.required){
+                })
+            },
+            getproduct(){
+                axios.get(this.url+'product?limit=all&id='+this.userId).then(({data})=>{
+                    let datas = data.data;
+                    this.server = datas.map((item) => {
+                        return {
+                            value: item.id + '/' + item.productName + ' — ' + item.domain,
+                            text: item.productName + ' — ' + item.domain
+                        };
+                    });
+                    this.pendingServer = datas.filter((item) => {
+                        return item.status === "Pending";
+                    }).map((item) => {
+                        return {
+                            value: item.id + '/' + item.productName + ' — ' + item.domain,
+                            text: item.productName + ' — ' + item.domain
+                        };
+                    });
+                    // this.myproduct = datas
+                })
+            },
+            async savedata(){
+                if(this.validate()){
+                    this.issave = true;
+                    this.txtsave = "Processing..";
+                    switch (this.mydata.reason) {
+                        case "Installation":
+                            this.mydata.server_maintenance = "install"
+                            break;
+                        case "visit DC":
+                            this.mydata.server_maintenance = "visit"
+                            break;
+                        case "Maintenance":
+                            this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
+                            break;
+                        case "Unloading":
+                            this.mydata.server_maintenance = JSON.stringify(this.maintenancedata)
+                            break;
+                    }
+                    try {
+                        const response = await axios.post(this.url + 'visitdc', this.prepareData()).then(({data})=>{
+                            if (data.status) {
+                                this.$notify({
+                                    title: 'Berhasil',
+                                    text: data.message,
+                                    type: 'success',
+                                    duration: 5000, // Durasi notifikasi dalam milidetik
+                                });
+                                return this.$router.push('/request');
+                            }else{
+                                return this.$notify({
+                                    title: 'Gagal',
+                                    text: data.message,
+                                    type: 'error',
+                                    duration: 5000, // Durasi notifikasi dalam milidetik
+                                });
+                            }
+                        });
+                        // this.success();
+                        this.issave = false;
+                        this.txtsave = "Save";
+                        return true
+                    } catch (error) {
+                        this.$notify({
+                                    title: 'Gagal',
+                                    text: "Silahkan coba lagi",
+                                    type: 'error',
+                                    duration: 5000, // Durasi notifikasi dalam milidetik
+                                });
+                    }
+                    return true
+                }
+                this.$notify({
+                    title: 'Periksa Inputan',
+                    text: "silahkan periksa kembali inputan",
+                    type: 'warning',
+                    duration: 5000, // Durasi notifikasi dalam milidetik
+                });
                 
-                let error = document.getElementById('error-'+element.id)
-                if((element.type).toLowerCase() === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(element.value)){
-                    error.hidden =false
-                    error.innerText = "input harus email"
-                    invalid = true
-                    return true;
+            },
+            success(){
+                this.issave = false;
+                this.txtsave = "Success Save";
+            },
+            prepareData(){
+                // init signature result
+                const { isEmpty, data } = this.$refs.signaturePad.saveSignature();
+                // convert teams selected to array
+                let teams = [];
+                    this.selectedteams.forEach(element => {
+                        teams.push(element.name)
+                    });
+
+
+                let datas = {
+                    UID             : uuidv4(),
+                    id_user         : this.userId,
+                    lead_name       : this.mydata.name,
+                    lead_email      : this.mydata.email,
+                    lead_phone      : this.mydata.phone,
+                    lead_nik        : this.mydata.nik,
+                    lead_ktp        : this.mydata.filektp,
+                    lead_signature  : data,
+                    company_name    : this.mydata.company,
+                    Date            : moment(this.mydata.date).format('DD MMM YYYY HH:mm'),
+                    data_center     : this.mydata.data_center,
+                    reason          : this.mydata.reason,
+                    dataserver      : this.serverdata,
+                    serverId        : this.serverId.toString(),
+                    server_maintenance : this.mydata.server_maintenance,
+                    teams           : JSON.stringify(teams),
+                    file_surat      : ''
+
                 }
-                if (element.value === '' || element.value === '#') {
-                    error.hidden =false
-                    error.innerText = "Tidak boleh kosong"
-                    invalid = true
-                    return true;
+                return datas;
+            },
+            addserver(){
+                this.serverdata.push(this.tempdata)
+                this.serverId.push(this.tempdata['productid'].split('/')[0])
+                this.tempdata = {}
+                this.reasonmodal = false
+                // if(!this.validate('add-server')){
+                //     this.serverdata.push(this.tempdata)
+                //     this.serverId.push(this.tempdata['productid'].split('/')[0])
+                //     this.tempdata = {}
+                //     this.reasonmodal = false
+                // }
+                // this.$notify({
+                //     title: 'Periksa Inputan',
+                //     text: "silahkan periksa kembali inputan",
+                //     type: 'warning',
+                //     duration: 5000, // Durasi notifikasi dalam milidetik
+                // });
+            },
+            deleteserver(pos, type){
+                switch (type) {
+                    case "install":
+                        this.serverdata.splice(pos,1)
+                        break;
+                    case "maintenance":
+                        this.maintenancedata.splice(pos,1)
+                        break;
+                
+                    default:
+                        break;
                 }
-                if((element.type).toLowerCase() === 'number' && isNaN(parseFloat(element.value))){
-                    error.hidden =false
-                    error.innerText = "input harus number"
-                    invalid = true
+                this.serverId.splice(pos,1)
+            },
+            optionDataserver(event,key){
+                this.tempdata[key] = event.target.value;
+            },
+            optionData(event,key){
+                this.mydata[key] = event.target.value;
+            },
+            addtteams(item){
+                this.selectedteams.push(item)
+            },
+            getteams(){
+                this.teams = []
+                axios.get(this.url + 'teams/'+this.userId).then(({data}) => {
+                    let temp = data.datas;
+                    for (const key in temp) {
+                        this.teams.push({ value : temp[key], text : temp[key]['name']})
+                    }
+                })
+            },
+            onFilePicked(){
+                this.upload = this.$refs.file.files[0]
+                this.file = [];
+                const fileReader = new FileReader()
+                fileReader.addEventListener('load', () => {
+                    this.mydata.filektp = fileReader.result;
+                    this.file.push({ data: fileReader.result, name: this.upload.name })
+                })
+                fileReader.readAsDataURL(this.upload)
+            },
+            undo() {
+                this.$refs.signaturePad.undoSignature();
+            },
+            validate(){
+                try {
+                    this.formSchema.parse(this.mydata);
                     return true;
+                } catch (error) {
+                    this.errors = error.formErrors.fieldErrors;
+                    console.log(this.errors)
+                    return false
                 }
-                if (error == null) {
-                    return true;
-                }
-                error.hidden =true
-            }
-        });
-        return invalid;
-    },
-  },
-}
+            },
+        },
+    }
 </script>

@@ -64,7 +64,7 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span :class="(item.success)? 'bg-green-500' :'bg-yellow-500'" class=' px-2 text-white rounded-full'>{{ (item.success)? "Selesai":"Request" }}</span>
+                                                            <span :class="(item.status === 'Completed')? 'bg-green-500' :'bg-yellow-500'" class=' px-2 text-white rounded-full'>{{ item.status }}</span>
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
@@ -76,7 +76,92 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span @click="setdone(item.UID)" class="bg-yellow-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-check"></i></span>
+                                                            <span @click="updateProgress(item.UID, item.status)" class="bg-yellow-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-check"></i></span>
+                                                            <span @click="viewdetail(item.UID, item.id_user)" class="bg-green-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
+                                                            <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 mt-5">
+                            <div class="mb-4 flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">Accepted Request Data Center</h3>
+                                    <span class="text-base font-normal text-gray-500">This is a list of Accepted Request Data Center</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col mt-8">
+                                <div class="overflow-x-auto rounded-lg">
+                                    <div class="align-middle inline-block min-w-full">
+                                        <div class="shadow overflow-hidden sm:rounded-lg">
+                                            <table class="min-w-full divide-y divide-gray-200">
+                                                <thead class="bg-orange-600">
+                                                    <tr>
+                                                        <th scope="col"
+                                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                                            Date
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                                            Name
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                                            Reason
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                                            Progress
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                                            Data Center
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                                            Teams
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                                            
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="bg-white" v-for="(item, index) in acceptedRequestdc" :key="index">
+                                                    <tr>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                            {{ item.Date }}
+                                                        </td>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                            {{ item.lead_name || item.lead_signature }}
+                                                        </td>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                            {{ item.reason }}
+                                                        </td>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                            <span :class="(item.status === 'Accepted')? 'bg-green-500' :'bg-yellow-500'" class=' px-2 text-white rounded-full'>{{ item.status }}</span>
+                                                        </td>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                            {{ item.data_center }}
+                                                        </td>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                            {{ teamsconvert(item.teams) }}
+                                                        </td>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                            <span @click="updateProgress(item.UID, item.status)" class="bg-yellow-500 p-2 text-white rounded-tl-md rounded-bl-md cursor-pointer"><i class="fa fa-check"></i></span>
                                                             <span @click="viewdetail(item.UID, item.id_user)" class="bg-green-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
                                                             <span @click="deletedata(item.UID)" class="bg-red-500 p-2 text-white rounded-tr-md rounded-br-md cursor-pointer"><i class="fa fa-trash"></i></span>
                                                         </td>
@@ -148,7 +233,7 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span :class="(item.success)? 'bg-green-500' :'bg-yellow-500'" class=' px-2 text-white rounded-full'>{{ (item.success)? "Selesai":"Request" }}</span>
+                                                            <span :class="(item.status === 'Completed') ? 'bg-green-500' :'bg-yellow-500'" class=' px-2 text-white rounded-full'>{{ item.status }}</span>
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
@@ -209,6 +294,7 @@
                 userId      : this.$storage.getStorageSync("user_id"),
                 token       : this.$storage.getStorageSync("token"),
                 requestdc     : '',
+                acceptedRequestdc : [],
                 allrequest  : [],
                 showallrequest  : [],
                 loader      : null,
@@ -262,7 +348,7 @@
                     }
                 })
             },
-            setdone(id){
+            updateProgress(id, status){
                 
                 this.loader = this.$loading.show({container: null,canCancel: false,});
                 let header = {
@@ -270,11 +356,20 @@
                     'Authorization': `Bearer ${this.token}` 
                     }
                 }
+                let dataUpdate = "";
+                console.log(status)
+                if(status === "Requested"){
+                    dataUpdate = "Accepted"
+                }else{
+                    dataUpdate = "Completed";
+                }
+
                 axios.put(this.url + 'visitdc/update',{
                     uid : id,
-                    success : 1
+                    status : dataUpdate
                 },header).then(({data}) => {
                     this.loader.hide();
+                    console.log(data)
                     if(data.status){
                         this.$notify({
                             title: 'Berhasil',
@@ -303,19 +398,12 @@
                  axios.get(this.url + 'visitdc', header).then(({data}) => {
                     this.loader.hide()
                     let temp = data.data
-                    let convert = temp.map((item) => {
-                        if (item.reason === "visit DC" && item.server_maintenance === "visit DC") {
-                            let team = JSON.parse(item.teams)
-                            let convertteam = team.map(item => item.name)
-                            item.teams = JSON.stringify(convertteam)
-                        }
-                        return item
-                    })
-                    this.allrequest = this.filter(convert, 1)
-                    this.showallrequest = this.filter(convert, 1)
-                    this.pageCount = (Math.ceil(convert.length / this.perPage)) - 1;
+                    this.acceptedRequestdc = this.filter(temp, "Accepted")
+                    this.allrequest = this.filter(temp, "Completed")
+                    this.showallrequest = this.filter(temp, "Completed")
+                    this.pageCount = (Math.ceil(temp.length / this.perPage)) - 1;
                     this.paginatedItems()
-                    this.requestdc = this.filter(convert, 0)
+                    this.requestdc = this.filter(temp, "Requested")
                 }).catch((error) =>{
                     this.$notify({
                         title: 'Error',
@@ -343,7 +431,7 @@
             filter(temp, status){
                 let sample= [];
                     for (const key in temp) {
-                        if (temp[key].success === status) {
+                        if (temp[key].status === status) {
                             sample.push(temp[key])
                         }
                     }

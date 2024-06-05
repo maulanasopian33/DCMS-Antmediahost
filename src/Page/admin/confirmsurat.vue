@@ -385,8 +385,8 @@
                                                     <label for="signature_client"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">client signature</label>
                                                         <div @click="modalttd('client')" class="w-[80%] h-20 md:w-[80%] md:h-56 border-[1px] border-gray-200 flex items-center justify-center rounded-md">
-                                                            <i v-show="clientsignature === ''" class="fa fa-file-signature text-3xl"></i>
-                                                            <img v-show="clientsignature !== ''" class="w-[60%] h-[80%] sticky object-contain rounded-md bg-fixed" :src="clientsignature">
+                                                            <i v-show="!clientsignature" class="fa fa-file-signature text-3xl"></i>
+                                                            <img v-show="clientsignature" class="w-[60%] h-[80%] sticky object-contain rounded-md bg-fixed" :src="clientsignature">
                                                         </div>
                                                 </div>
                                             </div>
@@ -484,6 +484,7 @@ methods: {
                     type: 'success',
                     duration: 5000, // Durasi notifikasi dalam milidetik
                 });
+                console.log(data)
             this.$router.push('/admin/surat')
             this.loader.hide()
             }
@@ -504,7 +505,6 @@ methods: {
     },
     async getdatasurat(){
         let data = await this.apiget('admin/surat/'+ this.uuid,this.token,this);
-        console.log(data.data.length)
         if(data.data.length){
             this.update                     = true
             this.mydata['id']               = data.data[0].id
@@ -522,9 +522,12 @@ methods: {
             this.mydata['dokumentasi']      = JSON.parse(data.data[0].dokumentasi)
             this.mydata['tim_signature']    = this.urlapi + 'storage/'+ data.data[0].support_signature
             this.mydata['client_signature'] = this.urlapi + 'storage/'+ data.data[0].client_signature
-            this.timsignature               = this.urlapi + 'storage/'+ data.data[0].support_signature
-            this.clientsignature            = this.urlapi + 'storage/'+ data.data[0].client_signature
-            console.log('update',this.mydata)
+            if(data.data[0].client_signature){
+                this.clientsignature            = this.urlapi + 'storage/'+ data.data[0].client_signature
+            }
+            if(data.data[0].support_signature){
+                this.timsignature               = this.urlapi + 'storage/'+ data.data[0].support_signature
+            }
             for (const key in this.mydata['dokumentasi']) {
                 this.file.push({ data: this.urlapi +"storage/"+ this.mydata['dokumentasi'][key], name: '' })
             }
@@ -536,8 +539,11 @@ methods: {
             }
         }else{
             this.update = false
+            let noSurat = await this.apiget('generate/nosurat',this.token,this);
+            this.mydata['nosurat'] = noSurat.data
         }
     },
+
     async updatedata(){
         this.loader = this.$loading.show({container: null,canCancel: false,});
         this.mydata['dokumentasi'] = this.file
@@ -582,6 +588,7 @@ methods: {
         let data = await this.apiput('admin/productdetail/'+ id,this.token,tempdata,this);
     },
     async getdata(){
+        console.log(this.uuid)
         this.loader = this.$loading.show({container: null,canCancel: false,});
         let data = await this.apiget('admin/visitdc/'+ this.uuid,this.token,this);
         let tempdata = data.data;
@@ -622,6 +629,8 @@ methods: {
             this.mydata['controlPanel'] = this.mydata['controlPanel'] || '-'
             this.mydata['os'] = this.mydata['os'] || '-'
             let data = await this.apipost('admin/surat',this.token,this.mydata,this);
+            this.loader.hide()
+            
             if(data['status']){
                 this.$notify({
                     title: 'Berhasil',
@@ -629,11 +638,16 @@ methods: {
                     type: 'success',
                     duration: 5000, // Durasi notifikasi dalam milidetik
                 });
-                location.reload();
+                return location.reload();
             }
-            this.loader.hide()
+            this.$notify({
+                title: 'Gagal',
+                text: data.message,
+                type: 'error',
+                duration: 5000, // Durasi notifikasi dalam milidetik
+            });
         }
-        this.$notify({
+        return this.$notify({
             title: 'Periksa Inputan',
             text: "silahkan periksa kembali inputan",
             type: 'warning',

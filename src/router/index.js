@@ -20,18 +20,20 @@ import surat from '../Page/admin/surat.vue'
 import confirm from '../Page/admin/confirmsurat.vue'
 import vpn from '../Page/admin/vpn.vue'
 // middleware
-
 import adminAuth from '../middleware/adminAuth'
 import userAuth from '../middleware/userAuth'
 
-import { createRouter, createWebHistory } from 'vue-router';
-const routes = [
-  {
+import {
+  createRouter,
+  createWebHistory
+} from 'vue-router';
+import cekproduct from '../middleware/cekproduct'
+const routes = [{
     path: '/',
     name: 'Home',
     component: Home,
-    meta : {
-      middleware : [userAuth]
+    meta: {
+      middleware: [cekproduct]
     },
   },
   {
@@ -63,16 +65,16 @@ const routes = [
     path: '/request',
     name: 'Visit DC',
     component: visitDC,
-    meta : {
-      middleware : [userAuth]
+    meta: {
+      middleware: [userAuth]
     },
   },
   {
     path: '/vpnClient',
     name: 'Vpn Client',
     component: vpnClient,
-    meta : {
-      middleware : [userAuth]
+    meta: {
+      middleware: [userAuth]
     },
   },
   {
@@ -84,32 +86,32 @@ const routes = [
     path: '/request/add',
     name: 'add Visit DC',
     component: AddVisitDc,
-    meta : {
-      middleware : [userAuth]
+    meta: {
+      middleware: [userAuth]
     },
   },
   {
     path: '/products',
     name: 'Products',
     component: Product,
-    meta : {
-      middleware : [userAuth]
+    meta: {
+      middleware: [userAuth]
     },
   },
   {
     path: '/teams',
     name: 'Teams',
     component: Teams,
-    meta : {
-      middleware : [userAuth]
+    meta: {
+      middleware: [userAuth]
     },
   },
   {
     path: '/profile',
     name: 'Profile',
     component: Profile,
-    meta : {
-      middleware : [userAuth]
+    meta: {
+      middleware: [userAuth]
     },
   },
 
@@ -123,48 +125,48 @@ const routes = [
     path: '/admin',
     name: 'dashboard Admin',
     component: dashboardpanel,
-    meta : {
-      middleware : [adminAuth]
+    meta: {
+      middleware: [adminAuth]
     },
   },
   {
     path: '/admin/visitdc',
     name: 'Visit DC Admnin',
     component: requestvisitdc,
-    meta : {
-      middleware : [adminAuth]
+    meta: {
+      middleware: [adminAuth]
     },
   },
   {
     path: '/admin/usermanage',
     name: 'User Manage Admin',
     component: usermanage,
-    meta : {
-      middleware : [adminAuth]
+    meta: {
+      middleware: [adminAuth]
     },
   },
   {
     path: '/admin/surat',
     name: 'Manage Surat Admin',
     component: surat,
-    meta : {
-      middleware : [adminAuth]
+    meta: {
+      middleware: [adminAuth]
     },
   },
   {
     path: '/admin/surat/:id',
     name: 'confirm Surat Admin',
     component: confirm,
-    meta : {
-      middleware : [adminAuth]
+    meta: {
+      middleware: [adminAuth]
     },
   },
   {
     path: '/admin/vpn',
     name: 'VPN Admin',
     component: vpn,
-    meta : {
-      middleware : [adminAuth]
+    meta: {
+      middleware: [adminAuth]
     },
   },
 ];
@@ -177,10 +179,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.middleware) {
     const middleware = to.meta.middleware;
-    const context = { next, router };
-    middleware[0]({ ...context });
+    const context = {
+      next,
+      router
+    };
+    middleware[0]({
+      ...context
+    });
   }
   return next();
 });
 export default router;
-

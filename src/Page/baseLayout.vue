@@ -188,9 +188,9 @@
             </div>
          </aside>
          <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
-         <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
+         <div id="main-content" class="min-h-screen w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
             <slot></slot>
-            <footer
+            <!-- <footer
                class="bg-white md:flex md:items-center md:justify-between shadow rounded-lg p-4 md:p-6 xl:p-8 my-6 mx-4">
                <div class="flex sm:justify-center space-x-6">
                   <a href="#" class="text-gray-500 hover:text-gray-900">
@@ -228,7 +228,7 @@
                      </svg>
                   </a>
                </div>
-            </footer>
+            </footer> -->
             <p class="text-center text-sm text-gray-500 my-10">
                &copy; {{ new Date().getFullYear() }} <a href="#" class="hover:underline"
                   target="_blank">Antmediahost</a>. All rights reserved.

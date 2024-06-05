@@ -73,7 +73,7 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span :class="item.success ? 'bg-green-500' : 'bg-yellow-600'" class=" p-2 text-white rounded-md cursor-pointer">{{ item.success ? 'Done' : "Onprogress" }}</span>
+                                                            <span :class="item.status === 'Requested' ? 'bg-yellow-600' : 'bg-green-500'" class=" p-2 text-white rounded-md cursor-default">{{ item.status }}</span>
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
@@ -83,7 +83,7 @@
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 text-end">
                                                             <a :href="item.file_surat" target="_blank" v-show="item.reason === 'Installation' || item.reason === 'Unloading'" :class="(item.file_surat == null) ? 'cursor-not-allowed bg-green-200' : 'cursor-pointer bg-green-500'" class="p-2 text-white rounded-tl-md rounded-bl-md"><i class="fa fa-download"></i></a>
                                                             <span @click="viewdetail(item.UID)" :class="(item.reason === 'Installation' || item.reason === 'Unloading') ? '' : 'rounded-lt-md rounded-lb-md'" class="bg-yellow-500 p-2 text-white cursor-pointer"><i class="fa fa-eye"></i></span>
-                                                            <span :class="(!item.success) ? 'bg-red-500 cursor-pointer' : 'bg-red-200 cursor-not-allowed'" @click="deletedata(item.UID)" class=" p-2 text-white rounded-tr-md rounded-br-md"><i class="fa fa-trash"></i></span>
+                                                            <span :class="item.status === 'Requested' ? 'bg-red-500 cursor-pointer' : 'bg-red-200 cursor-not-allowed'" @click="deletedata(item.UID)" class=" p-2 text-white rounded-tr-md rounded-br-md"><i class="fa fa-trash"></i></span>
                                                         </td>
                                                     </tr>
 
@@ -120,6 +120,7 @@
             }
         },
         mounted() {
+            this.loader = this.$loading.show({ container: null, canCancel: false, });
             this.getdata();
         },
         methods: {
@@ -151,6 +152,7 @@
             getdata(){
                 axios.get(this.url + 'visitdc/'+this.userId).then(({data}) => {
                     this.visitdc = data.datas
+                    this.loader.hide();
                 })
             },
             teamsconvert(data){

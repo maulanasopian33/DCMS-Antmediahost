@@ -29,7 +29,7 @@
 
                             <input id="username" type="text" name="username" v-model="username"
                                 class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
-                                placeholder="E-Mail Address" />
+                                placeholder="Username" />
                         </div>
                         <label for="username" class="mb-1 text-xs tracking-wide text-red-600">{{ error.username
                             }}</label>
@@ -111,7 +111,7 @@ export default {
         }
     },
     mounted() {
-        getKey(this)
+        // getKey(this)
     },
     methods: {
         async login() {

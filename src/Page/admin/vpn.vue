@@ -116,11 +116,15 @@
                                                         </th>
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase">
-                                                            Service
+                                                            Host
                                                         </th>
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase">
-                                                            User IP
+                                                            Protocol
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="p-4 text-left text-xs font-medium text-white uppercase">
+                                                            Remote Address
                                                         </th>
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase">
@@ -149,11 +153,15 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            {{ item.service }}
+                                                            {{ item.host }}
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            {{ item['remote-address'] }}
+                                                            {{ item.protocol }}
+                                                        </td>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                            {{ item['remoteAddress'] }}
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
@@ -178,17 +186,17 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            <span @click="isdisabled('enable', item['.id'])"
+                                                            <span @click="isdisabled('enable', item['vpnId'])"
                                                                 class="bg-blue-500 p-2 ml-[1px] text-white rounded-md cursor-pointer hover:bg-blue-400">Enable</span>
                                                             <span
-                                                                @click="isdisabled('disable', item['.id'], item['name'])"
+                                                                @click="isdisabled('disable', item['vpnId'], item['name'])"
                                                                 class="bg-blue-500 p-2 ml-[1px] text-white rounded-md cursor-pointer hover:bg-blue-400">Disable</span>
-                                                            <span @click="confimdelete(item['.id'], item['name'])"
+                                                            <span @click="confimdelete(item['vpnId'], item['name'])"
                                                                 class="bg-blue-500 p-2 ml-[1px] text-white rounded-md cursor-pointer hover:bg-blue-400">Delete</span>
                                                             <span @click="setAssign(index, item['name'])"
                                                                 class="bg-blue-500 p-2 ml-[1px] text-white rounded-md cursor-pointer hover:bg-blue-400">Set
                                                                 Assign</span>
-                                                            <span @click="showmodal(item['.id'], item['name'])"
+                                                            <span @click="showmodal(item['vpnId'], item['name'])"
                                                                 class="bg-blue-500 p-2 ml-[1px] text-white rounded-md cursor-pointer hover:bg-blue-400">Change
                                                                 Password</span>
                                                         </td>
@@ -355,7 +363,6 @@ export default {
                 }
             }
             axios.get(this.url + 'admin/vpn', header).then(({ data }) => {
-                console.log(data)
                 let datadecrypt = JSON.parse(decrypt(data.data))
                 this.getuser(datadecrypt)
             })
@@ -396,7 +403,7 @@ export default {
             this.loader = this.$loading.show({ container: null, canCancel: false, });
             let header = {
                 headers: {
-                    'Authorization': `Bearer ${this.token}`
+                    'Authorization': `Beaarer ${this.token}`
                 }
             }
             let datas = {

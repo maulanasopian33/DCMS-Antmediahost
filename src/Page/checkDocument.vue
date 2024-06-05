@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-slate-200 h-screen w-full flex justify-center">
+    <div class="bg-slate-200 min-h-screen w-full flex justify-center">
         <div class="max-w-screen-2xl flex flex-col items-center p-10">
             <div>
                 <img v-show="!status" src="../assets/error.svg" alt="error" srcset="">
@@ -46,6 +46,7 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 
 export default {
     name: 'checkDocument',
@@ -67,6 +68,7 @@ export default {
                 this.status = data.status
                 if (data.status) {
                     this.data = data.data[0]
+                    this.data.updated_at = moment(this.data.updated_at).format('DD MMMM YYYY, H:mm:ss');
                     this.loader.hide()
                     return true;
                 }

@@ -37,8 +37,8 @@
                         </div>
                     </div>
                     <p>Status <span :class="(vpnData.disabled === 'true') ? 'bg-red-500' : 'bg-green-500'"
-                            class=" p-2 rounded-md text-white">{{ (vpnData.disabled === 'true') ? 'Disconnected' :
-                        'Connected' }}</span></p>
+                            class=" p-2 rounded-md text-white">{{ (vpnData.disabled === 'true') ? 'Disable' :
+                        'Enable' }}</span></p>
 
 
                 </div>
@@ -48,14 +48,24 @@
                         <table>
                             <tbody>
                                 <tr>
+                                    <td>Host</td>
+                                    <td>:</td>
+                                    <td>{{ vpnData.host }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Protocol</td>
+                                    <td>:</td>
+                                    <td>{{ vpnData.protocol }}</td>
+                                </tr>
+                                <tr>
                                     <td>Username</td>
                                     <td>:</td>
                                     <td>{{ vpnData.name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Service</td>
+                                    <td>Password</td>
                                     <td>:</td>
-                                    <td>{{ vpnData.service }}</td>
+                                    <td>{{ vpnData.password }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -88,10 +98,10 @@ export default {
         getdata() {
             this.loader = this.$loading.show({ container: null, canCancel: false, });
             axios.get(this.url + 'getUser/' + this.userId).then(({ data }) => {
-                console.log(data)
                 axios.get(this.url + 'get/vpn/' + data.data.vpn).then(({ data }) => {
                     let datadecrypt = JSON.parse(decrypt(data.data))
                     this.vpnData = datadecrypt[0]
+                    console.log(this.vpnData)
                     this.loader.hide()
                 })
             })
@@ -107,7 +117,7 @@ export default {
 
             let datas = {
                 'status': status,
-                'username': this.vpnData['.id'],
+                'username': this.vpnData['vpnId'],
                 'name': this.vpnData['name']
             }
             axios.post(this.url + 'vpn/disable', datas).then(({ data }) => {
