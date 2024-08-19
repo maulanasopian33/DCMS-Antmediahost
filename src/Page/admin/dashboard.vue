@@ -88,9 +88,8 @@
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
                                                             <span
-                                                                :class="(item.success) ? 'bg-green-500' : 'bg-yellow-500'"
-                                                                class=' px-2 text-white rounded-full'>{{ (item.success) ?
-                                                                "Selesai":"Request" }}</span>
+                                                                :class="(item.status === 'Completed')? 'bg-green-500' :'bg-yellow-500'"
+                                                                class=' px-2 text-white rounded-full'>{{ item.status }}</span>
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
