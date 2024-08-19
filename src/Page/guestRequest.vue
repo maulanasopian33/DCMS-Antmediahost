@@ -89,9 +89,8 @@
                                             <div>
                                                 <label for="date"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date</label>
-                                                <input type="date" v-model="mydata.date" id="date"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-                                                    required>
+                                                    <VueDatePicker name="date" id="date" v-model="mydata.date" model-type="iso"
+                                                        ></VueDatePicker>
                                             </div>
                                         </div>
                                         <div class="sm:overflow-y-auto max-w-full">
@@ -112,6 +111,10 @@
                                                         </th>
                                                         <th scope="col"
                                                             class="p-4 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                                            Phone
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="p-4 text-left text-xs font-medium text-white uppercase tracking-wider">
                                                             
                                                         </th>
                                                     </tr>
@@ -129,6 +132,10 @@
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
                                                             {{ item.email }}
+                                                        </td>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                            {{ item.phone }}
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
@@ -161,6 +168,12 @@
                                                             <input type="email" v-model="tempteam.email" id="email"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                                                             placeholder="email" required>
+                                                        </td>
+                                                        <td
+                                                            class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                            <input type="text" v-model="tempteam.phone" id="phone"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+                                                            placeholder="Phone Number" required>
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
@@ -244,10 +257,14 @@
 import { VueFinalModal } from 'vue-final-modal';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import moment from 'moment'
+
 export default {
     name : 'guestRequest',
     components: {
-                VueFinalModal
+                VueFinalModal, VueDatePicker
             },
     data() {
         return {
@@ -338,7 +355,7 @@ export default {
     prepareData(){
         let team = []
         this.teams.forEach(element => {
-            team.push({name : element.name, nik : element.nik, email : element.email})
+            team.push({name : element.name, nik : element.nik, email : element.email, phone : element.phone})
         });
         let datas = {
             UID                : uuidv4(),
@@ -348,7 +365,7 @@ export default {
             nik                : this.mydata.nik,
             ktp                : JSON.stringify(this.file),
             company_name       : this.mydata.company,
-            Date               : this.mydata.date,
+            Date               : moment(this.mydata.date).format('DD MMM YYYY HH:mm'),
             data_center        : this.mydata.data_center,
             reason             : "Visit DC",
             dataserver         : "",

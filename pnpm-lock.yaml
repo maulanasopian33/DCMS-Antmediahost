@@ -48,13 +48,13 @@ importers:
         specifier: ^4.4.5
         version: 4.4.5(@vueuse/core@10.4.1(vue@3.3.4))(@vueuse/integrations@10.4.1(axios@1.5.0)(focus-trap@7.5.3)(vue@3.3.4))(focus-trap@7.5.3)(vue@3.3.4)
       vue-loading-overlay:
-        specifier: ^6.0
+        specifier: ^6.0.3
         version: 6.0.3(vue@3.3.4)
       vue-recaptcha-v3:
         specifier: ^2.0.1
         version: 2.0.1(vue@3.3.4)
       vue-router:
-        specifier: '4'
+        specifier: ^4.2.4
         version: 4.2.4(vue@3.3.4)
       vue-search-select:
         specifier: ^3.2.0
@@ -446,8 +446,8 @@ packages:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
     engines: {node: '>= 6'}
 
-  caniuse-lite@1.0.30001527:
-    resolution: {integrity: sha512-YkJi7RwPgWtXVSgK4lG9AHH57nSzvvOp9MesgXmw4Q7n0C3H04L0foHqfxcmSAm5AcWb8dW9AYj2tR7/5GnddQ==}
+  caniuse-lite@1.0.30001651:
+    resolution: {integrity: sha512-9Cf+Xv1jJNe1xPZLGuUXLNkE1BoDkqRqYyFJ9TDYSqhduqA4hu4oR9HluGoWYQC/aj8WHjsGVV+bwkh0+tegRg==}
 
   chokidar@3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
@@ -925,8 +925,8 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  vue-demi@0.14.6:
-    resolution: {integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==}
+  vue-demi@0.14.10:
+    resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
     engines: {node: '>=12'}
     hasBin: true
     peerDependencies:
@@ -1216,7 +1216,7 @@ snapshots:
       '@types/web-bluetooth': 0.0.17
       '@vueuse/metadata': 10.4.1
       '@vueuse/shared': 10.4.1(vue@3.3.4)
-      vue-demi: 0.14.6(vue@3.3.4)
+      vue-demi: 0.14.10(vue@3.3.4)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -1225,7 +1225,7 @@ snapshots:
     dependencies:
       '@vueuse/core': 10.4.1(vue@3.3.4)
       '@vueuse/shared': 10.4.1(vue@3.3.4)
-      vue-demi: 0.14.6(vue@3.3.4)
+      vue-demi: 0.14.10(vue@3.3.4)
     optionalDependencies:
       axios: 1.5.0
       focus-trap: 7.5.3
@@ -1237,7 +1237,7 @@ snapshots:
 
   '@vueuse/shared@10.4.1(vue@3.3.4)':
     dependencies:
-      vue-demi: 0.14.6(vue@3.3.4)
+      vue-demi: 0.14.10(vue@3.3.4)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -1268,7 +1268,7 @@ snapshots:
   autoprefixer@10.4.15(postcss@8.4.29):
     dependencies:
       browserslist: 4.21.10
-      caniuse-lite: 1.0.30001527
+      caniuse-lite: 1.0.30001651
       fraction.js: 4.3.6
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -1298,14 +1298,14 @@ snapshots:
 
   browserslist@4.21.10:
     dependencies:
-      caniuse-lite: 1.0.30001527
+      caniuse-lite: 1.0.30001651
       electron-to-chromium: 1.4.508
       node-releases: 2.0.13
       update-browserslist-db: 1.0.11(browserslist@4.21.10)
 
   camelcase-css@2.0.1: {}
 
-  caniuse-lite@1.0.30001527: {}
+  caniuse-lite@1.0.30001651: {}
 
   chokidar@3.5.3:
     dependencies:
@@ -1749,7 +1749,7 @@ snapshots:
     dependencies:
       vue: 3.3.4
 
-  vue-demi@0.14.6(vue@3.3.4):
+  vue-demi@0.14.10(vue@3.3.4):
     dependencies:
       vue: 3.3.4
 

@@ -26,6 +26,8 @@
                         <td class="px-2">:</td>
                         <td class="px-2">{{ this.data.reason }}</td>
                     </tr>
+
+                    
                     <tr>
                         <td class="px-2">Data Center</td>
                         <td class="px-2">:</td>
@@ -40,6 +42,11 @@
                         <td class="px-2">Date</td>
                         <td class="px-2">:</td>
                         <td class="px-2">{{ this.data.Date }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-2">keterangan</td>
+                        <td class="px-2">:</td>
+                        <td class="px-2">{{ this.data.keterangan }}</td>
                     </tr>
                     </tbody>
                 </table>

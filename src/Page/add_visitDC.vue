@@ -741,6 +741,7 @@
                     Date            : moment(this.mydata.date).format('DD MMM YYYY HH:mm'),
                     data_center     : this.mydata.data_center,
                     reason          : this.mydata.reason,
+                    keterangan      : this.mydata.keterangan,
                     dataserver      : this.serverdata,
                     serverId        : this.serverId.toString(),
                     server_maintenance : this.mydata.server_maintenance,

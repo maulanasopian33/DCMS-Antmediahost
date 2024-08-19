@@ -72,7 +72,7 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            {{ teamsconvert(item.teams) }}
+                                                            {{ teamsconvert(item.teams, item.reason) }}
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
@@ -157,7 +157,7 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            {{ teamsconvert(item.teams) }}
+                                                            {{ teamsconvert(item.teams), item.reason }}
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
@@ -241,7 +241,7 @@
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            {{ teamsconvert(item.teams) }}
+                                                            {{ teamsconvert(item.teams,item.reason) }}
                                                         </td>
                                                         <td
                                                             class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
@@ -437,7 +437,11 @@
                     }
                 return sample;
             },
-            teamsconvert(data){
+            teamsconvert(data, reason){
+                if(reason === "visit DC"){
+                    let json = JSON.parse(data);
+                    return json.map(item => item.name).join(',');
+                }
                 let json = JSON.parse(data);
                 return json.join();
             }

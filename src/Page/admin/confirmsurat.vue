@@ -484,7 +484,6 @@ methods: {
                     type: 'success',
                     duration: 5000, // Durasi notifikasi dalam milidetik
                 });
-                console.log(data)
             this.$router.push('/admin/surat')
             this.loader.hide()
             }
@@ -588,7 +587,6 @@ methods: {
         let data = await this.apiput('admin/productdetail/'+ id,this.token,tempdata,this);
     },
     async getdata(){
-        console.log(this.uuid)
         this.loader = this.$loading.show({container: null,canCancel: false,});
         let data = await this.apiget('admin/visitdc/'+ this.uuid,this.token,this);
         let tempdata = data.data;
@@ -647,6 +645,7 @@ methods: {
                 duration: 5000, // Durasi notifikasi dalam milidetik
             });
         }
+        this.loader.hide()
         return this.$notify({
             title: 'Periksa Inputan',
             text: "silahkan periksa kembali inputan",

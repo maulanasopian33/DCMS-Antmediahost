@@ -14,50 +14,22 @@
             </div>
             </div> -->
                 <div class="mt-10">
-                    <div class="flex flex-col mb-6">
-                        <label for="username"
-                            class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Username:</label>
-                        <div class="relative">
-                            <div
-                                class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
-                                <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path
-                                        d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                                </svg>
-                            </div>
-
-                            <input id="username" type="text" name="username" v-model="username"
-                                class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
-                                placeholder="Username" />
-                        </div>
-                        <label for="username" class="mb-1 text-xs tracking-wide text-red-600">{{ error.username
-                            }}</label>
+                    <div class="relative z-0 w-full mb-5">
+                        <input type="text" name="username" placeholder=" " required  v-model="username"
+                            class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+                        <label for="name" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Enter
+                            username</label>
+                        <span class="text-sm text-red-600" id="error">{{ error.username
+                            }}</span>
                     </div>
-                    <div class="flex flex-col mb-6">
-                        <label for="password"
-                            class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Password:</label>
-                        <div class="relative">
-                            <div
-                                class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
-                                <span>
-                                    <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path
-                                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                    </svg>
-                                </span>
-                            </div>
-
-                            <input id="password" @keyup.enter="login()" type="password" v-model="password"
-                                name="password"
-                                class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
-                                placeholder="Password" />
-                        </div>
-                        <label for="password" class="mb-1 text-xs tracking-wide text-red-600">{{ error.password
-                            }}</label>
+                    <div class="relative z-0 w-full mb-5">
+                        <input type="password" @keyup.enter="login()" name="password" placeholder=" " required  v-model="password"
+                            class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200" />
+                        <label for="name" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Enter
+                            password</label>
+                        <span class="text-sm text-red-600" id="error">{{ error.password
+                            }}</span>
                     </div>
-
                     <div class="flex items-center mb-6 -mt-4">
                         <div class="flex ml-auto">
                             <a href="#" class="inline-flex text-xs sm:text-sm text-blue-500 hover:text-blue-700">Forgot
@@ -94,7 +66,42 @@
         </div>
     </div>
 </template>
+<style>
+  .-z-1 {
+    z-index: -1;
+  }
 
+  .origin-0 {
+    transform-origin: 0%;
+  }
+
+  input:focus ~ label,
+  input:not(:placeholder-shown) ~ label,
+  textarea:focus ~ label,
+  textarea:not(:placeholder-shown) ~ label,
+  select:focus ~ label,
+  select:not([value='']):valid ~ label {
+    /* @apply transform; scale-75; -translate-y-6; */
+    --tw-translate-x: 0;
+    --tw-translate-y: 0;
+    --tw-rotate: 0;
+    --tw-skew-x: 0;
+    --tw-skew-y: 0;
+    transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate))
+      skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    --tw-scale-x: 0.75;
+    --tw-scale-y: 0.75;
+    --tw-translate-y: -1.5rem;
+  }
+
+  input:focus ~ label,
+  select:focus ~ label {
+    /* @apply text-black; left-0; */
+    --tw-text-opacity: 1;
+    color: rgba(0, 0, 0, var(--tw-text-opacity));
+    left: 0px;
+  }
+</style>
 <script>
 import axios from 'axios'
 export default {

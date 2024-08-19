@@ -185,7 +185,8 @@ export default {
                     }
                     return item
                 })
-                this.visitdc = this.filter(convert);
+                this.visitdc = data.data
+                // this.visitdc = this.filter(convert);
 
                 // update chart
                 this.updateChart(this.groupdata(data.data, false, ''), 'All')

@@ -9,7 +9,6 @@ export function getKey(self){
         'Authorization': `Bearer ${token}` 
         }
     }
-    console.log(header)
     axios.get(url+'create/rsa', header).then(({data})=>{
         localStorage.setItem('prvtk', data.data)
     })
